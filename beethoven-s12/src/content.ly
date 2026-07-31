@@ -1,52 +1,11 @@
 \version "2.24.1"
 
-\include "articulate.ly"
+\include "lib.ly"
 
-headerData = \header {
-  title = "Piano Sonata No. 12"
-  composer = "Ludwig van Beethoven"
-  opus = "Op. 26"
-  date = "1800–1801"
-}
-
-defaultLayout = \layout {
-  \context {
-    \Voice
-    \override Script.avoid-slur = #'inside
-    \override Script.outside-staff-priority = ##f
-  }
-}
-
-split = 
-#(define-music-function (voiceA voiceB) (ly:music? ly:music?)
-#{
-  <<
-    { \voiceOne $voiceA }
-    \context Voice = "right-lower-voice" { \voiceTwo $voiceB }
-  >>
-  \oneVoice
-#})
-
-splitThree = 
-#(define-music-function (voiceA voiceB voiceC) (ly:music? ly:music? ly:music?)
-#{
-  <<
-    { \voiceOne $voiceA }
-    \context Voice = "right-middle-voice" { \voiceThree $voiceB }
-    \context Voice = "right-lower-voice" { \voiceTwo $voiceC }
-  >>
-  \oneVoice
-#})
-
-renderMovement = 
-#(define-music-function (movementContent) (ly:music?)
-#{
-  \new PianoStaff <<
-    \new Staff = "" << \keepWithTag #(list 'score 'right) $movementContent >>
-    \new Dynamics \keepWithTag #(list 'dynamics) $movementContent
-    \new Staff = "" << \keepWithTag #(list 'score 'left) $movementContent >>
-  >>
-#})
+workTitle = "Piano Sonata No. 12"
+workComposer = "Ludwig van Beethoven"
+workOpus = "Op. 26"
+workDate = "1800–1801"
 
 firstMovement = {
   \override Score.RehearsalMark.self-alignment-X = #LEFT
@@ -63,12 +22,13 @@ firstMovement = {
 
   \partial 8
 
-  \tag #'right { \clef treble es'8 }
+  % critical-note: intro-note|A|opening upbeat, RH|Minimal critical-note example attached to the opening note. This longer sample paragraph is intentionally verbose enough to check the note-page text block, margins, and line wrapping in the assembled extended edition. It should remain on the notes page immediately following the score page that contains marker A, and it should not drift to a later page when the music layout changes.
+  \tag #'right { \clef treble \tag #'urtext { es'8 } \tag #'main-only { es'8-1\altFinger "(2" } \tag #'extended { es'8-1\altFinger "(2"^\markup \box \bold "A" \critRef #'intro-note } }
   \tag #'left  { \clef bass es8 }
   \tag #'dynamics { s8-\p }
   |
 
-  \tag #'right { \clef treble \split { es'8( as') as'^. } { c'4. } }
+  \tag #'right { \clef treble \split { es'8-2\altFinger "3)"( as'-3) as'^. } { c'4. } }
   \tag #'left  { \clef bass \split { es8( as) as^. } { <as, es>4. } }
   \tag #'dynamics { s4. }
   |
@@ -78,7 +38,7 @@ firstMovement = {
   \tag #'dynamics { s4. }
   |
 
-  \tag #'right { \clef treble \split { as'4( bes'8) } { r8 es' <bes es'> } }
+  \tag #'right { \clef treble \split { as'4( bes'8) } { r8 es' <bes es'>\altFinger "(1 5;2 5)"\tag #'extended \altFinger "(1 4;2)" } }
   \tag #'left  { \clef bass \split { as4 es8 } { r8 c g, } }
   \tag #'dynamics { s4.-\cresc }
   |
@@ -3141,53 +3101,4 @@ fourthMovement = {
   |
 
   \bar "|."
-}
-
-
-\book {
-  \bookOutputName "out/score"
-
-  \score {
-    \renderMovement \firstMovement
-    \defaultLayout
-  }
-  \pageBreak
-
-  \score {
-    \renderMovement \secondMovement 
-    \defaultLayout
-  }
-  \pageBreak
-
-  \score {
-    \renderMovement \thirdMovement
-    \defaultLayout
-  }
-  \pageBreak
-
-  \score {
-    \renderMovement \fourthMovement
-    \defaultLayout
-  }
-
-  \score {
-    \unfoldRepeats
-    \articulate
-
-    {
-      \renderMovement \firstMovement
-      \renderMovement \secondMovement
-      \renderMovement \thirdMovement
-      \renderMovement \fourthMovement
-    }
-
-    \midi {
-      \context {
-        \Staff
-        \accepts Dynamics
-      }
-    }
-  }
-
-  \headerData
 }
