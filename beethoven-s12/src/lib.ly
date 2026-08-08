@@ -37,6 +37,12 @@ urtextLayout = \layout {
   }
 }
 
+calando =
+#(make-music 'DecrescendoEvent
+   'span-direction START
+   'span-type 'text
+   'span-text "calando")
+
 split = 
 #(define-music-function (voiceA voiceB) (ly:music? ly:music?)
 #{
@@ -264,9 +270,9 @@ renderMovementForEdition =
 #(define-music-function (edition movementContent) (symbol? ly:music?)
 #{
   \new PianoStaff <<
-    \new Staff = "" << \keepForEdition #edition #'right $movementContent >>
+    \new Staff = "right" << \keepForEdition #edition #'right $movementContent >>
     \new Dynamics \keepForEdition #edition #'dynamics $movementContent
-    \new Staff = "" << \keepForEdition #edition #'left $movementContent >>
+    \new Staff = "left" << \keepForEdition #edition #'left $movementContent >>
   >>
 #})
 

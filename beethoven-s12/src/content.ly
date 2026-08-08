@@ -997,7 +997,7 @@ firstMovement = {
 
   \tag #'right { \clef treble \tuplet 3/2 { c'16( f' es' } }
   \tag #'left  { \clef bass r8 }
-  \tag #'dynamics { s8 }
+  \tag #'dynamics { s8\p }
   |
 
   \tag #'right { \clef treble \tuplet 3/2 { c'16 f' es' } \tuplet 3/2 { c'16 bes' as' } \tuplet 3/2 { c'16 bes' as') } }
@@ -1027,17 +1027,17 @@ firstMovement = {
 
   \tag #'right { \clef treble \tuplet 3/2 { as'16( g'' f'' } \tuplet 3/2 { g'16 c'' bes' } \tuplet 3/2 { as'16 f'' es'') } }
   \tag #'left  { \clef bass \tuplet 3/2 { d16 f bes } \tuplet 3/2 { des16 es bes } \tuplet 3/2 { c16 es as) } }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s8 s4\cresc }
   |
 
   \tag #'right { \clef treble \tuplet 3/2 { as'16( es'' d'' } \tuplet 3/2 { fes'16 <c'' es''> <bes' des''> } \tuplet 3/2 { es'16 <bes' des''> <as' c''>) } }
   \tag #'left  { \clef bass \tuplet 3/2 { f,16 f as } \tuplet 3/2 { g,16 g bes } \tuplet 3/2 { as,16 as c' } }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s4 s16. s32\! }
   |
 
   \tag #'right { \clef treble <fis' a'>8( <g' bes'>) es'32( es'') es'( es'') }
   \tag #'left  { \clef bass \tuplet 3/2 { es,16 es es } \tuplet 3/2 { es16 f es } \tuplet 3/2 { des16 c bes, } }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s4.\p }
   |
 
   \tag #'right { \clef treble \split { es'32( es'' f'' es'' as' es'' f'' es'' as' es'' f'' es'') } { es'8 as' as' } }
@@ -1062,17 +1062,17 @@ firstMovement = {
 
   \tag #'right { \clef treble \split { des''32( as'' bes'' as'' des'' as'' bes'' as'' c'' as'' bes'' as'' } { des''8 des''( c'' } }
   \tag #'left  { \clef bass f,32 f as des' f( as des' as es as c' as) }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s4.\cresc }
   |
 
   \tag #'right { \clef treble \split { f''32 as'' bes'' as'' bes' g'' as'' g'' es'' as'' bes'' as'') } { f''8 bes' es'') } }
   \tag #'left  { \clef bass d32( f bes f des es bes es c es as es) }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s4 s16. s32\! }
   |
 
   \tag #'right { \clef treble \split { as'32 es'' f'' es'' c'' es'' f'' es'' bes' es'' f'' es'' } { as'8 <as' c''> <g' bes'> } }
   \tag #'left  { \clef bass es,32 c es as es, c es as es, des es g }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s4.\p }
   |
 
   \tag #'right { \clef treble as'8 r e''32( f'') e''( f'') }
@@ -1112,42 +1112,42 @@ firstMovement = {
 
   \tag #'right { \clef treble \split { es''4 d''8 } { g'32( fis' g' fis' g' bes' as' g' f' as' g' f') } }
   \tag #'left  { \clef bass bes,16( bes bes, bes b, b) }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s4 s8\sf }
   |
 
   \tag #'right { \clef treble \split { es''4 f''8 } { es'32( f' g' as' bes' b' c'' b') c''( b' d'' c'') } }
   \tag #'left  { \clef bass c16( c' as, as a, a) }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s4 s8\sf }
   |
 
   \tag #'right { \clef treble \split { es''4 d''8 } { g'32 fis' g' fis' g' bes' as' g' f'( as' g' f') } }
   \tag #'left  { \clef bass bes,16( bes bes, bes bes,, bes,) }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s4 s8\sf }
   |
 
   \tag #'right { \clef treble \split { es''8( d'' des'') } { r32 es'( g' es') r es'( as' es') r es'( bes' es') } }
   \tag #'left  { \clef bass es,16( es f, f g, g) }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s4\cresc s16. s32\! }
   |
 
   \tag #'right { \clef treble \split { c''32( es'' f'' es'' f'' es'' f'' es'' f'' es'' f'' es'') } { es'16( as') as' as' as' as' } }
   \tag #'left  { \clef bass as,32( es as es c es as es c es as es) }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s4.\p }
   |
 
   \tag #'right { \clef treble \split { f''32( es'' f'' es'' f'' es'' f'' es'' f'' es'' f'' es'') } { as'16( g') g'( f' g' es') } }
-  \tag #'left  { \clef bass bes,32 es g es des es bes es des es bes es }
+  \tag #'left  { \clef bass bes,32( es g es des es bes es des es bes es) }
   \tag #'dynamics { s4. }
   |
 
   \tag #'right { \clef treble \split { f''32( es'' f'' es'' f'' es'' f'' es'' f'' es'' f'' es'' } { as'8 as'( bes' } }
   \tag #'left  { \clef bass c32 es as es c es as es g, es g es }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s4.\cresc }
   |
 
   \tag #'right { \clef treble \split { f''32 es'' f'' es'' f'' es'' f'' es'') \acciaccatura { c''8 } bes'32 a' bes' c'' } { <as' c''>8 <g' bes'>) s } }
   \tag #'left  { \clef bass as,32 es as es es, es g es ges, es ges es }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s4 s16 s16\! }
   |
 
   \tag #'right { \clef treble \split { des''32( as'' bes'' as'' bes'' as'' bes'' as'' bes'' as'' bes'' as'' } { des''8 des''( c'') } }
@@ -1167,7 +1167,7 @@ firstMovement = {
 
   \tag #'right { \clef treble as'16) es' es' es' es' es' }
   \tag #'left  { \clef bass <as, c es as>8 r4 }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s16 s16\p s4 }
   |
 
   \tag #'right { \clef treble \split { c''4( bes'16 as') } { <c' es'>16 <c' es'> <c' es'> <c' es'> <c' es'> <c' es'> } }
@@ -1205,39 +1205,39 @@ firstMovement = {
   \tag #'dynamics { s4. }
   |
 
-  \tag #'right { \clef treble \split { as'8 r r16 a'( } { <c' es'>16 <c' es'> <c' es'> <c' es'> <c' es'> <c' es'> } }
+  \tag #'right { \clef treble \split { as'8 r r16 a' } { <c' es'>16 <c' es'> <c' es'> <c' es'> <c' es'> <c' es'> } }
   \tag #'left  { \clef bass r8 es( as) }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s4 s8\decresc }
   |
 
-  \tag #'right { \clef treble \split { bes'8) r r16 c''( } { <des' es'>16 <des' es'> <des' es'> <des' es'> <des' es'> <des' es'> } }
+  \tag #'right { \clef treble \split { bes'8 r r16 c'' } { <des' es'>16 <des' es'> <des' es'> <des' es'> <des' es'> <des' es'> } }
   \tag #'left  { \clef bass r8 es,( g,) }
   \tag #'dynamics { s4. }
   |
 
-  \tag #'right { \clef treble \split { as'8) r r16 a'( } { <c' es'>16 <c' es'> <c' es'> <c' es'> <c' es'> <c' es'> } }
+  \tag #'right { \clef treble \split { as'8 r r16 a' } { <c' es'>16 <c' es'> <c' es'> <c' es'> <c' es'> <c' es'> } }
   \tag #'left  { \clef bass r8 es( as) }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s8 s4\!\calando }
   |
 
-  \tag #'right { \clef treble \split { bes'8) r r16 c''( } { <des' es'>16 <des' es'> <des' es'> <des' es'> <des' es'> <des' es'> } }
+  \tag #'right { \clef treble \split { bes'8 r r16 c'' } { <des' es'>16 <des' es'> <des' es'> <des' es'> <des' es'> <des' es'> } }
   \tag #'left  { \clef bass r8 es,( g,) }
   \tag #'dynamics { s4. }
   |
 
-  \tag #'right { \clef treble \split { as'4.~) } { <c' es'>16 <c' es'> <c' es'> <c' es'> <c' es'> <c' es'> } }
-  \tag #'left  { \clef bass \split { s8 as,4~ } { r8 as, es, } }
-  \tag #'dynamics { s4. }
+  \tag #'right { \clef treble \split { as'4.~ } { <c' es'>16 <c' es'> <c' es'> <c' es'> <c' es'> <c' es'> } }
+  \tag #'left  { \clef bass \split { s8 as,4~ } { r8 as,( es, } }
+  \tag #'dynamics { s4.\!\pp }
   |
 
   \tag #'right { \clef treble \split { as'8 as' as' } { <c' es'>16 <c' es'> <c' es'> <c' es'> <c' es'> <c' es'> } }
-  \tag #'left  { \clef bass \split { as,8 as, as, } { c,8 es, c, } }
+  \tag #'left  { \clef bass \split { as,8 as, as, } { c,8 es, c,) } }
   \tag #'dynamics { s4. }
   |
 
   \tag #'right { \clef treble \split { as'4.~ } { <c' es'>4.~ } }
   \tag #'left  { \clef bass \split { as,4.~ } { as,,4.~ } }
-  \tag #'dynamics { s4. }
+  \tag #'dynamics { s4.\p }
   |
 
   \tag #'right { \clef treble \split { as'4 } { <c' es'>4 } }
@@ -1298,7 +1298,7 @@ secondMovement = {
   \tag #'dynamics { s2.\sf }
   |
 
-  \tag #'right { \clef treble \split { as''2.~) } { c''2 es''4 } }
+  \tag #'right { \clef treble \split { as''2.~ } { c''2 es''4 } }
   \tag #'left  { \clef treble as'4) r c'-. }
   \tag #'dynamics { s2. }
   |
