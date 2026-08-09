@@ -67,7 +67,6 @@ require_command() {
 
 ensure_base_tools() {
   require_command lilypond lilypond
-  require_command python3 python3
 
   if ! command -v pdflatex >/dev/null 2>&1; then
     install_debian_packages texlive-latex-base texlive-latex-recommended
@@ -97,47 +96,110 @@ ensure_base_tools() {
   done
 }
 
-has_musescore_flatpak() {
-  command -v flatpak >/dev/null 2>&1 &&
-    flatpak list --app --columns=application 2>/dev/null | grep -qx 'org.musescore.MuseScore'
-}
+select_fluidsynth_soundfont() {
+  local candidate
+  local flatpak_root
+  local root
 
-ensure_musescore() {
-  for command_name in musescore4 mscore MuseScore4 musescore; do
-    if command -v "$command_name" >/dev/null 2>&1; then
-      return
-    fi
+  find_first_soundfont() {
+    local search_root="$1"
+    shift
+
+    [ -n "$search_root" ] || return 1
+    [ -e "$search_root" ] || return 1
+
+    find "$search_root" -type f "$@" 2>/dev/null | LC_ALL=C sort | sed -n '1p'
+  }
+
+  flatpak_root="$(flatpak info --show-location org.musescore.MuseScore 2>/dev/null || true)"
+  for root in \
+    "$flatpak_root" \
+    "$HOME/.local/share/flatpak/app/org.musescore.MuseScore" \
+    "/var/lib/flatpak/app/org.musescore.MuseScore"
+  do
+    candidate="$(find_first_soundfont "$root" \( -iname '*general*.sf2' -o -iname '*general*.sf3' \))"
+    [ -n "$candidate" ] && { printf '%s\n' "$candidate"; return 0; }
+
+    candidate="$(find_first_soundfont "$root" \( -iname '*musescore*.sf2' -o -iname '*musescore*.sf3' \))"
+    [ -n "$candidate" ] && { printf '%s\n' "$candidate"; return 0; }
+
+    candidate="$(find_first_soundfont "$root" \( -iname 'MS Basic.sf2' -o -iname 'MS Basic.sf3' \))"
+    [ -n "$candidate" ] && { printf '%s\n' "$candidate"; return 0; }
+
+    candidate="$(find_first_soundfont "$root" \( -iname '*.sf2' -o -iname '*.sf3' \))"
+    [ -n "$candidate" ] && { printf '%s\n' "$candidate"; return 0; }
   done
 
-  if has_musescore_flatpak; then
-    return
-  fi
+  for root in \
+    /usr/share/mscore-* \
+    /usr/local/share/mscore-* \
+    /usr/share/musescore* \
+    /usr/local/share/musescore* \
+    /usr/share/sounds/sf2 \
+    /usr/share/sounds/sf3 \
+    /usr/share/soundfonts \
+    /usr/local/share/soundfonts \
+    "$HOME/.local/share/MuseScore" \
+    "$HOME"/Documents/MuseScore*
+  do
+    candidate="$(find_first_soundfont "$root" \( -iname '*musescore*general*.sf2' -o -iname '*musescore*general*.sf3' -o -iname '*general*musescore*.sf2' -o -iname '*general*musescore*.sf3' \))"
+    [ -n "$candidate" ] && { printf '%s\n' "$candidate"; return 0; }
 
-  if ! command -v flatpak >/dev/null 2>&1; then
-    install_debian_packages flatpak
-  fi
+    candidate="$(find_first_soundfont "$root" \( -iname '*general*.sf2' -o -iname '*general*.sf3' \))"
+    [ -n "$candidate" ] && { printf '%s\n' "$candidate"; return 0; }
 
-  if ! flatpak remote-list 2>/dev/null | awk '{print $1}' | grep -qx flathub; then
-    log "Adding Flathub remote"
-    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-  fi
+    candidate="$(find_first_soundfont "$root" \( -iname '*musescore*.sf2' -o -iname '*musescore*.sf3' \))"
+    [ -n "$candidate" ] && { printf '%s\n' "$candidate"; return 0; }
 
-  log "Installing MuseScore 4 Flatpak"
-  flatpak install -y flathub org.musescore.MuseScore
+    candidate="$(find_first_soundfont "$root" \( -iname 'MS Basic.sf2' -o -iname 'MS Basic.sf3' \))"
+    [ -n "$candidate" ] && { printf '%s\n' "$candidate"; return 0; }
+  done
+
+  for candidate in \
+    /usr/share/sounds/sf2/FluidR3_GM.sf2 \
+    /usr/share/soundfonts/FluidR3_GM.sf2 \
+    /usr/share/sounds/sf2/default-GM.sf2 \
+    /usr/share/soundfonts/default-GM.sf2 \
+    /usr/share/sounds/sf2/TimGM6mb.sf2 \
+    /usr/share/soundfonts/TimGM6mb.sf2
+  do
+    [ -f "$candidate" ] && { printf '%s\n' "$candidate"; return 0; }
+  done
+
+  for root in \
+    /usr/share/sounds/sf2 \
+    /usr/share/sounds/sf3 \
+    /usr/share/soundfonts \
+    /usr/local/share/soundfonts
+  do
+    candidate="$(find_first_soundfont "$root" \( -iname '*.sf2' -o -iname '*.sf3' \))"
+    [ -n "$candidate" ] && { printf '%s\n' "$candidate"; return 0; }
+  done
+
+  return 1
 }
 
-run_musescore_export() {
+ensure_audio_tools() {
+  require_command fluidsynth fluidsynth
+
+  if ! select_fluidsynth_soundfont >/dev/null; then
+    install_debian_packages fluid-soundfont-gm
+  fi
+
+  if ! select_fluidsynth_soundfont >/dev/null; then
+    echo "No FluidSynth-compatible sound font was found." >&2
+    exit 1
+  fi
+}
+
+run_fluidsynth_export() {
   local midi_file="$1"
   local wav_file="$2"
+  local soundfont
+  soundfont="$(select_fluidsynth_soundfont)"
 
-  for command_name in musescore4 mscore MuseScore4 musescore; do
-    if command -v "$command_name" >/dev/null 2>&1; then
-      "$command_name" -o "$wav_file" "$midi_file"
-      return
-    fi
-  done
-
-  flatpak run --branch=stable --arch=x86_64 --command=mscore org.musescore.MuseScore -o "$wav_file" "$midi_file"
+  log "Using soundfont: ${soundfont}"
+  fluidsynth -ni -F "$wav_file" -r 44100 "$soundfont" "$midi_file"
 }
 
 build_lilypond_view() {
@@ -160,56 +222,111 @@ build_lilypond_debug_view() {
   lilypond -o "${view_dir}/${output_name}" "${SRC_DIR}/${view_name}.ly"
 }
 
+lilypond_string_escape() {
+  local value="$1"
+
+  value="${value//\\/\\\\}"
+  value="${value//\"/\\\"}"
+  printf '%s' "$value"
+}
+
+tex_escape() {
+  local value="$1"
+  local out=""
+  local char
+  local i
+
+  for ((i = 0; i < ${#value}; i++)); do
+    char="${value:i:1}"
+    case "$char" in
+      "\\") out+="\\textbackslash{}" ;;
+      '&') out+="\\&" ;;
+      '%') out+="\\%" ;;
+      '$') out+="\\$" ;;
+      '#') out+="\\#" ;;
+      '_') out+="\\_" ;;
+      '{') out+="\\{" ;;
+      '}') out+="\\}" ;;
+      '~') out+="\\textasciitilde{}" ;;
+      '^') out+="\\textasciicircum{}" ;;
+      *) out+="$char" ;;
+    esac
+  done
+
+  printf '%s' "$out"
+}
+
 extract_critical_notes() {
   local notes_tsv="$1"
 
-  python3 - "$SRC_DIR/content.ly" "$notes_tsv" <<'PY'
-import re
-import sys
+  awk '
+    function trim(value) {
+      gsub(/^[ \t]+/, "", value)
+      gsub(/[ \t]+$/, "", value)
+      return value
+    }
 
-source_path, output_path = sys.argv[1:3]
-pattern = re.compile(r"^\s*%\s*critical-note:\s*([^|]+)\|([^|]+)\|([^|]+)\|(.*)$")
-seen = set()
-rows = []
+    function fail(message) {
+      print FILENAME ":" FNR ": " message > "/dev/stderr"
+      exit 1
+    }
 
-with open(source_path, encoding="utf-8") as source:
-    for line_number, line in enumerate(source, 1):
-        match = pattern.match(line.rstrip("\n"))
-        if not match:
-            continue
-        note_id, marker, location, text = [part.strip() for part in match.groups()]
-        if not re.fullmatch(r"[A-Za-z0-9_-]+", note_id):
-            raise SystemExit(f"{source_path}:{line_number}: invalid critical note id: {note_id}")
-        if note_id in seen:
-            raise SystemExit(f"{source_path}:{line_number}: duplicate critical note id: {note_id}")
-        seen.add(note_id)
-        rows.append((note_id, marker, location, text))
+    {
+      line = $0
+      if (line !~ /^[ \t]*%[ \t]*critical-note:[ \t]*/) {
+        next
+      }
 
-with open(output_path, "w", encoding="utf-8") as output:
-    for row in rows:
-        output.write("\t".join(row) + "\n")
-PY
+      sub(/^[ \t]*%[ \t]*critical-note:[ \t]*/, "", line)
+
+      first_pipe = index(line, "|")
+      if (!first_pipe) {
+        fail("invalid critical note")
+      }
+      note_id = trim(substr(line, 1, first_pipe - 1))
+      line = substr(line, first_pipe + 1)
+
+      second_pipe = index(line, "|")
+      if (!second_pipe) {
+        fail("invalid critical note")
+      }
+      marker = trim(substr(line, 1, second_pipe - 1))
+      line = substr(line, second_pipe + 1)
+
+      third_pipe = index(line, "|")
+      if (!third_pipe) {
+        fail("invalid critical note")
+      }
+      location = trim(substr(line, 1, third_pipe - 1))
+      text = trim(substr(line, third_pipe + 1))
+
+      if (note_id !~ /^[A-Za-z0-9_-]+$/) {
+        fail("invalid critical note id: " note_id)
+      }
+      if (seen[note_id]++) {
+        fail("duplicate critical note id: " note_id)
+      }
+
+      print note_id "\t" marker "\t" location "\t" text
+    }
+  ' "$SRC_DIR/content.ly" > "$notes_tsv"
 }
 
 generate_extended_index_source() {
   local notes_tsv="$1"
   local index_source="$2"
+  local escaped_content_path
+  local marker
+  local location
+  local note_id
+  local text
 
-  python3 - "$SRC_DIR/content.ly" "$notes_tsv" "$index_source" <<'PY'
-import pathlib
-import sys
+  escaped_content_path="$(lilypond_string_escape "$SRC_DIR/content.ly")"
 
-content_path, notes_path, output_path = sys.argv[1:4]
-notes = []
-with open(notes_path, encoding="utf-8") as source:
-    for line in source:
-        if line.strip():
-            notes.append(line.rstrip("\n").split("\t", 3))
-
-body = r'''\version "2.24.1"
-
-\include "%s"
-
+  {
+    printf '\\version "2.24.1"\n\n'
+    printf '\\include "%s"\n\n' "$escaped_content_path"
+    cat <<'EOF'
 extendedEditionSubtitle = "Extended critical edition"
 
 extendedHeaderData = \header {
@@ -251,19 +368,18 @@ extendedHeaderData = \header {
   \pageBreak
   \markup \column {
     \line { "CRITICAL_NOTE_INDEX_START" }
-''' % content_path.replace("\\", "\\\\")
-
-for note_id, marker, location, text in notes:
-    body += f'    \\line {{ "CRITICAL_NOTE_PAGE|{note_id}|" \\page-ref #\'{note_id} "?" "?" }}\n'
-
-body += r'''    \line { "CRITICAL_NOTE_INDEX_END" }
+EOF
+    while IFS=$'\t' read -r note_id marker location text; do
+      [ -n "$note_id" ] || continue
+      printf "    \\\\line { \"CRITICAL_NOTE_PAGE|%s|\" \\\\page-ref #'%s \"?\" \"?\" }\n" "$note_id" "$note_id"
+    done < "$notes_tsv"
+    cat <<'EOF'
+    \line { "CRITICAL_NOTE_INDEX_END" }
   }
 
 }
-'''
-
-pathlib.Path(output_path).write_text(body, encoding="utf-8")
-PY
+EOF
+  } > "$index_source"
 }
 
 pdf_pages() {
@@ -278,86 +394,112 @@ generate_note_pages() {
   local tex_file="$5"
 
   local index_text="${RUN_DIR}/critical-index.txt"
+  local page_map="${RUN_DIR}/critical-page-map.tsv"
+  local notes_by_page="${RUN_DIR}/critical-notes-by-page.tsv"
+  local escaped_location
+  local escaped_marker
+  local escaped_text
+  local found
+  local location
+  local marker
+  local note_id
+  local note_page
+  local page
+  local resolved_page
+  local text
+
   pdftotext "$index_pdf" "$index_text"
 
-  python3 - "$notes_tsv" "$index_text" "$music_pages" "$initial_pages" "$tex_file" <<'PY'
-import collections
-import pathlib
-import re
-import sys
+  tr '\n\f\r' '   ' < "$index_text" |
+    grep -oE 'CRITICAL_NOTE_PAGE\|[A-Za-z0-9_-]+\|[[:space:]]*[0-9?]+' |
+    awk -F '|' '
+      {
+        page = $3
+        gsub(/^[ \t]+/, "", page)
+        gsub(/[ \t]+$/, "", page)
+        print $2 "\t" page
+      }
+    ' > "$page_map" || true
 
-notes_path, index_text_path, music_pages_raw, initial_pages_raw, tex_path = sys.argv[1:6]
-music_pages = int(music_pages_raw)
-initial_pages = int(initial_pages_raw)
+  : > "$notes_by_page"
+  while IFS=$'\t' read -r note_id marker location text; do
+    [ -n "$note_id" ] || continue
 
-notes = []
-with open(notes_path, encoding="utf-8") as source:
-    for line in source:
-        if not line.strip():
-            continue
-        note_id, marker, location, text = line.rstrip("\n").split("\t", 3)
-        notes.append((note_id, marker, location, text))
+    resolved_page="$(
+      awk -F '\t' -v id="$note_id" '
+        $1 == id {
+          print $2
+          found = 1
+          exit
+        }
+        END {
+          if (!found) {
+            exit 1
+          }
+        }
+      ' "$page_map" || true
+    )"
 
-index_text = pathlib.Path(index_text_path).read_text(encoding="utf-8", errors="replace")
-page_map = dict(re.findall(r"CRITICAL_NOTE_PAGE\|([A-Za-z0-9_-]+)\|\s*([0-9?]+)", index_text))
+    if [ -z "$resolved_page" ]; then
+      echo "Critical note id was not found in the rendered page index: ${note_id}" >&2
+      exit 1
+    fi
+    if [ "$resolved_page" = "?" ]; then
+      echo "LilyPond could not resolve the page for critical note id: ${note_id}" >&2
+      exit 1
+    fi
+    if ! [[ "$resolved_page" =~ ^[0-9]+$ ]]; then
+      echo "Critical note ${note_id} resolved to invalid page: ${resolved_page}" >&2
+      exit 1
+    fi
+    if [ "$resolved_page" -lt 1 ] || [ "$resolved_page" -gt "$music_pages" ]; then
+      echo "Critical note ${note_id} resolved to page ${resolved_page}, outside 1..${music_pages}" >&2
+      exit 1
+    fi
+    if [ "$resolved_page" -le "$initial_pages" ]; then
+      echo "Critical note ${note_id} resolved to initial page ${resolved_page}" >&2
+      exit 1
+    fi
 
-grouped = collections.defaultdict(list)
-for note_id, marker, location, text in notes:
-    page = page_map.get(note_id)
-    if page is None:
-        raise SystemExit(f"Critical note id was not found in the rendered page index: {note_id}")
-    if page == "?":
-        raise SystemExit(f"LilyPond could not resolve the page for critical note id: {note_id}")
-    page_number = int(page)
-    if page_number < 1 or page_number > music_pages:
-        raise SystemExit(f"Critical note {note_id} resolved to page {page_number}, outside 1..{music_pages}")
-    if page_number <= initial_pages:
-        raise SystemExit(f"Critical note {note_id} resolved to initial page {page_number}")
-    grouped[page_number].append((marker, location, text))
+    printf '%s\t%s\t%s\t%s\n' "$resolved_page" "$marker" "$location" "$text" >> "$notes_by_page"
+  done < "$notes_tsv"
 
-def tex_escape(value):
-    replacements = {
-        "\\": r"\textbackslash{}",
-        "&": r"\&",
-        "%": r"\%",
-        "$": r"\$",
-        "#": r"\#",
-        "_": r"\_",
-        "{": r"\{",
-        "}": r"\}",
-        "~": r"\textasciitilde{}",
-        "^": r"\textasciicircum{}",
-    }
-    return "".join(replacements.get(char, char) for char in value)
+  {
+    cat <<'EOF'
+\documentclass[a4paper,10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=18mm]{geometry}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+\begin{document}
+EOF
 
-lines = [
-    r"\documentclass[a4paper,10pt]{article}",
-    r"\usepackage[T1]{fontenc}",
-    r"\usepackage[utf8]{inputenc}",
-    r"\usepackage[margin=18mm]{geometry}",
-    r"\pagestyle{empty}",
-    r"\setlength{\parindent}{0pt}",
-    r"\setlength{\parskip}{7pt}",
-    r"\begin{document}",
-]
+    for page in $(seq $((initial_pages + 1)) "$music_pages"); do
+      printf '\\thispagestyle{empty}\n'
+      found=0
 
-for page in range(initial_pages + 1, music_pages + 1):
-    lines.append(r"\thispagestyle{empty}")
-    if grouped.get(page):
-        for marker, location, text in grouped[page]:
-            lines.append(
-                r"\noindent\textbf{%s}\quad\textit{%s}\par" %
-                (tex_escape(marker), tex_escape(location))
-            )
-            lines.append(tex_escape(text) + r"\par")
-    else:
-        lines.append(r"\null")
-    if page != music_pages:
-        lines.append(r"\newpage")
+      while IFS=$'\t' read -r note_page marker location text; do
+        [ "$note_page" = "$page" ] || continue
+        found=1
+        escaped_marker="$(tex_escape "$marker")"
+        escaped_location="$(tex_escape "$location")"
+        escaped_text="$(tex_escape "$text")"
+        printf '\\noindent\\textbf{%s}\\quad\\textit{%s}\\par\n' "$escaped_marker" "$escaped_location"
+        printf '%s\\par\n' "$escaped_text"
+      done < "$notes_by_page"
 
-lines.append(r"\end{document}")
-pathlib.Path(tex_path).write_text("\n".join(lines) + "\n", encoding="utf-8")
-PY
+      if [ "$found" -eq 0 ]; then
+        printf '\\null\n'
+      fi
+      if [ "$page" -ne "$music_pages" ]; then
+        printf '\\newpage\n'
+      fi
+    done
+
+    printf '\\end{document}\n'
+  } > "$tex_file"
 }
 
 compile_latex_pdf() {
@@ -405,7 +547,7 @@ assemble_extended_pdf() {
 
 prepare_build_dir
 ensure_base_tools
-ensure_musescore
+ensure_audio_tools
 
 build_lilypond_view main main
 build_lilypond_debug_view main main-debug
@@ -437,9 +579,9 @@ generate_note_pages "$NOTES_TSV" "${INDEX_DIR}/extended-index.pdf" "$MUSIC_PAGES
 compile_latex_pdf "$NOTES_TEX" "$NOTES_DIR"
 assemble_extended_pdf "$MUSIC_PDF" "${NOTES_DIR}/extended-notes.pdf" "${OUT_DIR}/extended.pdf" "$MUSIC_PAGES" "$EXTENDED_INITIAL_PAGES"
 
-log "Rendering main.wav with MuseScore"
+log "Rendering main.wav with FluidSynth"
 WAV_RENDER="${RUN_DIR}/main-render.wav"
-run_musescore_export "${OUT_DIR}/main.midi" "$WAV_RENDER"
+run_fluidsynth_export "${OUT_DIR}/main.midi" "$WAV_RENDER"
 cp "$WAV_RENDER" "${OUT_DIR}/main.wav"
 
 log "Done"
