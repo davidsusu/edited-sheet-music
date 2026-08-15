@@ -2171,11 +2171,6 @@ thirdMovement = {
   \tag #'dynamics { s1\ff }
   |
 
-  \tag #'right { \clef treble <as'' ces'' as'>4-. \clef bass <as es ces>-. as,-. r }
-  \tag #'left { \clef bass <as, as,,>4-. <as, as,,>-. as,,-. r }
-  \tag #'dynamics { s1 }
-  |
-  
   \tag #'right { \clef treble <as'' ces'' as'>4-. r r <beses' ges'>8.([ <as' fes'>16)] }
   \tag #'left { \clef bass \split { s2. c8.[ des16] } { <as, as,,>4-. as,8.[ as,16] as,4 as,4 } }
   \tag #'dynamics { s4 s2\p s4 }
