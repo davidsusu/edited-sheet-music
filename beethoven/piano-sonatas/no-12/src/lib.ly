@@ -43,6 +43,21 @@ calando =
    'span-type 'text
    'span-text "calando")
 
+turnInside =
+#(define-music-function (delta y extra music) (ly:duration? number? pair? ly:music?)
+#{
+  <<
+    $music
+    {
+      \skip $delta
+      \once \override TextScript.outside-staff-priority = ##f
+      \once \override TextScript.Y-offset = #y
+      \once \override TextScript.extra-offset = #extra
+      s1*0^\markup { \musicglyph "scripts.turn" }
+    }
+  >>
+#})
+
 split = 
 #(define-music-function (voiceA voiceB) (ly:music? ly:music?)
 #{
