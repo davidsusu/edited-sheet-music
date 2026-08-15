@@ -305,7 +305,7 @@ altFinger =
                'tags '(fingering)
                'text (markup #:altFingerMarkup spec)))
 
-#(define edition-staff-tags '(score right left dynamics))
+#(define edition-staff-tags '(score right left common))
 #(define edition-content-tags '(urtext main main-only extended critical fingering))
 #(define edition-exclusive-tags '(urtext main-only extended critical))
 
@@ -360,7 +360,7 @@ renderMovementForEdition =
 #{
   \new PianoStaff <<
     \new Staff = "right" << \keepForEdition #edition #'right $movementContent >>
-    \new Dynamics \keepForEdition #edition #'dynamics $movementContent
+    \new Dynamics \keepForEdition #edition #'common $movementContent
     \new Staff = "left" << \keepForEdition #edition #'left $movementContent >>
   >>
 #})
