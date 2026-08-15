@@ -78,18 +78,26 @@ turnInside =
     {
       \set Staff.scriptDefinitions = #visualTurnScriptDefinitions
       \skip $delta
-      \once \override Script.avoid-slur = #'inside
-      \once \override Script.outside-staff-priority = ##f
-      \once \override Script.Y-offset = #y
-      \once \override Script.extra-offset = #extra
       $(if (or lower upper)
            #{
-             \once \override Script.stencil =
-               #(lambda (grob)
-                  (grob-interpret-markup grob (turn-inside-markup upper lower)))
+             s1*0
+               -\tweak avoid-slur #'inside
+               -\tweak outside-staff-priority ##f
+               -\tweak Y-offset #y
+               -\tweak extra-offset #extra
+               -\tweak stencil
+                 #(lambda (grob)
+                    (grob-interpret-markup grob (turn-inside-markup upper lower)))
+               ^\visualTurn
            #}
-           #{ #})
-      s1*0^\visualTurn
+           #{
+             s1*0
+               -\tweak avoid-slur #'inside
+               -\tweak outside-staff-priority ##f
+               -\tweak Y-offset #y
+               -\tweak extra-offset #extra
+               ^\visualTurn
+           #})
     }
   >>
 #})
@@ -102,17 +110,24 @@ turnAccidental =
     $music
     {
       \set Staff.scriptDefinitions = #visualTurnScriptDefinitions
-      \once \override Script.avoid-slur = #'inside
-      \once \override Script.outside-staff-priority = ##f
-      \once \override Script.Y-offset = #y
       $(if (or lower upper)
            #{
-             \once \override Script.stencil =
-               #(lambda (grob)
-                  (grob-interpret-markup grob (turn-inside-markup upper lower)))
+             s1*0
+               -\tweak avoid-slur #'inside
+               -\tweak outside-staff-priority ##f
+               -\tweak Y-offset #y
+               -\tweak stencil
+                 #(lambda (grob)
+                    (grob-interpret-markup grob (turn-inside-markup upper lower)))
+               ^\visualTurn
            #}
-           #{ #})
-      s1*0^\visualTurn
+           #{
+             s1*0
+               -\tweak avoid-slur #'inside
+               -\tweak outside-staff-priority ##f
+               -\tweak Y-offset #y
+               ^\visualTurn
+           #})
     }
   >>
 #})

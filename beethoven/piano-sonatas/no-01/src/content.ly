@@ -227,7 +227,7 @@ firstMovement = {
 
   \tag #'right { \clef bass as4) r4  \clef treble\acciaccatura d'16 ces''4.( bes'8) }
   \tag #'left { \clef bass as,4 as r <d f as ces'> }
-  \tag #'dynamics { s2 s2-\markup {\italic "con espressione" } }
+  \tag #'dynamics { s2 s2 \tweak extra-offset #'(-0.7 . 0) -\markup {\italic "con espressione" } }
   |
 
   \tag #'right { \clef treble as'2 g'4.( es''8) }
@@ -940,7 +940,7 @@ secondMovement = {
   \tag #'dynamics { s2 s4\pp }
   |
 
-  \tag #'right { \clef treble c''8\noBeam \clef bass c <a f'>[\( <g e'> <f a d'> <e g c'>]\) }
+  \tag #'right { \clef treble c''8\noBeam \clef bass c' <a f'>[\( <g e'> <f a d'> <e g c'>]\) }
   \tag #'left { \clef bass <c' e'>8 r r4 r }
   \tag #'dynamics { s2. }
   |
@@ -1064,7 +1064,76 @@ secondMovement = {
 
   \tag #'right { \clef treble c'''32\( d''' c''' b'' c''' f''' e''' d''' c''' b'' bes'' a'' g'' f'' e'' d''\) c''16^.[^( bes'^. a'^. g'^.]) }
   \tag #'left { \clef treble <c' f' a'>8 r r4\clef bass <c e bes>4 }
-  \tag #'dynamics { s2 s4 \tweak extra-offset #'(0 . 0.5) \pp }
+  \tag #'dynamics { s2 s4 \tweak extra-offset #'(0.7 . 0.6) \pp }
+  |
+
+  \tag #'right { \clef treble \split { f'2 ~ f'8\noBeam c'16( f') } { r8 f[( bes a g f]) } }
+  \tag #'left { \clef bass \split { r8 a,[( d c bes,8. a,16]) } { f,2~ f,8\noBeam f, } }
+  \tag #'dynamics { s2. }
+  |
+
+  \tag #'right { \clef treble \split { f'4( e') e' } { <c'bes g>2 <c' bes g>4 } }
+  \tag #'left { \clef bass <c, c>4 ~ <c, c>16\( d,32 e, f, g, a, bes,\) c\( b, c d c bes, a, g,\) }
+  \tag #'dynamics { s2. \tweak extra-offset #'(0.7 . -0.7) \fp }
+  |
+
+  \tag #'right { \clef treble \tupletSpan 8 \tuplet 3/2 { <f' c' a>16[ a c'] f'[a' c''] c''[^( f' bes']) bes'[^( e'! a']) a'[^( d' g']) g'[^( c' f']) } }
+  \tag #'left { \clef bass f,4 \tupletSpan 8 \tuplet 3/2 { r16 es'( d') r d'( c') r c'( bes) r bes( a) } }
+  \tag #'dynamics { s2. }
+  |
+
+  \tag #'right { \clef treble \split { f'4( e') e'' } { <c' bes g>2 <g' bes' c''>4 } }
+  \tag #'left { \clef bass <c, c>4 ~ <c, c>16\( d32 e f g a bes\) c'\( b c' d' c' bes a g\) }
+  \tag #'dynamics { s2. \tweak extra-offset #'(0.5 . 0.3) \sf }
+  |
+
+  \tag #'right { \clef treble \tupletDown r16 \tuplet 3/2 { f'32_( a' c'') } r16 \tuplet 3/2 { f''32_( a'' c''') } \tuplet 3/2 { c'''32_( a'' bes'') } r16 \tuplet 3/2 { bes''32_( gis'' a'') } r16 \tuplet 3/2 { a''32_( fis'' g'') } r16 \tuplet 3/2 { g''32_( e'' f'') } r16 \tupletNeutral }
+  \tag #'left { \clef bass \tupletUp \tuplet 3/2 { f32^( a c') } r16 \clef treble \tuplet 3/2 { f'32^( a' c'') } r16 r16 \tuplet 3/2 { cis''32^( d'' f'') } r16 \tuplet 3/2 { b'32^( c'' e'') } r16 \tuplet 3/2 { a'32^( bes' d'') } r16 \tuplet 3/2 { gis'32^( a' c'') } \tupletNeutral }
+  \tag #'dynamics { s2. \tweak extra-offset #'(-0.5 . 0) \p }
+  |
+
+  \tag #'right { \clef treble \shape #'((0.5 . 0) (0.3 . -0.3) (-0.8 . -0.3) (-1.3 . 0)) PhrasingSlur f''4\( e''32-.(\) c''32-. d''-. e''-. f''-. g''-. a''-. bes''-.) c'''\( b'' c''' d''' c''' bes'' a'' g''\) }
+  \tag #'left { \clef bass <bes, g,! c,>4. r8 <bes, g, e, c,>4 }
+  \tag #'dynamics { s2.\sf }
+  |
+
+  \tag #'right { \clef treble f''8 r \turnAccidental #6 ##f \markup \natural c''16-.( d''32-. e''-. f''-. g''-. a''-. bes''!-.) c'''\( b'' c''' d''' c''' bes'' a'' g''\) }
+  \tag #'left { \clef bass <f, a,>8 r r4 <bes, g, e, c,> }
+  \tag #'dynamics { s4 s2\pp }
+  |
+
+  \tag #'right { \clef treble g''4. \shape #'((2 . -2) (2 . -1) (0 . 0) (0 . -1)) PhrasingSlur \turnAccidental #5.7 ##f \markup \sharp g''16.\(\< a''32\! c'''16\> bes'' g'' e''\)\! }
+  \tag #'left { \clef treble \split { bes'4\( c'' des''\) \tweak extra-offset #'(0 . 0.7) \sf } { f'2. } }
+  \tag #'dynamics { s2. }
+  |
+
+  \tag #'right { \clef treble <e'' g''>4\( f''8\) r r4 }
+  \tag #'left { \clef treble \split { <bes' des''>4\( <a' c''>8\) r r4 } { f'4. s4. } }
+  \tag #'dynamics { s2. \tweak extra-offset #'(0.5 . 0.5) \pp }
+  |
+
+  \tag #'right { \clef treble <g'' e'' c'' bes' g'>8-. r <f'' c'' a'>-. r\fermata }
+  \tag #'left { \clef bass <c e g c'>8_. r <f, a, c f>-. r\fermata }
+  \tag #'dynamics { s2 \tweak extra-offset #'(1.2 . 0) \pp }
+  \bar "|."
+  
+}
+
+thirdMovement = {
+
+  \mark \markup { \bold "Menuetto. Allegretto" }
+  \key f \minor
+  \accidentalStyle default
+  \time 3/4
+  \override Score.MetronomeMark.transparent = ##t
+  \tempo 4 = 168
+
+  \repeat volta 2 {
+
+  \partial 4
+  \tag #'right { \clef treble <c' as'>4-. }
+  \tag #'left { \clef bass r4 }
+  \tag #'dynamics { s4\p }
   |
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1072,82 +1141,6 @@ secondMovement = {
   \once \override Staff.BarLine.color = #blue
   \once \override PianoStaff.SpanBar.color = #blue
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  % REVISION END
-  \once \override Staff.BarLine.color = #red
-  \once \override PianoStaff.SpanBar.color = #red
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-  \tag #'right { \clef treble << { \clef bass f'2 ~ f'8\noBeam c'16( f') } \\ { d8\rest f( bes a g f) } >> }
-  \tag #'left { \clef bass << { d,,8\rest a,,,( d,, c,, bes,,, a,,,) } \\ { f,2 f,4 } >> }
-  \tag #'dynamics { s2. }
-  % |
-
-  \tag #'right { \clef treble << { \clef treble f'4( e') e'( } \\ { <c'bes g>2\sfp <c' bes g>4 } >> }
-  \tag #'left { \clef bass << { <c,, c,,,>4 ~ <c,, c,,,>16 d,,,32\( e,,, f,,, g,,, a,,, bes,,, c,, b,,, c,, d,, c,, bes,,, a,,, g,,, } \\ { s2. } >> }
-  \tag #'dynamics { s2. }
-  % |
-
-  \tag #'right { \clef treble << { \tuplet 3/2 { <f' c' a>16) a( c' f'[a' c'']) c''( f' bes') bes'([e'! a')] a'( d' g') g'([c,f')] } } \\ { s2. } >> }
-  \tag #'left { \clef bass << { a,,,4\) \tuplet 3/2 { r16 es,( d,) r d,(-2 c,) r c,( bes,,) r bes,,( a,,) } } \\ { s2. } >> }
-  \tag #'dynamics { s2. }
-  % |
-
-  \tag #'right { \clef treble << { f'4( e') e'' } \\ { <c' bes g>2\sfp <c'bes g>4 } >> }
-  \tag #'left { \clef bass << { <c,c,,>4 ~ <c,, c,,,>16\( d,,32 e,, f,, g,, a,, bes,, c, b,, c, d, c, bes,, a,, g,, } \\ { s2. } >> }
-  \tag #'dynamics { s2. }
-  % |
-
-  \tag #'right { \clef treble << { \once \tupletSpan 16 \tuplet 3/2 {\change Staff = "left" \once \hideNotes f32( s16\change Staff = "right" f'32[\p a' c''])\change Staff = "left" \once \hideNotes f'32^( s16\change Staff = "right" f''32 a'' c''') c'''^( a'' bes''\change Staff = "left" s16 \once \hideNotes f''32)\change Staff = "right" bes''32^([gis'' a'']\change Staff = "left" s16 \once \hideNotes e''32)\change Staff = "right" a''32^([fis'' g'']\change Staff = "left" s16 \once \hideNotes d''32)\change Staff = "right" g''32^([e'' f'']\change Staff = "left" s16 \once \hideNotes c''32)\change Staff = "right" } } \\ { r16 s r s8 r16 s r s r s r } >> }
-  \tag #'left { \clef bass << { \once \tupletSpan 16 \tuplet 3/2 { f,,32\)\p a,, c, } r16\clef treble \tuplet 3/2 { f,32 a, c } r16 r \tuplet 3/2 { cis32 d f } r16 \tuplet 3/2 { b,32 c e } r16 \tuplet 3/2 { a,32 bes, d } r16 \tuplet 3/2 { gis,32_[a, c] } } \\ { s2. } >> }
-  \tag #'dynamics { s2. }
-  % |
-
-  \tag #'right { \clef treble << { f''4( e''32-.) c''32-.\( d''-. e''-. f''-. g''-. a''-. bes''-. c''' b'' c''' d''' c''' bes'' a'' g'' } \\ {  } >> }
-  \tag #'left { \clef bass << { <bes, g,! c,>4. r8 <bes, g, e, c,>4 } \\ { s2. } >> }
-  \tag #'dynamics { s2. }
-  % |
-
-  \tag #'right { \clef treble << { f''8\) r c''16\(\pp d''32-.( e''-. f''-. g''-. a''-. bes''!-.) c''' b'' c''' d''' c''' bes'' a'' g'' } \\ {  } >> }
-  \tag #'left { \clef bass << { <f, a,>8 r r4 <bes, g, e, c,> } \\ { s2. } >> }
-  \tag #'dynamics { s2. }
-  % |
-
-  \tag #'right { \clef treble << { g''4. g''16.\< a''32\! c'''16\> bes'' g'' e''\! } \\ {  } >> }
-  \tag #'left { \clef bass << { bes,4\( c des\sf } \\ { f'2. } >> }
-  \tag #'dynamics { s2. }
-  % |
-
-  \tag #'right { \clef treble << { <e'' g''>4\pp f''8\) r r4 } \\ {  } >> }
-  \tag #'left { \clef bass << { <des bes,>4 <c a,>8\) r r4 } \\ { f'4. s4. } >> }
-  \tag #'dynamics { s2. }
-  % |
-
-  \tag #'right { \clef treble << { <g'' e'' c'' bes' g'>8-. r <f'' c'' a'>-. r8 r8 r8\fermata\bar "|." } \\ {  } >> }
-  \tag #'left { \clef bass << { \clef bass <c, g,, e,, c,,>8-. r <f,, c,, a,,, f,,,>-. r8 r8 r8\fermata } \\ {  } >> }
-  \tag #'dynamics { s2. }
-  % |
-
-}
-
-thirdMovement = {
-  \key f \minor
-  \accidentalStyle default
-  \time 3/4
-  \override Score.MetronomeMark.transparent = ##t
-  \tempo 4 = 168
-
-  \tag #'right { \clef treble }
-  \tag #'left { \clef bass }
-  \tag #'dynamics {  }
-
-  \repeat volta 2 {
-  \partial 4
-  \tag #'right { \clef treble <c' as'>4\p-.^\markup { "Allegretto." }^\markup { "MENUETTO." } }
-  \tag #'left { \clef bass r4 }
-  \tag #'dynamics { s4 }
-  % |
 
   \tag #'right { \clef treble <des' bes'>4( <bes g'>) r4 }
   \tag #'left { \clef bass r4 r f4 }
@@ -1213,6 +1206,12 @@ thirdMovement = {
   \tag #'left { \clef bass <es c'>2 <es des'>4 }
   \tag #'dynamics { s2. }
   % |
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % REVISION END
+  \once \override Staff.BarLine.color = #red
+  \once \override PianoStaff.SpanBar.color = #red
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   \tag #'right { \clef treble as'4 r4 }
   \tag #'left { \clef bass <as c'>4 r4 }
@@ -1538,6 +1537,8 @@ thirdMovement = {
 }
 
 fourthMovement = {
+
+  \mark \markup { \bold "Prestissimo" }
   \key f \minor
   \accidentalStyle default
   \time 4/4
@@ -1547,7 +1548,7 @@ fourthMovement = {
   \override TupletNumber.transparent = ##t
   \override TupletBracket.transparent = ##t
 
-  \tag #'right { \clef treble r2^\markup {\bold "Prestissimo." } }
+  \tag #'right { \clef treble r2 }
   \tag #'left { \clef bass\once \tupletSpan 4 \tuplet 3/2 { f8\p([as c']) f([as c']) } }
   \tag #'dynamics { s2 }
 
