@@ -870,7 +870,7 @@ secondMovement = {
   \tag #'dynamics { s4 s2\pp }
   |
 
-  \tag #'right { \clef treble \turnInside 8 #4 #'(0 . 0) { \shape #'((0 . -1.5) (0 . 0) (0 . 0) (0 . -1)) PhrasingSlur a''4\( } \grace c'''16 bes''8 <a'' f''> <g'' e''> f''\) }
+  \tag #'right { \clef treble \turnInside 8 #4 #'(0 . 0) { \shape #'((0 . -1.5) (0 . 0) (0 . 0) (0 . -1)) PhrasingSlur a''4\(\grace c'''16 } bes''8 <a'' f''> <g'' e''> f''\) }
   \tag #'left { \clef treble \split { f'16 c'' f'' e'' d''8\( c'' bes' a'\) } { f'2 f'4 } }
   \tag #'dynamics { s2. }
   |
