@@ -771,7 +771,7 @@ firstMovement = {
   \tag #'dynamics { s4. }
   |
 
-  \tag #'right { \clef treble <g' g>16 <as' as>8 <as' as> <as' as~>16~ }
+  \tag #'right { \clef treble <g' g>16 <as' as>8 <as' as> <as' as>16~ }
   \tag #'left { \clef bass ces,8 <es ces> <es ces> }
   \tag #'dynamics { s4. }
   |
