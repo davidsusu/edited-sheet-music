@@ -4,9 +4,9 @@ set -euo pipefail
 
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-if [ "$#" -ne 0 ]; then
-  echo "Usage: ./build.sh" >&2
+if [ "$#" -gt 1 ] || { [ "$#" -eq 1 ] && [ "$1" != "--quick" ]; }; then
+  echo "Usage: ./build.sh [--quick]" >&2
   exit 2
 fi
 
-exec "${PROJECT_DIR}/../shared/build.sh" "$PROJECT_DIR"
+exec "${PROJECT_DIR}/../shared/build.sh" "$PROJECT_DIR" "$@"

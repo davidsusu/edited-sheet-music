@@ -2,16 +2,45 @@
 
 set -euo pipefail
 
-if [ "$#" -ne 1 ]; then
-  echo "Usage: shared/build.sh <sonata-project-dir>" >&2
+QUICK=0
+PROJECT_ARG=""
+
+for arg in "$@"; do
+  case "$arg" in
+    --quick)
+      QUICK=1
+      ;;
+    --help|-h)
+      echo "Usage: shared/build.sh <sonata-project-dir> [--quick]" >&2
+      exit 0
+      ;;
+    -*)
+      echo "Unknown option: ${arg}" >&2
+      echo "Usage: shared/build.sh <sonata-project-dir> [--quick]" >&2
+      exit 2
+      ;;
+    *)
+      if [ -n "$PROJECT_ARG" ]; then
+        echo "Unexpected argument: ${arg}" >&2
+        echo "Usage: shared/build.sh <sonata-project-dir> [--quick]" >&2
+        exit 2
+      fi
+      PROJECT_ARG="$arg"
+      ;;
+  esac
+done
+
+if [ -z "$PROJECT_ARG" ]; then
+  echo "Usage: shared/build.sh <sonata-project-dir> [--quick]" >&2
   exit 2
 fi
 
-PROJECT_DIR="$(cd "$1" && pwd)"
+PROJECT_DIR="$(cd "$PROJECT_ARG" && pwd)"
 SRC_DIR="${PROJECT_DIR}/src"
 BUILD_DIR="${PROJECT_DIR}/build"
 OUT_DIR="${PROJECT_DIR}/out"
 RUN_DIR="${BUILD_DIR}/current"
+OUT_STAGE_DIR="${RUN_DIR}/out"
 EXTENDED_INITIAL_PAGES=1
 
 log() {
@@ -21,7 +50,33 @@ log() {
 prepare_build_dir() {
   mkdir -p "$BUILD_DIR"
   find "$BUILD_DIR" -mindepth 1 -depth -delete
-  mkdir -p "$RUN_DIR" "$OUT_DIR"
+  mkdir -p "$RUN_DIR" "$OUT_STAGE_DIR"
+}
+
+publish_out_dir() {
+  local staged_dir="$1"
+  local backup_dir="${BUILD_DIR}/previous-out"
+
+  if [ ! -d "$staged_dir" ]; then
+    echo "Staged output directory does not exist: ${staged_dir}" >&2
+    exit 1
+  fi
+
+  if [ -e "$backup_dir" ]; then
+    find "$backup_dir" -mindepth 1 -depth -delete
+    rmdir "$backup_dir"
+  fi
+
+  if [ -e "$OUT_DIR" ]; then
+    mv "$OUT_DIR" "$backup_dir"
+  fi
+
+  mv "$staged_dir" "$OUT_DIR"
+
+  if [ -e "$backup_dir" ]; then
+    find "$backup_dir" -mindepth 1 -depth -delete
+    rmdir "$backup_dir"
+  fi
 }
 
 APT_UPDATED=0
@@ -65,8 +120,12 @@ require_command() {
   fi
 }
 
-ensure_base_tools() {
+ensure_lilypond_tools() {
   require_command lilypond lilypond
+}
+
+ensure_base_tools() {
+  ensure_lilypond_tools
 
   if ! command -v pdflatex >/dev/null 2>&1; then
     install_debian_packages texlive-latex-base texlive-latex-recommended
@@ -222,12 +281,89 @@ build_lilypond_debug_view() {
   lilypond -o "${view_dir}/${output_name}" "${SRC_DIR}/${view_name}.ly"
 }
 
+build_lilypond_debug_source() {
+  local source_file="$1"
+  local output_name="$2"
+  local view_dir="${RUN_DIR}/${output_name}"
+
+  mkdir -p "$view_dir"
+  log "Engraving ${output_name} with source links"
+  lilypond -o "${view_dir}/${output_name}" "$source_file"
+}
+
+run_quick_build() {
+  local quick_source="${RUN_DIR}/main-debug.ly"
+
+  prepare_build_dir
+  ensure_lilypond_tools
+
+  generate_quick_main_debug_source "$quick_source"
+  build_lilypond_debug_source "$quick_source" main-debug
+
+  cp "${RUN_DIR}/main-debug/main-debug.pdf" "${OUT_STAGE_DIR}/main-debug.pdf"
+  publish_out_dir "$OUT_STAGE_DIR"
+
+  log "Done"
+}
+
 lilypond_string_escape() {
   local value="$1"
 
   value="${value//\\/\\\\}"
   value="${value//\"/\\\"}"
   printf '%s' "$value"
+}
+
+generate_quick_main_debug_source() {
+  local output_source="$1"
+  local escaped_content_path
+
+  escaped_content_path="$(lilypond_string_escape "$SRC_DIR/content.ly")"
+
+  {
+    printf '\\version "2.24.1"\n\n'
+    printf '\\include "%s"\n\n' "$escaped_content_path"
+    cat <<'EOF'
+mainEditionSubtitle = "Pragmatic edition"
+
+mainHeaderData = \header {
+  title = \workTitle
+  subtitle = \mainEditionSubtitle
+  composer = \workComposer
+  opus = \workOpus
+  date = \workDate
+}
+
+\book {
+  \mainHeaderData
+  \editionCoverPage \workTitle \mainEditionSubtitle \workComposer \workOpus
+  \pageBreak
+
+  \score {
+    \renderMovementForEdition #'main \firstMovement
+    \defaultLayout
+  }
+  \pageBreak
+
+  \score {
+    \renderMovementForEdition #'main \secondMovement
+    \defaultLayout
+  }
+  \pageBreak
+
+  \score {
+    \renderMovementForEdition #'main \thirdMovement
+    \defaultLayout
+  }
+  \pageBreak
+
+  \score {
+    \renderMovementForEdition #'main \fourthMovement
+    \defaultLayout
+  }
+}
+EOF
+  } > "$output_source"
 }
 
 tex_escape() {
@@ -545,6 +681,11 @@ assemble_extended_pdf() {
   pdfunite "${parts[@]}" "$output_pdf"
 }
 
+if [ "$QUICK" -eq 1 ]; then
+  run_quick_build
+  exit 0
+fi
+
 prepare_build_dir
 ensure_base_tools
 ensure_audio_tools
@@ -554,10 +695,10 @@ build_lilypond_debug_view main main-debug
 build_lilypond_view urtext urtext
 build_lilypond_view extended extended-music
 
-cp "${RUN_DIR}/main/main.pdf" "${OUT_DIR}/main.pdf"
-cp "${RUN_DIR}/main/main.midi" "${OUT_DIR}/main.midi"
-cp "${RUN_DIR}/main-debug/main-debug.pdf" "${OUT_DIR}/main-debug.pdf"
-cp "${RUN_DIR}/urtext/urtext.pdf" "${OUT_DIR}/urtext.pdf"
+cp "${RUN_DIR}/main/main.pdf" "${OUT_STAGE_DIR}/main.pdf"
+cp "${RUN_DIR}/main/main.midi" "${OUT_STAGE_DIR}/main.midi"
+cp "${RUN_DIR}/main-debug/main-debug.pdf" "${OUT_STAGE_DIR}/main-debug.pdf"
+cp "${RUN_DIR}/urtext/urtext.pdf" "${OUT_STAGE_DIR}/urtext.pdf"
 
 NOTES_TSV="${RUN_DIR}/critical-notes.tsv"
 INDEX_SOURCE="${RUN_DIR}/extended-index.ly"
@@ -577,11 +718,13 @@ MUSIC_PAGES="$(pdf_pages "$MUSIC_PDF")"
 
 generate_note_pages "$NOTES_TSV" "${INDEX_DIR}/extended-index.pdf" "$MUSIC_PAGES" "$EXTENDED_INITIAL_PAGES" "$NOTES_TEX"
 compile_latex_pdf "$NOTES_TEX" "$NOTES_DIR"
-assemble_extended_pdf "$MUSIC_PDF" "${NOTES_DIR}/extended-notes.pdf" "${OUT_DIR}/extended.pdf" "$MUSIC_PAGES" "$EXTENDED_INITIAL_PAGES"
+assemble_extended_pdf "$MUSIC_PDF" "${NOTES_DIR}/extended-notes.pdf" "${OUT_STAGE_DIR}/extended.pdf" "$MUSIC_PAGES" "$EXTENDED_INITIAL_PAGES"
 
 log "Rendering main.wav with FluidSynth"
 WAV_RENDER="${RUN_DIR}/main-render.wav"
-run_fluidsynth_export "${OUT_DIR}/main.midi" "$WAV_RENDER"
-cp "$WAV_RENDER" "${OUT_DIR}/main.wav"
+run_fluidsynth_export "${OUT_STAGE_DIR}/main.midi" "$WAV_RENDER"
+cp "$WAV_RENDER" "${OUT_STAGE_DIR}/main.wav"
+
+publish_out_dir "$OUT_STAGE_DIR"
 
 log "Done"

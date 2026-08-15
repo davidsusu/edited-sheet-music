@@ -43,17 +43,76 @@ calando =
    'span-type 'text
    'span-text "calando")
 
+visualTurnScriptDefinitions =
+#(cons (cons 'visualturn (cdr (assq 'turn default-script-alist)))
+       default-script-alist)
+
+visualTurn = #(make-articulation 'visualturn)
+
+#(define (maybe-markup? value)
+   (or (not value) (markup? value)))
+
+#(define (turn-inside-markup upper lower)
+   (let ((items '()))
+     (if upper
+         (set! items
+               (append items
+                       (list (make-fontsize-markup -4 upper)))))
+     (set! items
+           (append items
+                   (list (make-musicglyph-markup "scripts.turn"))))
+     (if lower
+         (set! items
+               (append items
+                       (list (make-fontsize-markup -4 lower)))))
+     (make-override-markup
+      '(baseline-skip . 0.7)
+      (make-center-column-markup items))))
+
 turnInside =
-#(define-music-function (delta y extra music) (ly:duration? number? pair? ly:music?)
+#(define-music-function (delta y extra upper lower music)
+   (ly:duration? number? pair? (maybe-markup? #f) (maybe-markup? #f) ly:music?)
 #{
   <<
     $music
     {
+      \set Staff.scriptDefinitions = #visualTurnScriptDefinitions
       \skip $delta
-      \once \override TextScript.outside-staff-priority = ##f
-      \once \override TextScript.Y-offset = #y
-      \once \override TextScript.extra-offset = #extra
-      s1*0^\markup { \musicglyph "scripts.turn" }
+      \once \override Script.avoid-slur = #'inside
+      \once \override Script.outside-staff-priority = ##f
+      \once \override Script.Y-offset = #y
+      \once \override Script.extra-offset = #extra
+      $(if (or lower upper)
+           #{
+             \once \override Script.stencil =
+               #(lambda (grob)
+                  (grob-interpret-markup grob (turn-inside-markup upper lower)))
+           #}
+           #{ #})
+      s1*0^\visualTurn
+    }
+  >>
+#})
+
+turnAccidental =
+#(define-music-function (y upper lower music)
+   ((number? 0) (maybe-markup? #f) (maybe-markup? #f) ly:music?)
+#{
+  <<
+    $music
+    {
+      \set Staff.scriptDefinitions = #visualTurnScriptDefinitions
+      \once \override Script.avoid-slur = #'inside
+      \once \override Script.outside-staff-priority = ##f
+      \once \override Script.Y-offset = #y
+      $(if (or lower upper)
+           #{
+             \once \override Script.stencil =
+               #(lambda (grob)
+                  (grob-interpret-markup grob (turn-inside-markup upper lower)))
+           #}
+           #{ #})
+      s1*0^\visualTurn
     }
   >>
 #})
