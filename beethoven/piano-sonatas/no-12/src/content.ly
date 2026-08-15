@@ -1,6 +1,6 @@
 \version "2.24.1"
 
-\include "lib.ly"
+\include "../../shared/lib.ly"
 
 workTitle = "Piano Sonata No. 12"
 workComposer = "Ludwig van Beethoven"
