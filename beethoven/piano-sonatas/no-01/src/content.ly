@@ -1136,222 +1136,225 @@ thirdMovement = {
   \tag #'common { s4\p }
   |
 
+  \tag #'right { \clef treble <bes' des'>4( <g' bes>) r4 }
+  \tag #'left { \clef bass r4 r f4 }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble <as' c'>4( <f' as>) <f' c'>^( }
+  \tag #'left { \clef bass r4 r <as f>( }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble <e' c'>4 <f' c'> <g' c'>) }
+  \tag #'left { \clef bass <bes g>4 <as f> <g e>) }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble \split { bes'4( as') } { c'2 } <c'' es'!>4-. }
+  \tag #'left { \clef bass <as f>2 r4 }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble <des'' f'>4( <bes' des'>) r4 }
+  \tag #'left { \clef bass r4 r4 <as as,> }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble <c'' es'>4( <as' c'>) <as' es'>^( }
+  \tag #'left { \clef bass r4 r <c' as>( }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble <g' es'>4 <as' es'> <bes' es'>) }
+  \tag #'left { \clef bass <des' bes>4 <c' as> <bes g>) }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble \split { des''4( c'') es'' } { es'2 \shape #'((0.8 . 0.3) (1 . 0) (0 . 0) (0 . 0.2)) Slur as'4( } }
+  \tag #'left { \clef bass <c' as>2 \shape #'((0.7 . 0) (0.9 . 0) (0 . 0) (0 . 0)) Slur <es' c'>4( }
+  \tag #'common { s2 s4\f }
+  |
+
+  \tag #'right { \clef treble \split { es''4 es'' es'' } { \once \override Stem.length = #'4.5 g'4 \once \override Stem.length = #'5 as' bes') } }
+  \tag #'left { \clef bass <des' bes>4 <c' as> <bes g>) }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble \split { es''2 f''4 } { des''4( c'') s4 } }
+  \tag #'left { \clef bass as2 <bes des>4 }
+  \tag #'common { s2 s4\p }
+  |
+
+  \tag #'right { \clef treble as'2^( \grace { c''8 } <bes' g'>4) }
+  \tag #'left { \clef bass <c' es>2 <des' es>4 }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble as'4 r g''8\sf( f'') }
+  \tag #'left { \clef bass <c' as>4 r4 r }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble as'2^( \grace { c''8 } <bes' g'>4) }
+  \tag #'left { \clef bass <c' es>2 <des' es>4 }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble as'4 r4 }
+  \tag #'left { \clef bass <c' as>4 r4 }
+  \tag #'common { s2 }
+  }
+
+  \repeat volta 2 {
+  \tag #'right { \clef treble <es'' c''>4( }
+  \tag #'left { \clef bass r4 }
+  \tag #'common { s4\p }
+  |
+
+  \tag #'right { \clef treble <fes'' des''>4 <des'' bes'>) r4 }
+  \tag #'left { \clef bass r4 <bes g>( <des' bes>) }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble <es'' c''>4( <c'' as'>) r4 }
+  \tag #'left { \clef bass r4 <c' as>( <es' c'>) }
+  \tag #'common { s2. }
+  |
+
+  \break 
+  \tag #'right { \clef treble \once \override Score .NonMusicalPaperColumn .line-break-system-details = #'((alignment-distances . (12))) }
+
+  \tag #'right { <ges'' es''>4( <es'' c''>) r }
+  \tag #'left { \clef bass r4 <c' a>( <es' c'>) }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble <f''! des''>4( <des'' bes'>) r }
+  \tag #'left { \clef bass r4 <des' bes>( <f' des'>) }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble <bes' f'>2( \grace { des''8 } <c'' a'>4) }
+  \tag #'left { \clef bass <des' f>2 <es' f>4 }
+  \tag #'common { s2. \tweak extra-offset #'(0.3 . 0.5) \p }
+  |
+
+  \tag #'right { \clef treble bes'4 r ges''8\sf( f'') }
+  \tag #'left { \clef bass <des' bes>4 r r }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble bes'2( \grace { des''8 } <c'' a'>4) }
+  \tag #'left { \clef bass <des' f>2 <es' f>4 }
+  \tag #'common { s2. \tweak extra-offset #'(0.3 . 0.5) \pp }
+  |
+
+  \tag #'right { \clef treble bes'4 r <des'' a'>8( c'') }
+  \tag #'left { \clef bass <des' bes>4 r <es' f> }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble bes'4 r <des'' a'>8( c'') }
+  \tag #'left { \clef bass <des' bes>4 r <es' f> }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble bes'4 r des''8( c'' }
+  \tag #'left { \clef bass <des' bes>4 r des'8( c' }
+  \tag #'common { s2 s4 \tweak extra-offset #'(0.3 . 0.5) \ff }
+  |
+
+  \tag #'right { \clef treble bes'8[c'' des'' c'' bes' c''] }
+  \tag #'left { \clef bass bes8[c' des' c' bes c'] }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble bes'8[as'! g' as' g' f'] }
+  \tag #'left { \clef bass bes8[as! g as g f] }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble e'8[f' g' f' as' b] }
+  \tag #'left { \clef bass e8[f g f as b,] }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble c'4-.) r4 r }
+  \tag #'left { \clef bass c4-.) c'\clef treble <as' c'>4 }
+  \tag #'common { s2 s4\f }
+  |
+
+  \tag #'right { \clef treble r4 r e''4\sf }
+  \tag #'left { \clef treble <bes' des'>4( <g' bes>) <g' bes> }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble f''4( as'') \afterGrace c'''4^\trill { bes''16[c'''] } }
+  \tag #'left { \clef treble <as' c'>4( <f' as>)\clef bass <as f> }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble des'''4( bes'') \afterGrace bes''4^\trill { as''16[ bes''] }\break }
+  \tag #'left { \clef bass <g e>4( <bes g>) <bes g> }
+  \tag #'common { s2.\sf }
+  |
+
+  \break 
+  \tag #'right { \clef treble \once \override Score .NonMusicalPaperColumn .line-break-system-details = #'((alignment-distances . (12))) }
+
+  \tag #'right { \clef treble c'''4( as'') \afterGrace as''4^\trill { g''16[ as''] } }
+  \tag #'left { \clef bass <as f>4( <c' as>) <f' c' as> }
+  \tag #'common { s2. \tweak extra-offset #'(0 . 0.6) \sf }
+  |
+
+  \tag #'right { \clef treble bes''4( g'') \afterGrace g''4^\trill { f''16[ g''] } }
+  \tag #'left { \clef bass <e' bes g>4_( <e' des' bes>) <e' des' bes>\clef treble }
+  \tag #'common { s2. \tweak extra-offset #'(0 . 0.7) \sf }
+  |
+
+  \tag #'right { \clef treble as''4( f'') f'' }
+  \tag #'left { \clef treble \split { f'4( as') as' } { <d' b>2 <d' b>4 } }
+  \tag #'common { s2 s4\sf }
+  |
+
+  \tag #'right { \clef treble f''2( \grace { as''8 } <g'' e''>4) }
+  \tag #'left { \clef treble <as' c'>2 <bes'! c'>4 }
+  \tag #'common { s2.\p }
+  |
+
+  \tag #'right { \clef treble f''4 r4 es''!8( des'') }
+  \tag #'left { \clef treble <as' f'>4 r r\clef bass }
+  \tag #'common { s2 s4\pp }
+  |
+
+  \tag #'right { \clef treble f'2^( \grace { as'8 } <g' e'>4) }
+  \tag #'left { \clef bass <as c>2 <bes c>4 }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef treble f'4 r r }
+  \tag #'left { \clef bass <as f>4 r r }
+  \tag #'common { s2. }
+  |
+
+  \tag #'right { \clef bass <c' g e>2. }
+  \tag #'left { \clef bass <c c,>2. }
+  \tag #'common { s2.\pp }
+  |
+
+  \tag #'right { \clef bass f4 r4 }
+  \tag #'left { \clef bass f,4 r4 }
+  \tag #'common { s2 }
+
+  }
+
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % REVISION START
   \once \override Staff.BarLine.color = #blue
   \once \override PianoStaff.SpanBar.color = #blue
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \tag #'right { \clef treble <bes' des'>4( <g' bes>) r4 }
-  \tag #'left { \clef bass r4 r f4 }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble <as' c'>4( <f' as>) <f' c'>( }
-  \tag #'left { \clef bass r4 r <as f>( }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble <e' c'>4 <f' c'> <g' c'>) }
-  \tag #'left { \clef bass <bes g>4 <as f> <g e>) }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble << { bes'4( as') }\\ { c'2 } >> <c'' es'!>4-. }
-  \tag #'left { \clef bass <as f>2 r4 }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble <des'' f'>4( <bes' des'>) r4 }
-  \tag #'left { \clef bass r4 r4 <as as,> }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble <c'' es'>4( <as' c'>) <as' es'>( }
-  \tag #'left { \clef bass r4 r <c' as>( }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble <g' es'>4 <as' es'> <bes' es'>) }
-  \tag #'left { \clef bass <des' bes>4 <c' as> <bes g>) }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble << { des''4( c'') es'' }\\ { es'2 as'4\f( } >> }
-  \tag #'left { \clef bass <c' as>2 <es' c'>4\f( }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble << { es''4 es'' es'' }\\ { g'4 as' bes') } >> }
-  \tag #'left { \clef bass <des' bes>4 <c' as> <bes g>) }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble << { es''2 f''4\p }\\ { des''4( c'') s4 } >> }
-  \tag #'left { \clef bass as2 <bes des>4\p }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble as'2(\appoggiatura c''8 <bes' g'>4) }
-  \tag #'left { \clef bass <c' es>2 <des' es>4 }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble as'4 r g''8\sf( f'') }
-  \tag #'left { \clef bass <c' as>4 r4 r }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble as'2(\appoggiatura c''8 <bes' g'>4) }
-  \tag #'left { \clef bass <c' es>2 <des' es>4 }
-  \tag #'common { s2. }
-  % |
-
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  % REVISION END
-  \once \override Staff.BarLine.color = #red
-  \once \override PianoStaff.SpanBar.color = #red
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-  \tag #'right { \clef treble as'4 r4 }
-  \tag #'left { \clef bass <c' as>4 r4 }
-  \tag #'common { s2 }
-  }
-  \repeat volta 2 {
-  \tag #'right { \clef treble <es'' c''>4\p( }
-  \tag #'left { \clef bass r4 }
-  \tag #'common { s4 }
-  % |
-
-  \tag #'right { \clef treble <fes'' des''>4 <des'' bes'>) r4 }
-  \tag #'left { \clef bass r4 <bes g>( <des' bes>) }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble <es'' c''>4( <c'' as'>) r4\break }
-  \tag #'left { \clef bass r4 <c' as>( <es' c'>) }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble <ges'' es''>4( <es'' c''>) r }
-  \tag #'left { \clef bass r4 <c' a>( <es' c'>) }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble <f''! des''>4( <des'' bes'>) r }
-  \tag #'left { \clef bass r4 <des' bes>( <f' des'>) }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble <bes' f'>2\p( \acciaccatura des''8 <c'' a'>4) }
-  \tag #'left { \clef bass <des' f>2\p <es' f>4 }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble bes'4 r ges''8\sf( f'') }
-  \tag #'left { \clef bass <des' bes>4 r r }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble bes'2\pp( \acciaccatura des''8 <c'' a'>4) }
-  \tag #'left { \clef bass <des' f>2\pp <es' f>4 }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble bes'4 r <des'' a'>8( c'') }
-  \tag #'left { \clef bass <des' bes>4 r <es' f> }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble bes'4 r <des'' a'>8( c'') }
-  \tag #'left { \clef bass <des' bes>4 r <es' f> }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble bes'4 r des''8\ff( c'' }
-  \tag #'left { \clef bass <des' bes>4 r des'8\ff( c' }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble bes'8[c'' des'' c'' bes' c''] }
-  \tag #'left { \clef bass bes8[c' des' c' bes c'] }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble bes'8[as'! g' as' g' f'] }
-  \tag #'left { \clef bass bes8[as! g as g f] }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble e'8[f' g' f' as' b]) }
-  \tag #'left { \clef bass e8[f g f as b,]) }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble c'4-. r4 r }
-  \tag #'left { \clef bass c4-. c'\clef treble <as' c'>4\f }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble r4 r e''4\sf }
-  \tag #'left { \clef treble <bes' des'>4( <g' bes>) <g' bes> }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble f''4( as'')\afterGrace c'''4^\trill { bes''16[c'''] } }
-  \tag #'left { \clef treble <as' c'>4( <f' as>)\clef bass <as f> }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble des'''4( bes'')\afterGrace bes''4^\trill { as''16[bes''] }\break }
-  \tag #'left { \clef bass <g e>4\sf( <bes g>) <bes g> }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble c'''4\sf( as'')\afterGrace as''4^\trill { bes''16[c'''] } }
-  \tag #'left { \clef bass <as f>4\sf( <c' as>) <f' c' as> }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble bes''4\sf( g'')\afterGrace g''4^\trill { f''16[g''] } }
-  \tag #'left { \clef bass <e' bes g>4\sf <e' des' bes> <e' des' bes>\clef treble }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble as''4( f'') f''\sf }
-  \tag #'left { \clef treble << { f'4( as') as' }\\ { <d' b>2 <d' b>4 } >> }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble f''2\p( \acciaccatura as''8 <g'' e''>4) }
-  \tag #'left { \clef treble <as' c'>2\p <bes'! c'>4 }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble f''4 r4 es''!8\pp( des'') }
-  \tag #'left { \clef treble <as' f'>4 r r\clef bass }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble f'2( \acciaccatura as'8 <g' e'>4) }
-  \tag #'left { \clef bass <as c>2\pp <bes c>4 }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble f'4 r r }
-  \tag #'left { \clef bass <as f>4 r r }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble s2 s4 }
-  \tag #'left { \clef bass << { <c' g e>2. }\\ { <c c,>2.\pp } >> }
-  \tag #'common { s2. }
-  % |
-
-  \tag #'right { \clef treble s2 }
-  \tag #'left { \clef bass << { f4 b4\rest }\\ { f,4 f,4\rest } >> }
-  \tag #'common { s2 }
-  }
   \break
   \key f \major
 
@@ -1410,6 +1413,13 @@ thirdMovement = {
   \tag #'left { \clef bass c,4 c }
   \tag #'common { s2 }
   }
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % REVISION END
+  \once \override Staff.BarLine.color = #red
+  \once \override PianoStaff.SpanBar.color = #red
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
   \repeat volta 2 {
   \tag #'right { \clef treble c'4 }
   \tag #'left { \clef bass r4 }
