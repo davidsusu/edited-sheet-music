@@ -1058,7 +1058,7 @@ secondMovement = {
   |
 
   \tag #'right { \clef treble d'32\( es' d' cis' d' e' f' fis' g' a' bes' c''! d'' e'' f''! fis'' g'' a'' bes'' c''' d''' e''' f'''! d'''\) }
-  \tag #'left { \clef bass <d! bes,>8\) r r4\clef treble <g' d' bes>8 r }
+  \tag #'left { \clef bass <d! bes,>8 r r4\clef treble <g' d' bes>8 r }
   \tag #'common { s2. }
   |
 
