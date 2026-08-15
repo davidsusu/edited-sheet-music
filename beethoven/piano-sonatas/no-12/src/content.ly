@@ -1617,17 +1617,10 @@ secondMovement = {
     \tag #'dynamics { s2 }
     |
   }
-  \tag #'right { \textEndMark \markup { \italic "Fin" } }
+  \tag #'dynamics { \textEndMark \markup { \italic "Fin" } }
 
   \key des \major
-  \tag #'right {
-    \textMark \markup {
-      \column {
-        \bold "Trio"
-        \italic "sempre legato"
-      }
-    }
-  }
+  \tag #'dynamics { \tweak after-line-breaking ##f \tweak Y-offset #0 \tweak extra-offset #'(7 . 0.5) \textMark \markup { \column { \bold "Trio" \italic "sempre legato" } } }
 
   \repeat volta 2 {
     \partial 4
