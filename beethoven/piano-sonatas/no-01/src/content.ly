@@ -217,7 +217,7 @@ firstMovement = {
 
   \tag #'right { \clef treble f'8 es' des' c' \clef bass bes as g f }
   \tag #'left { \clef bass es,4 as,2\sf c4 }
-  \tag #'common { s1\p }
+  \tag #'common { s1 \tweak extra-offset #'(0.5 . -2) \p }
   |
 
   \tag #'right { \clef bass es8 f g as bes c' des' bes }
@@ -268,7 +268,7 @@ firstMovement = {
   \break
 
   \repeat volta 2 {
-  \tag #'right { \clef treble es'4 }
+  \tag #'right { \clef treble es'4-. }
   \tag #'left { \clef treble r4 }
   \tag #'common { s4\p }
   |
@@ -384,7 +384,7 @@ firstMovement = {
   |
 
   \tag #'right { \clef treble \split { r4 a'( bes'!) r } { es'8 c' es' c' des'! bes des' bes } }
-  \tag #'left { \clef bass ges,4.\sf( f,8 bes,4) fes4( }
+  \tag #'left { \clef bass ges,4.\sf( f,8 bes,4-.) fes4( }
   \tag #'common { s1 }
   |
 
@@ -725,12 +725,12 @@ firstMovement = {
 
   \tag #'right { \clef treble b8 c' des' c') c'( bes! as g }
   \tag #'left { \clef bass r4 c,4 c, c, }
-  \tag #'common { \once \override DynamicText.Y-offset = #0 s1\pp }
+  \tag #'common { s1 \tweak extra-offset #'(0.3 . -0.3) \pp }
   |
 
   \tag #'right { \clef treble f4) r4 as'4.( g'8) }
   \tag #'left { \clef bass f,4 f r <b f des>-. }
-  \tag #'common { s2 \once \override TextScript.Y-offset = #0 \once \override TextScript.extra-offset = #'(0 . 1) s2-\markup {\italic "con espressione" } }
+  \tag #'common { s2 s2 \tweak Y-offset #0 \tweak extra-offset #'(0 . 1) -\markup { \italic "con espressione" } }
   |
 
   \tag #'right { \clef treble f'2 e'4.( c''8) }
@@ -959,10 +959,10 @@ secondMovement = {
 
   \tag #'right { \clef treble \split { \clef bass c'4( b)\clef treble <b' f' d'> } { <g f d>2 s4 } }
   \tag #'left { \clef bass <g,^~ g,,>4 g,16\( a,32 b, c d e f\) g\( fis g a g f e d\) }
-  \tag #'common { s2.\sfp }
+  \tag #'common { s2. \tweak extra-offset #'(0 . -1.7) \sfp }
   |
 
-  \tag #'right { \clef treble <c'' e'>8\noBeam c'\noBeam\sf ~ c'16_\( d'32\pp e' f' g' a' bes'! c''^[b' c'' d'' c'' bes' a' g']\) }
+  \tag #'right { \clef treble <c'' e'>8\noBeam c'\noBeam\sf ~ c'16_\( d'32 \tweak extra-offset #'(0.6 . 0) \pp e' f' g' a' bes'! c''^[b' c'' d'' c'' bes' a' g']\) }
   \tag #'left { \clef bass \split { r4 <bes!>8_\( g e c'\) } { c2.\sf } }
   \tag #'common { s2. }
   |
