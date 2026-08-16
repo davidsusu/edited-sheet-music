@@ -9,11 +9,9 @@ workOpus = "Op. 2 No. 1"
 workDate = "1794-1795"
 
 firstMovement = {
-  \override Score.RehearsalMark.self-alignment-X = #LEFT
-  \set Score.tempoHideNote = ##t
-
   \mark \markup { \bold "Allegro" }
   \tempo 4 = 220
+  \set Score.tempoHideNote = ##t
   \time 2/2
   \key f \minor
   \accidentalStyle default
@@ -795,11 +793,10 @@ firstMovement = {
 }
 
 secondMovement = {
-  \override Score.RehearsalMark.self-alignment-X = #LEFT
-  \set Score.tempoHideNote = ##t
 
   \mark \markup { \bold "Adagio" }
   \tempo 4 = 45
+  \set Score.tempoHideNote = ##t
   \time 3/4
   \key f \major
   \accidentalStyle default
@@ -1125,8 +1122,8 @@ thirdMovement = {
   \key f \minor
   \accidentalStyle default
   \time 3/4
-  \override Score.MetronomeMark.transparent = ##t
   \tempo 4 = 168
+  \set Score.tempoHideNote = ##t
 
   \repeat volta 2 {
 
@@ -1527,8 +1524,8 @@ thirdMovement = {
   \tag #'common { s2. }
   |
 
-  \tag #'right { \clef treble f'4 r4 s4 }
-  \tag #'left { \clef bass f,4 f s4 }
+  \tag #'right { \clef treble f'4) r4 s }
+  \tag #'left { \clef bass f,4 f s }
   \tag #'common {
     s2.
     \once \override Score.TextMark.direction = #DOWN
@@ -1547,79 +1544,132 @@ fourthMovement = {
   \mark \markup { \bold "Prestissimo" }
   \key f \minor
   \accidentalStyle default
-  \time 4/4
-  \override Score.MetronomeMark.transparent = ##t
+  \time 2/2
   \tempo 4 = 180
+  \set Score.tempoHideNote = ##t
 
+  \partial 2
   \tag #'right { \clef treble r2 }
   \tag #'left { \clef bass \tupletUp \tupletSpan 4 \tweak extra-offset #'(0 . -0.5) \tuplet 3/2 { f8 \shape #'((0 . -1.3) (0.5 . -0.2) (0.2 . -0.3) (0 . -0.5)) ([_\p as c']) f \shape #'((0 . -1.3) (0.5 . -0.2) (0.2 . -0.3) (0 . -0.5)) ([ as c']) } \tupletNeutral }
   \tag #'common { s2 }
+  |
 
   \repeat volta 2 {
+
+  \partial 2
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % REVISION START
   \once \override Staff.BarLine.color = #blue
   \once \override PianoStaff.SpanBar.color = #blue
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
   \override TupletNumber.transparent = ##t
   \override TupletBracket.transparent = ##t
-  
-  \tag #'right { \clef treble <f'' c'' as' f'>4-. <e'' des'' bes' g' e'>-. }
-  \tag #'left { \clef bass \once \tupletSpan 4 \tuplet 3/2 { f8[as c'] f[bes des'] f[c' as] f[c as,] f,[as, c] e,[g, c] f,[as, c] f[as c'] f[as c'] f[bes des'] f8[c' as] f[c as,] f,[as, c] e,[g, c] f,[as, c] f[as c'] } }
-  \tag #'common { s1\p s1 s1 s1 }
-  % |
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \tag #'right { \clef treble <f'' c'' as' f'>4-. r <c''' as'' f'' c''>-. <c''' bes'' g'' c''>-. }
-  \tag #'left { \clef bass << { des'4( bes) c'2 }\\ { g2 as2 } >> }
-  \tag #'common { s2 s\f }
-  % |
+  \tag #'right { \clef treble <f'' c'' as' f'>4-. <e'' des'' bes' g' e'>4-. }
+  \tag #'left { \clef bass \once \tupletSpan 4 \tuplet 3/2 { f8[ as8 c'8] f8[ bes8 des'8] } }
+  \tag #'common { s2\p }
+  |
 
-  \tag #'right { \clef treble <c''' as'' f'' c''>4-. r <f'' c'' as' f'>4-. <e'' des'' bes' g' e'>-. }
-  \tag #'left { \clef bass << { des'4( bes c'2) }\\ { g2 as } >> }
-  \tag #'common { s2 s\p }
-  % |
+  \tag #'right { \clef treble <f'' c'' as' f'>4-. r4 <c''' as'' f'' c''>4-. <c''' bes'' g'' c''>4-. }
+  \tag #'left { \tuplet 3/2 { f8[ c'8 as8] f8[ c8 as,8] f,8[ as,8 c8] e,8[ g,8 c8] } }
+  \tag #'common { s2 s2\f }
+  |
 
-  \tag #'right { \clef treble <f'' c'' as' f'>4-. r <c''' as'' f'' c''>\f-. <c''' bes'' g'' c''>-. }
-  \tag #'left { \clef bass << { des'4( bes) }\\ { g2 } >> <c' as>4( <g e> }
+  \tag #'right { \clef treble <c''' as'' f'' c''>4-. r4 <f'' c'' as' f'>4-. <e'' des'' bes' g' e'>4-. }
+  \tag #'left { \tuplet 3/2 { f,8[ as,8 c8] f8[ as8 c'8] f8[ as8 c'8] f8[ bes8 des'8] } }
+  \tag #'common { s2 s2\p }
+  |
+
+  \tag #'right { \clef treble <f'' c'' as' f'>4-. r4 <c''' as'' f'' c''>4\f-. <c''' bes'' g'' c''>4-. }
+  \tag #'left { \tuplet 3/2 { f8[ c'8 as8] f8[ c8 as,8] f,8[ as,8 c8] e,8[ g,8 c8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <c''' as'' f'' c''>4-. r es''!4\p-.( es''-.) }
-  \tag #'left { \clef bass <as f>4 <f des>) <e c>4-. c'-.\clef treble }
+  \tag #'right { \clef treble <c''' as'' f'' c''>4-. r4 es''!4\p-.( es''4-.) }
+  \tag #'left { \tuplet 3/2 { f,8[ as,8 c8] f8[ as8 c'8] } \clef bass << { des'4( bes4) } \\ { g2 } >> }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble es''4( as'') es''-.( es''-.) }
-  \tag #'left { \clef bass << { bes'4( g') as'2 }\\ { e'2 f' } >> }
+  \tag #'right { \clef treble es''4( as''4) es''4-.( es''4-.) }
+  \tag #'left { << { c'2 } \\ { as2 } >> \clef bass << { des'4( bes4 } \\ { g2 } >> }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble es''4( as'') es''( e'' }
-  \tag #'left { \clef bass << { bes'4( g') as'2 }\\ { e'2 f' } >> }
+  \tag #'right { \clef treble es''4( as''4) es''4( e''4 }
+  \tag #'left { << { c'2) } \\ { as2 } >> \clef bass << { des'4( bes4) } \\ { g2 } >> }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble f''4 g'' as'' b'' }
-  \tag #'left { \clef bass << { bes4( g) }\\ { e2 } >> <as f>4 <as f>2\sf }
-  \tag #'common { s1 s4 }
-  % |
+  \tag #'right { \clef treble f''4 g''4 as''4 b''4 }
+  \tag #'left { <c' as>4( <g e>4 \clef bass <as f>4 <f des>4) }
+  \tag #'common { s1 }
+  |
 
-  \tag #'right { \clef treble c'''4) r c''4\p-.( c''-. }
-  \tag #'left { \clef bass <a fis>4\once \tupletSpan 4 \tuplet 3/2 { g8[b d'] g[b d'] g[b d'] g[c' es'] g[d' b] g[d b,] g,[b, d] g,[b, d] g,[b, d] g[b d'] g[b d'] g[c' es'] g[d' b] g[d b,] g,[b, d] g,[b, d] g,[b, d] g[d b,] g,[b, d] g,[b, d] g,[b, d] g[d b,] g,[b, d] g,[b, d] g,[b, d] g[d b,] g,[b, d] g[d b,] } }
-  \tag #'common { s1 s1 s1 s1 s1 s1 s1 s4 }
-  % |
+  \tag #'right { \clef treble c'''4) r4 c''4\p-.( c''4-. }
+  \tag #'left { <e c>4-. c'4-. \clef bass << { bes'4( g'4) } \\ { e'2 } >> }
+  \tag #'common { s1 }
+  |
 
-  \tag #'right { \clef treble c''4 f'') c''-.( c''-.) }
+  \tag #'right { \clef treble c''4 f''4) c''4-.( c''4-.) }
+  \tag #'left { << { as'2 } \\ { f'2 } >> \clef bass << { bes'4( g'4) } \\ { e'2 } >> }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble c''4^\trill( f''4) c''4-.( c''4-.) }
+  \tag #'left { << { as'2 } \\ { f'2 } >> \clef bass << { bes4( g4) } \\ { e2 } >> }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble \acciaccatura c''8 as''4.\sf( g''8 f''8[ es''8 d''8 c''8]) }
+  \tag #'left { <as f>4 <as f>2\sf \clef bass <a fis>4 }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble b'4 r4 <g'' d'' b' g'>4\p-. <fis'' es'' c'' a' fis'>4-. }
+  \tag #'left { \once \tupletSpan 4 \tuplet 3/2 { g8[ b8 d'8] g8[ b8 d'8] g8[ b8 d'8] g8[ c'8 es'8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <g'' d'' b' g'>4-. r4 <b'' g'' d'' b'>4\ff-. <b'' g'' d'' b'>4-. }
+  \tag #'left { \tuplet 3/2 { g8[ d'8 b8] g8[ d8 b,8] g,8[ b,8 d8] g,8[ b,8 d8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <b'' g'' d'' b'>4-. r4 <g'' d'' b' g'>4\p-. <fis'' es'' c'' a' fis'>4-. }
+  \tag #'left { \tuplet 3/2 { g,8[ b,8 d8] g8[ b8 d'8] g8[ b8 d'8] g8[ c'8 es'8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <g'' d'' b' g'>4-. r4 <d''' b'' g'' d''>4\ff-. <d''' b'' g'' d''>4-. }
+  \tag #'left { \tuplet 3/2 { g8[ d'8 b8] g8[ d8 b,8] g,8[ b,8 d8] g,8[ b,8 d8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <d''' b'' g'' d''>4-. r4 <f''' d''' b'' f''>4\ff-. <f''' d''' b'' f''>4-. }
+  \tag #'left { \tuplet 3/2 { g,8[ b,8 d8] g8[ d8 b,8] g,8[ b,8 d8] g,8[ b,8 d8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <f''' d''' b'' f''>4-. r4 <f''' d''' b'' f''>4-. <f''' d''' b'' f''>4-. }
+  \tag #'left { \tuplet 3/2 { g,8[ b,8 d8] g8[ d8 b,8] g,8[ b,8 d8] g,8[ b,8 d8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <f''' d''' b'' f''>4\sf-. r4 <f''' d''' b'' f''>4\sf-. r4 }
+  \tag #'left { \tuplet 3/2 { g,8[ b,8 d8] g8[ d8 b,8] g,8[ b,8 d8] g8[ d8 b,8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble \tuplet 3/2 { f'''8\ff[ es'''8 d'''8] c'''8[ b''8 as''8] g''8[ f''8 es''8] d''8 c''8 b'8] } }
   \tag #'left { \clef bass g,4 r4 r2 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble c''4^\trill( f'') c''-.( c''-.) \acciaccatura c''8 }
-  \tag #'left { \clef bass r2\once \tupletSpan 4 \tuplet 3/2 { r8 as[g] f[es d] } }
+  \tag #'right { \tuplet 3/2 { as'8[ g'8 f'8] es'8[ d'8 c'8] } \clef treble b4 r4 }
+  \tag #'left { \clef bass r2 \once \tupletSpan 4 \tuplet 3/2 { r8 as8[ g8] f8[ es8 d8] } }
   \tag #'common { s1 }
-  % |
+  |
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % REVISION END
@@ -1627,785 +1677,904 @@ fourthMovement = {
   \once \override PianoStaff.SpanBar.color = #red
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \tag #'right { \clef treble as''4.\sf( g''8 f''[es'' d'' c'']) }
-  \tag #'left { \clef bass c4 as4( g fis }
+  \tag #'right { \tuplet 3/2 { r8 es'8[ c'8] as'8[ es'8 c'8] g'8[ es'8 c'8] fis'8[ es'8 c'8] } }
+  \tag #'left { \clef bass c4 as4( g4 fis4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble b'4 r <g'' d'' b' g'>\p-. <fis'' es'' c'' a' fis'>-. }
-  \tag #'left { \clef bass g4 as g fis)\once \tupletSpan 4 }
+  \tag #'right { \tuplet 3/2 { g'8[ es'8 c'8] as'8[ es'8 c'8] g'8[ es'8 c'8] fis'8[ es'8 c'8] } }
+  \tag #'left { \clef bass g4 as4 g4 fis4) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <g'' d'' b' g'>4-. r <b'' g'' d'' b'>\ff-. <b'' g'' d'' b'>-. }
-  \tag #'left { \clef bass \tuplet 3/2 { g8[c' es'] as[c' es'] g[c' es'] fis[c' es'] g[c' es'] as[c' es'] g[c' es'] fis[c' es'] g[c' es'] } }
-  \tag #'common { s1 s1 s4 }
-  % |
-
-  \tag #'right { \clef treble <b'' g'' d'' b'>4-. r <g'' d'' b' g'>\p-. <fis'' es'' c'' a' fis'>-. }
-  \tag #'left { \clef bass as8( as' f![f'! g g'] e[e' }
+  \tag #'right { \clef treble g'4 \once \tupletSpan 4 \tuplet 3/2 { es''8[ c''8 as'8] es''8[ c''8 g'8] es''8[ c''8 fis'8] } }
+  \tag #'left { \clef bass \tuplet 3/2 { g8[ c'8 es'8] as8[ c'8 es'8] g8[ c'8 es'8] fis8[ c'8 es'8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <g'' d'' b' g'>4-. r <d''' b'' g'' d''>\ff-. <d''' b'' g'' d''>-. }
-  \tag #'left { \clef bass f8 f'] b,[b c c']) d,8([d }
+  \tag #'right { \tuplet 3/2 { es''8[ c''8 g'8] es''8[ c''8 as'8] es''8[ c''8 g'8] es''8[ c''8 fis'8] } }
+  \tag #'left { \tuplet 3/2 { g8[ c'8 es'8] as8[ c'8 es'8] g8[ c'8 es'8] fis8[ c'8 es'8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <d''' b'' g'' d''>4-. r <f''' d''' b'' f''>\ff-. <f''' d''' b'' f''>-. }
-  \tag #'left { \clef bass es,8 es] f,[f fis, fis]) g,8[g }
+  \tag #'right { \clef treble es''4 \tuplet 3/2 { as''8[ es''8 c''8] as''8[ des''!8 c''8] g''8[ des''8 bes'8] } }
+  \tag #'left { \tuplet 3/2 { g8[ c'8 es'8] } \clef bass as8( as'8 f!8[ f'!8 g8 g'8] }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <f''' d''' b'' f''>4-. r <f''' d''' b'' f''>-. <f''' d''' b'' f''>-. }
-  \tag #'left { \clef bass g,8 g] g,[g g, g] c4 }
+  \tag #'right { \tuplet 3/2 { g''8[ c''8 bes'8] f''8[ c''8 as'8] f''8[ d''8 g'8] es''!8[ c''8 g'8] } }
+  \tag #'left { e8[ e'8 \clef bass f8 f'8] b,8[ b8 c8 c'8]) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <f''' d''' b'' f''>4\sf-. r <f''' d''' b'' f''>\sf-. r\once \tupletSpan 4 }
-  \tag #'left { \clef bass as8([c'] f[as g bes]) e([g }
+  \tag #'right { \tuplet 3/2 { d''8[ b'8 f'8] c''8[ g'8 es'8] b'8[ as'8 d'8] c''8[ a'8 es'8] } }
+  \tag #'left { d,8([ d8 \clef bass es,8 es8] f,8[ f8 fis,8 fis8]) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble \tuplet 3/2 { f'''8\ff [es''' d'''] c'''[b'' as''] g''[f'' es''] d'' c'' b'] as'[g' f'] es'[d' c'] } }
-  \tag #'left { \clef bass f8 as] b,[d c es]) d,4( }
-  \tag #'common { s1 s2 }
-  % |
-
-  \tag #'right { \clef treble b4 r4 \tuplet 3/2 { r8 es'[c'] as'[es' c'] g'[es' c'] fis'[es' c'] g'[es' c'] as'[es' c'] g'[es' c'] fis'[es' c'] } }
-  \tag #'left { \clef bass es,4 f, fis,) g,,8[g, }
-  \tag #'common { s1 s1 s2 }
-  % |
-
-  \tag #'right { \clef treble g'4\once \tupletSpan 4 \tuplet 3/2 { es''8[c'' as'] es''[c'' g'] es''[c'' fis'] es''[c'' g'] es''[c'' as'] es''[c'' g'] es''[c'' fis'] } }
-  \tag #'left { \clef bass g,,8 g,] g,,[g, g,, g,]\once \tupletSpan 4 \tuplet 3/2 { c,8([g, c]) c,[g, c] c,[g, c] c,[g, c] d,[f, bes,!] d,[f, bes,] d,[f, bes,] d,[f, bes,] es,[g, bes,] es,[g, bes,] e,[g, c] e,[g, c] f,[as, c] f,[as, c] f,[as, d] f,[as, d] g,[bes, es] g,[bes, es] g,[bes, e] g,[bes, e] as,[c f] as,[c f] as,[c fis] as,[c fis] g,[c es] g,[c es] g,[c es] g,[c es] g,[b, d] g,[b, d] g,[b, d] g,[b, d] c,[g, c] c,[g, c] c,[g, c] c,[g, c] d,[f, bes,] d,[f, bes,] d,[f, bes,] d,[f, bes,] es,[g, bes,] es,[g, bes,] e,[g, c] e,[g, c] f,[as, c] f,[as, c] f,[as, d] f,[as, d] g,[bes, es] g,[bes, es] g,[bes, e] g,[bes, e] as,[c f] as,[c f] as,[c fis] as,[c fis] g,[c es] g,[c es] g,[c es] g,[c es] g,[b, d] g,[b, d] g,[b, d] g,[b, d] c[es g] c'[es' g'] c'[es' g'] c'[f' as'] c'[g' es'] c'[g es] c[es g] g,[d g] c[es g] c'[es' g'] c'[es' g'] c'[f' as'] c'[g' es'] c'[g es] c[es g] g,[d g] c[es g] c'[g es] c[es g] g,[d g] c[es g] c'[g es] c[es g] c'[g es] } }
-  \tag #'common { s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s2. }
-
-  \tag #'right { \clef treble es''4 \tuplet 3/2 { as''8[es'' c''] as''[des''! c''] g''[des'' bes'] g''[c'' bes'] f''[c'' as'] f''[d'' g'] es''![c'' g'] d''[b' f'] c''[g' es'] b'[as' d'] c''[a' es'] g'[es' c'] g'[es' c'] g'[d' b] g'[d' b] c'[es' g'] c''[as' es'] c''[as' des'!] bes'[g' des'] bes'[g' c'] as'[f' c'] g'[f' d'] g'[es'! c'] f'[b g] es'[c' g] } }
-  \tag #'left { \clef bass  }
-  \tag #'common { s1 s1 s1 s1 s1 s1 s2 }
-
-  \tag #'right { \clef bass \tuplet 3/2 { d'8[as f] c'[a es] c'[g es] c'[g es] b[g d] b[g d] } }
-  \tag #'left { \clef bass  }
-  \tag #'common { s1 s2 }
-
-  \tag #'right { \clef treble c'4 r4\clef treble <es'' es'>4\p <es'' es'> }
-  \tag #'left { \clef bass  }
+  \tag #'right { \tuplet 3/2 { g'8[ es'8 c'8] g'8[ es'8 c'8] g'8[ d'8 b8] g'8[ d'8 b8] } }
+  \tag #'left { g,8[ g8 \clef bass g,8 g8] g,8[ g8 g,8 g8] }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <d'' d'>4( <c'' c'> <bes' bes> <as' as>) }
-  \tag #'left { \clef bass  }
+  \tag #'right { \tuplet 3/2 { c'8[ es'8 g'8] c''8[ as'8 es'8] c''8[ as'8 des'!8] bes'8[ g'8 des'8] } }
+  \tag #'left { c4 \clef bass as8([ c'8] f8[ as8 g8 bes8]) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <g' g>2 <c''' c''>4 <c''' c''> }
-  \tag #'left { \clef bass  }
+  \tag #'right { \tuplet 3/2 { bes'8[ g'8 c'8] as'8[ f'8 c'8] g'8[ f'8 d'8] g'8[ es'!8 c'8] } }
+  \tag #'left { e8([ g8 \clef bass f8 as8] b,8[ d8 c8 es8]) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <bes'' bes'>4( <as'' as'> <g'' g'> <f'' f'>) }
-  \tag #'left { \clef bass  }
+  \tag #'right { \tuplet 3/2 { f'8[ b8 g8] es'8[ c'8 g8] } \clef bass \tuplet 3/2 { d'8[ as8 f8] c'8[ a8 es8] } }
+  \tag #'left { d,4( \clef bass es,4 f,4 fis,4) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <es'' es'>2 <g'' g'>4 <g'' g'> }
-  \tag #'left { \clef bass  }
+  \tag #'right { \tuplet 3/2 { c'8[ g8 es8] c'8[ g8 es8] b8[ g8 d8] b8[ g8 d8] } }
+  \tag #'left { g,,8[ g,8 \clef bass g,,8 g,8] g,,8[ g,8 g,,8 g,8] }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <f'' f'>4( <es''! es'!> <d'' d'> <c'' c'>) }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble c'4 r4 \clef treble <es'' es'>4\p <es'' es'>4 }
+  \tag #'left { \once \tupletSpan 4 \tuplet 3/2 { c,8([ g,8 c8]) c,8[ g,8 c8] c,8[ g,8 c8] c,8[ g,8 c8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <g' g>2 <g' g>4-.( <g' g>-.) }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble <d'' d'>4( <c'' c'>4 <bes' bes>4 <as' as>4) }
+  \tag #'left { \tuplet 3/2 { d,8[ f,8 bes,!8] d,8[ f,8 bes,8] d,8[ f,8 bes,8] d,8[ f,8 bes,8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <g' g>2 <g' g>4-.( <g' g>-.) }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble <g' g>2 <c''' c''>4 <c''' c''>4 }
+  \tag #'left { \tuplet 3/2 { es,8[ g,8 bes,8] es,8[ g,8 bes,8] e,8[ g,8 c8] e,8[ g,8 c8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble c'4 r4 <es'' es'>4 <es'' es'> }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble <bes'' bes'>4( <as'' as'>4 <g'' g'>4 <f'' f'>4) }
+  \tag #'left { \tuplet 3/2 { f,8[ as,8 c8] f,8[ as,8 c8] f,8[ as,8 d8] f,8[ as,8 d8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <d'' d'>4( <c'' c'> <bes' bes> <as' as>) }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble <es'' es'>2 <g'' g'>4 <g'' g'>4 }
+  \tag #'left { \tuplet 3/2 { g,8[ bes,8 es8] g,8[ bes,8 es8] g,8[ bes,8 e8] g,8[ bes,8 e8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <g' g>2 <c''' c''>4 <c''' c''> }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble <f'' f'>4( <es''! es'!>4 <d'' d'>4 <c'' c'>4) }
+  \tag #'left { \tuplet 3/2 { as,8[ c8 f8] as,8[ c8 f8] as,8[ c8 fis8] as,8[ c8 fis8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <bes'' bes'>4( <as'' as'> <g'' g'> <f'' f'>) }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble <g' g>2 <g' g>4-.( <g' g>4-.) }
+  \tag #'left { \tuplet 3/2 { g,8[ c8 es8] g,8[ c8 es8] g,8[ c8 es8] g,8[ c8 es8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <es'' es'>2 <g'' g'>4 <g'' g'> }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble <g' g>2 <g' g>4-.( <g' g>4-.) }
+  \tag #'left { \tuplet 3/2 { g,8[ b,8 d8] g,8[ b,8 d8] g,8[ b,8 d8] g,8[ b,8 d8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <f'' f'>4( <es''! es'!> <d'' d'> <c'' c'>) }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble c'4 r4 <es'' es'>4 <es'' es'>4 }
+  \tag #'left { \tuplet 3/2 { c,8[ g,8 c8] c,8[ g,8 c8] c,8[ g,8 c8] c,8[ g,8 c8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <g' g>2 <g' g>4-.( <g' g>-.) }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble <d'' d'>4( <c'' c'>4 <bes' bes>4 <as' as>4) }
+  \tag #'left { \tuplet 3/2 { d,8[ f,8 bes,8] d,8[ f,8 bes,8] d,8[ f,8 bes,8] d,8[ f,8 bes,8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <g' g>2 <g' g>4-.( <g' g>-.) }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble <g' g>2 <c''' c''>4 <c''' c''>4 }
+  \tag #'left { \tuplet 3/2 { es,8[ g,8 bes,8] es,8[ g,8 bes,8] e,8[ g,8 c8] e,8[ g,8 c8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble c'4 r4 <c''' g'' es'' c''>4\ff-. <b'' as'' f'' d'' b'>-. }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble <bes'' bes'>4( <as'' as'>4 <g'' g'>4 <f'' f'>4) }
+  \tag #'left { \tuplet 3/2 { f,8[ as,8 c8] f,8[ as,8 c8] f,8[ as,8 d8] f,8[ as,8 d8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <c''' g'' es'' c''>4-. r <g'' es'' c'' g'>-. <g'' d'' b' g'>-. }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble <es'' es'>2 <g'' g'>4 <g'' g'>4 }
+  \tag #'left { \tuplet 3/2 { g,8[ bes,8 es8] g,8[ bes,8 es8] g,8[ bes,8 e8] g,8[ bes,8 e8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <g'' es'' c'' g'>4-. r <c''' g'' es'' c''>-. <b'' as'' f'' d'' b'>-. }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble <f'' f'>4( <es''! es'!>4 <d'' d'>4 <c'' c'>4) }
+  \tag #'left { \tuplet 3/2 { as,8[ c8 f8] as,8[ c8 f8] as,8[ c8 fis8] as,8[ c8 fis8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <c''' g'' es'' c''>4-. r <g'' es'' c'' g'>-. <g'' d'' b' g'>-. }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble <g' g>2 <g' g>4-.( <g' g>4-.) }
+  \tag #'left { \tuplet 3/2 { g,8[ c8 es8] g,8[ c8 es8] g,8[ c8 es8] g,8[ c8 es8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <g'' es'' c'' g'>4-. r <g'' es'' c'' g'>-. <g'' d'' b' g'>-. }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble <g' g>2 <g' g>4-.( <g' g>4-.) }
+  \tag #'left { \tuplet 3/2 { g,8[ b,8 d8] g,8[ b,8 d8] g,8[ b,8 d8] g,8[ b,8 d8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <g'' es'' c'' g'>4-. r <es'' c'' g'>-. r }
-  \tag #'left { \clef bass  }
+  \tag #'right { \clef treble c'4 r4 <c''' g'' es'' c''>4\ff-. <b'' as'' f'' d'' b'>4-. }
+  \tag #'left { \tuplet 3/2 { c8[ es8 g8] c'8[ es'8 g'8] c'8[ es'8 g'8] c'8[ f'8 as'8] } }
   \tag #'common { s1 }
-  % |
+  |
+
+  \tag #'right { \clef treble <c''' g'' es'' c''>4-. r4 <g'' es'' c'' g'>4-. <g'' d'' b' g'>4-. }
+  \tag #'left { \tuplet 3/2 { c'8[ g'8 es'8] c'8[ g8 es8] c8[ es8 g8] g,8[ d8 g8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <g'' es'' c'' g'>4-. r4 <c''' g'' es'' c''>4-. <b'' as'' f'' d'' b'>4-. }
+  \tag #'left { \tuplet 3/2 { c8[ es8 g8] c'8[ es'8 g'8] c'8[ es'8 g'8] c'8[ f'8 as'8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <c''' g'' es'' c''>4-. r4 <g'' es'' c'' g'>4-. <g'' d'' b' g'>4-. }
+  \tag #'left { \tuplet 3/2 { c'8[ g'8 es'8] c'8[ g8 es8] c8[ es8 g8] g,8[ d8 g8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <g'' es'' c'' g'>4-. r4 <g'' es'' c'' g'>4-. <g'' d'' b' g'>4-. }
+  \tag #'left { \tuplet 3/2 { c8[ es8 g8] c'8[ g8 es8] c8[ es8 g8] g,8[ d8 g8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <g'' es'' c'' g'>4-. r4 <es'' c'' g'>4-. r4 }
+  \tag #'left { \tuplet 3/2 { c8[ es8 g8] c'8[ g8 es8] c8[ es8 g8] c'8[ g8 es8] } }
+  \tag #'common { s1 }
+  |
 
   }
 
   \alternative {
     {
-    \tag #'right { \clef treble <c'' g' es'>4-. r <bes' g' e'>-. r }
-    \tag #'left { \clef bass \once \tupletSpan 4 \tuplet 3/2 { c8[es g] c'[g es] c[e g] c'[g e] f\p [as c'] f[as c'] } }
-    \tag #'common { s1 s2 }
-    % |
 
-    \tag #'right { \clef treble <as' f'>4-. r s2 }
-    \tag #'left { \clef bass s2 }
-    \tag #'common { s1 }
-    % |
+      \tag #'right { \clef treble <c'' g' es'>4-. r4 <bes' g' e'>4-. r4 }
+      \tag #'left { \clef bass \once \tupletSpan 4 \tuplet 3/2 { c8[ es8 g8] c'8[ g8 es8] c8[ e8 g8] c'8[ g8 e8] } }
+      \tag #'common { s1 }
+      |
+
+      \tag #'right { \clef treble <as' f'>4-. r4 s2 }
+      \tag #'left { \tuplet 3/2 { f8\p[ as8 c'8] f8[ as8 c'8] } \clef bass s2 }
+      \tag #'common { s1 }
+      |
     }
     {
-    \tag #'right { \clef treble <c'' g' es'>4-. r r2 }
-    \tag #'left { \clef bass c4-. r4 r2 }
-    \tag #'common { s1 }
-    % |
 
-    \tag #'right { \clef treble <des''! g' es' des'!>4\ff-. r <bes' g' es' des'>-. r }
-    \tag #'left { \clef bass <g es des! bes,>4\ff-. r <g es des bes,>-. r }
-    \tag #'common { s1 }
-    % |
+      \tag #'right { \clef treble <c'' g' es'>4-. r4 r2 }
+      \tag #'left { \clef bass c4-. r4 r2 }
+      \tag #'common { s1 }
+      |
 
-    \tag #'right { \clef treble <g' es' des'>4-. r r2 }
-    \tag #'left { \clef bass <g es des bes,>4-. r4 r2 }
-    \tag #'common { s1 }
-    % |
+      \tag #'right { \clef treble <des''! g' es' des'!>4\ff-. r4 <bes' g' es' des'>4-. r4 }
+      \tag #'left { \clef bass <g es des! bes,>4\ff-. r4 <g es des bes,>4-. r4 }
+      \tag #'common { s1 }
+      |
+
+      \tag #'right { \clef treble <g' es' des'>4-. r4 r2 }
+      \tag #'left { \clef bass <g es des bes,>4-. r4 r2 }
+      \tag #'common { s1 }
+      |
     }
   }
 
   \repeat volta 2 {
 
-  \tag #'right { \clef treble es'1^\markup {\italic "sempre piano e dolce" }( }
-  \tag #'left { \clef bass r4 <c' as> <c' as> <c' as> }
+  \tag #'right { \clef treble es'1^\markup \line { \italic "sempre piano e dolce"}( }
+  \tag #'left { \clef bass r4 <c' as>4 <c' as>4 <c' as>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble as'2 c'') }
-  \tag #'left { \clef bass r4 <es' c' as> <es' c' as> <es' c' as> }
+  \tag #'right { \clef treble as'2 c''2) }
+  \tag #'left { \clef bass r4 <es' c' as>4 <es' c' as>4 <es' c' as>4 }
   \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble es''2. es''4( }
-  \tag #'left { \clef bass r4 <es' bes g> <es' bes g> <es' bes g> }
+  \tag #'left { \clef bass r4 <es' bes g>4 <es' bes g>4 <es' bes g>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble d''4 es'' f'' es'') }
-  \tag #'left { \clef bass r4 <es' bes g> <es' bes g> <es' bes g> }
+  \tag #'right { \clef treble d''4 es''4 f''4 es''4) }
+  \tag #'left { \clef bass r4 <es' bes g>4 <es' bes g>4 <es' bes g>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble es''4( des''!) r des''-. }
-  \tag #'left { \clef bass r4 <des'! as f> <des' as f> <des' as f> }
+  \tag #'right { \clef treble es''4( des''!4) r4 des''4-. }
+  \tag #'left { \clef bass r4 <des'! as f>4 <des' as f>4 <des' as f>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble des''4( c'') r c''-. }
-  \tag #'left { \clef bass r4 <c' as es> <c' as es> <c' as es> }
+  \tag #'right { \clef treble des''4( c''4) r4 c''4-. }
+  \tag #'left { \clef bass r4 <c' as es>4 <c' as es>4 <c' as es>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble c''8([bes' des'' c''] es''[des'' c'' bes'] }
-  \tag #'left { \clef bass r4 <bes f des> <bes f des> <bes f des> }
+  \tag #'right { \clef treble c''8([ bes'8 des''8 c''8] es''8[ des''8 c''8 bes'8] }
+  \tag #'left { \clef bass r4 <bes f des>4 <bes f des>4 <bes f des>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble as'2^\markup {\translate #(cons 5 -1) {\musicglyph "scripts.turn" } } c''4 bes' }
-  \tag #'left { \clef bass r4 <c' es> <des' es> <des' es> }
+  \tag #'right { \clef treble as'2^\markup \line { \translate #(cons 5 -1) \musicglyph "scripts.turn"} c''4 bes'4 }
+  \tag #'left { \clef bass r4 <c' es>4 <des' es>4 <des' es>4 }
   \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble bes'2. c''4 }
-  \tag #'left { \clef bass r4 <des' as> <des' as> <des' as> }
+  \tag #'left { \clef bass r4 <des' as>4 <des' as>4 <des' as>4 }
   \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble as'4) r4 r2 }
-  \tag #'left { \clef bass r4 as c' es' }
+  \tag #'left { \clef bass r4 as4 c'4 es'4 }
   \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble es''2. es''4-. }
-  \tag #'left { \clef bass r4\clef treble <c'' as'> <c'' as'> <c'' as'> }
+  \tag #'left { \clef bass r4 \clef treble <c'' as'>4 <c'' as'>4 <c'' as'>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble g''4( as'') b''( c''') }
-  \tag #'left { \clef bass r4 <es'' c'' as'> <es'' c'' as'> <es'' c'' as'> }
+  \tag #'right { \clef treble g''4( as''4) b''4( c'''4) }
+  \tag #'left { \clef bass r4 <es'' c'' as'>4 <es'' c'' as'>4 <es'' c'' as'>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble d'''4( es''') r4 es'''4( }
-  \tag #'left { \clef bass r4 <es'' bes'! g'> <es'' bes' g'> <es'' bes' g'> }
+  \tag #'right { \clef treble d'''4( es'''4) r4 es'''4( }
+  \tag #'left { \clef bass r4 <es'' bes'! g'>4 <es'' bes' g'>4 <es'' bes' g'>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble d'''4 es''' f''' es''') }
-  \tag #'left { \clef bass r4 <es'' bes' g'> <es'' bes' g'> <es'' bes' g'> }
+  \tag #'right { \clef treble d'''4 es'''4 f'''4 es'''4) }
+  \tag #'left { \clef bass r4 <es'' bes' g'>4 <es'' bes' g'>4 <es'' bes' g'>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble es'''4( des'''!) r des'''-. }
-  \tag #'left { \clef bass r4 <des'' as' f'> <des'' as' f'> <des'' as' f'> }
+  \tag #'right { \clef treble es'''4( des'''!4) r4 des'''4-. }
+  \tag #'left { \clef bass r4 <des'' as' f'>4 <des'' as' f'>4 <des'' as' f'>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble des'''4( c''') r c'''-. }
-  \tag #'left { \clef bass r4 <c'' a' es'> <c'' a' es'> <c'' a' es'> }
+  \tag #'right { \clef treble des'''4( c'''4) r4 c'''4-. }
+  \tag #'left { \clef bass r4 <c'' a' es'>4 <c'' a' es'>4 <c'' a' es'>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble c'''8([bes'' des''' c'''] es'''[des''' c''' bes''] }
-  \tag #'left { \clef bass r4 <bes' f' des'> <bes' f' des'> <bes' f' des'> }
+  \tag #'right { \clef treble c'''8([ bes''8 des'''8 c'''8] es'''8[ des'''8 c'''8 bes''8] }
+  \tag #'left { \clef bass r4 <bes' f' des'>4 <bes' f' des'>4 <bes' f' des'>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble as''!2^\markup {\translate #(cons 5 -1) {\musicglyph "scripts.turn" } } c'''4 bes'' }
-  \tag #'left { \clef bass r4 <c'' es'> <des'' es'> <des'' es'> }
+  \tag #'right { \clef treble as''!2^\markup \line { \translate #(cons 5 -1) \musicglyph "scripts.turn"} c'''4 bes''4 }
+  \tag #'left { \clef bass r4 <c'' es'>4 <des'' es'>4 <des'' es'>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble << { bes''2.( c'''4) }\\ { des''1 } >> }
-  \tag #'left { \clef bass r4 g' as' g' }
+  \tag #'right { \clef treble << { bes''2.( c'''4) } \\ { des''1 } >> }
+  \tag #'left { \clef bass r4 g'4 as'4 g'4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <as'' c''>4 r r es''-. }
-  \tag #'left { \clef bass as'4 es' c' as }
+  \tag #'right { \clef treble <as'' c''>4 r4 r4 es''4-. }
+  \tag #'left { \clef bass as'4 es'4 c'4 as4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble es''4 f'' g'' as'' }
-  \tag #'left { \clef bass r4\clef bass <es' bes g> <es' bes g> <es' bes g> }
+  \tag #'right { \clef treble es''4 f''4 g''4 as''4 }
+  \tag #'left { \clef bass r4 \clef bass <es' bes g>4 <es' bes g>4 <es' bes g>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble bes''4 g'' es'' des'') }
-  \tag #'left { \clef bass r4 <es' des' bes> <es' des' bes> <es' des' bes> }
+  \tag #'right { \clef treble bes''4 g''4 es''4 des''4) }
+  \tag #'left { \clef bass r4 <es' des' bes>4 <es' des' bes>4 <es' des' bes>4 }
   \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble es''2.( des''4^\trill) }
-  \tag #'left { \clef bass r4 <es' c' as> <es' c' as> <es' c' as> }
+  \tag #'left { \clef bass r4 <es' c' as>4 <es' c' as>4 <es' c' as>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble c''4 r4 r es'' }
-  \tag #'left { \clef bass r4\clef treble <as' es' c'> <as' es' c'> <as' es' c'> }
+  \tag #'right { \clef treble c''4 r4 r4 es''4 }
+  \tag #'left { \clef bass r4 \clef treble <as' es' c'>4 <as' es' c'>4 <as' es' c'>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble es''8([f'' es'' d''] es''[f'' g'' as''] }
-  \tag #'left { \clef bass r4 <g' es' bes> <g' es' bes> <g' es' bes> }
+  \tag #'right { \clef treble es''8([ f''8 es''8 d''8] es''8[ f''8 g''8 as''8] }
+  \tag #'left { \clef bass r4 <g' es' bes>4 <g' es' bes>4 <g' es' bes>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble a''8[bes'' c''' bes''] as''![g'' f'' es'']) }
-  \tag #'left { \clef bass r4 <bes' es' des'!> <bes' es' des'> <bes' es' des'> }
+  \tag #'right { \clef treble a''8[ bes''8 c'''8 bes''8] as''!8[ g''8 f''8 es''8]) }
+  \tag #'left { \clef bass r4 <bes' es' des'!>4 <bes' es' des'>4 <bes' es' des'>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble es''2( des''!^\trill) }
-  \tag #'left { \clef bass r4\clef bass <g es>( <as f> <bes g> }
+  \tag #'right { \clef treble es''2( des''!2^\trill) }
+  \tag #'left { \clef bass r4 \clef bass <g es>4( <as f>4 <bes g>4 }
   \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble c''4 r4 r2 }
-  \tag #'left { \clef bass <c' as>4 <des' bes> <es' c'> <des' bes>) }
+  \tag #'left { \clef bass <c' as>4 <des' bes>4 <es' c'>4 <des' bes>4) }
   \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble <es'' es'>1( }
-  \tag #'left { \clef bass r4 <c' as> <c' as> <c' as> }
+  \tag #'left { \clef bass r4 <c' as>4 <c' as>4 <c' as>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <as'' as'>2\< <c''' c''>) }
-  \tag #'left { \clef bass r4 <es' as ges> <es' as ges> <es' as ges> }
+  \tag #'right { \clef treble <as'' as'>2\<<c''' c''>2) }
+  \tag #'left { \clef bass r4 <es' as ges>4 <es' as ges>4 <es' as ges>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <es''' es''>4\!\sf( <des''' des''>) r <des''' des''>-. }
-  \tag #'left { \clef bass r4 <des' as f> <des' as f> <des' as f> }
+  \tag #'right { \clef treble <es''' es''>4\!\sf( <des''' des''>4) r4 <des''' des''>4-. }
+  \tag #'left { \clef bass r4 <des' as f>4 <des' as f>4 <des' as f>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <des''' des''>4\sf( <c''' c''>) r <c''' c''>-. }
-  \tag #'left { \clef bass r4 <a ges es> <a ges es> <a ges es> }
+  \tag #'right { \clef treble <des''' des''>4\sf( <c''' c''>4) r4 <c''' c''>4-. }
+  \tag #'left { \clef bass r4 <a ges es>4 <a ges es>4 <a ges es>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <c''' c''>4( <bes'' bes'> <f''' f''> <es''' es''>) }
-  \tag #'left { \clef bass r4 <bes f des> <bes f des> <bes f des> }
+  \tag #'right { \clef treble <c''' c''>4( <bes'' bes'>4 <f''' f''>4 <es''' es''>4) }
+  \tag #'left { \clef bass r4 <bes f des>4 <bes f des>4 <bes f des>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <es''' es''>4( <des''' des''> <c''' c''> <bes'' bes'>) }
-  \tag #'left { \clef bass r4 <des' g! es> <des' g es> <des' g es> }
+  \tag #'right { \clef treble <es''' es''>4( <des''' des''>4 <c''' c''>4 <bes'' bes'>4) }
+  \tag #'left { \clef bass r4 <des' g! es>4 <des' g es>4 <des' g es>4 }
   \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble <bes'' bes'>2.( <c''' c''>4 }
-  \tag #'left { \clef bass r4 <des' as> <des' as> <des' as> }
+  \tag #'left { \clef bass r4 <des' as>4 <des' as>4 <des' as>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <as'' as'>4) r4 r es''4 }
-  \tag #'left { \clef bass r4 <c' as> <es' c'> <c' as> }
+  \tag #'right { \clef treble <as'' as'>4) r4 r4 es''4 }
+  \tag #'left { \clef bass r4 <c' as>4 <es' c'>4 <c' as>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble es''4( f'' g'' as'' }
-  \tag #'left { \clef bass r4 <es' bes g> <es' bes g> <es' bes g> }
+  \tag #'right { \clef treble es''4( f''4 g''4 as''4 }
+  \tag #'left { \clef bass r4 <es' bes g>4 <es' bes g>4 <es' bes g>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble bes''4 g'' es'' des'') }
-  \tag #'left { \clef bass r4 <es' des' bes> <es' des' bes> <es' des' bes> }
+  \tag #'right { \clef treble bes''4 g''4 es''4 des''4) }
+  \tag #'left { \clef bass r4 <es' des' bes>4 <es' des' bes>4 <es' des' bes>4 }
   \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble es''2.( des''4^\trill) }
-  \tag #'left { \clef bass r4 <es' c' as> <es' c' as> <es' c' as> }
+  \tag #'left { \clef bass r4 <es' c' as>4 <es' c' as>4 <es' c' as>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble c''4 r4 r es'' }
-  \tag #'left { \clef bass r4\clef treble <as' es' c'> <as' es' c'> <as' es' c'> }
+  \tag #'right { \clef treble c''4 r4 r4 es''4 }
+  \tag #'left { \clef bass r4 \clef treble <as' es' c'>4 <as' es' c'>4 <as' es' c'>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble es''8([f'' es'' d''] es''[f'' g'' as''] }
-  \tag #'left { \clef bass r4 <g' es' bes> <g' es' bes> <g' es' bes> }
+  \tag #'right { \clef treble es''8([ f''8 es''8 d''8] es''8[ f''8 g''8 as''8] }
+  \tag #'left { \clef bass r4 <g' es' bes>4 <g' es' bes>4 <g' es' bes>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble bes''8[b'' c''' des'''] d'''[es''' f''' es''']) }
-  \tag #'left { \clef bass r4 <bes'! es' des'!> <bes' es' des'> <bes' es' des'> }
+  \tag #'right { \clef treble bes''8[ b''8 c'''8 des'''8] d'''8[ es'''8 f'''8 es'''8]) }
+  \tag #'left { \clef bass r4 <bes'! es' des'!>4 <bes' es' des'>4 <bes' es' des'>4 }
   \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble es'''2( des'''!2^\trill) }
-  \tag #'left { \clef bass r4\clef bass <g es>( <as f> <bes g> }
+  \tag #'left { \clef bass r4 \clef bass <g es>4( <as f>4 <bes g>4 }
   \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble c'''4 r4 r2 }
-  \tag #'left { \clef bass <c' as>4 <des' bes> <es' c'> <des' bes>) }
+  \tag #'left { \clef bass <c' as>4 <des' bes>4 <es' c'>4 <des' bes>4) }
   \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble <es'' es'>1( }
-  \tag #'left { \clef bass r4 <c' as> <c' as> <c' as> }
+  \tag #'left { \clef bass r4 <c' as>4 <c' as>4 <c' as>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <as'' as'>2\< <c''' c''>) }
-  \tag #'left { \clef bass r4 <es' as ges> <es' as ges> <es' as ges> }
+  \tag #'right { \clef treble <as'' as'>2\<<c''' c''>2) }
+  \tag #'left { \clef bass r4 <es' as ges>4 <es' as ges>4 <es' as ges>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <es''' es''>4\!\sf( <des''' des''>) r <des''' des''>-. }
-  \tag #'left { \clef bass r4 <des' as f> <des' as f> <des' as f> }
+  \tag #'right { \clef treble <es''' es''>4\!\sf( <des''' des''>4) r4 <des''' des''>4-. }
+  \tag #'left { \clef bass r4 <des' as f>4 <des' as f>4 <des' as f>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <des''' des''>4\sf( <c''' c''>) r <c''' c''>-. }
-  \tag #'left { \clef bass r4 <a ges es> <a ges es> <a ges es> }
+  \tag #'right { \clef treble <des''' des''>4\sf( <c''' c''>4) r4 <c''' c''>4-. }
+  \tag #'left { \clef bass r4 <a ges es>4 <a ges es>4 <a ges es>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <c''' c''>4( <bes'' bes'> <f''' f''> <es''' es''>) }
-  \tag #'left { \clef bass r4 <bes f des> <bes f des> <bes f des> }
+  \tag #'right { \clef treble <c''' c''>4( <bes'' bes'>4 <f''' f''>4 <es''' es''>4) }
+  \tag #'left { \clef bass r4 <bes f des>4 <bes f des>4 <bes f des>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <es''' es''>4( <des''' des''> <c''' c''> <bes'' bes'>) }
-  \tag #'left { \clef bass r4 <des' g! es> <des' g es> <des' g es>\once \tupletSpan 4 }
+  \tag #'right { \clef treble <es''' es''>4( <des''' des''>4 <c''' c''>4 <bes'' bes'>4) }
+  \tag #'left { \clef bass r4 <des' g! es>4 <des' g es>4 <des' g es>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <as'' as'>4 r <c'' c'>\pp-. <b' b>-. }
-  \tag #'left { \clef bass \tuplet 3/2 { as,8[c es] as,[c es] as,[c es] as,[c es] as,[c es] as,[c es] as,[c es] as,[c es] } }
-  \tag #'common { s1 s1 }
-  % |
-
-  \tag #'right { \clef treble <c'' c'>4-. r <c'' c'>-. <b' b>-. }
-  \tag #'left { \clef bass as,4 <es' c' as> <es' c' as> <es' c' as> }
+  \tag #'right { \clef treble <as'' as'>4 r4 <c'' c'>4\pp-. <b' b>4-. }
+  \tag #'left { \clef bass \tuplet 3/2 { as,8[ c8 es8] as,8[ c8 es8] as,8[ c8 es8] as,8[ c8 es8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble c''1^\markup {\translate #(cons 10 -1) {\musicglyph "scripts.turn" } } }
-  \tag #'left { \clef bass <es' c' as>4 <es' c' as> <es' c' as> <es' c' as>\once \tupletSpan 4 }
+  \tag #'right { \clef treble <c'' c'>4-. r4 <c'' c'>4-. <b' b>4-. }
+  \tag #'left { \tuplet 3/2 { as,8[ c8 es8] as,8[ c8 es8] as,8[ c8 es8] as,8[ c8 es8] } }
   \tag #'common { s1 }
-  % |
+  |
+
+  \tag #'right { \clef treble c''1^\markup \line { \translate #(cons 10 -1) \musicglyph "scripts.turn"} }
+  \tag #'left { \clef bass as,4 <es' c' as>4 <es' c' as>4 <es' c' as>4 }
+  \tag #'common { s1 }
+  |
 
   \tag #'right { \clef treble c'''2.\sf c''4 }
-  \tag #'left { \clef bass \tuplet 3/2 { g,8[c e] g,[c e] g,[c e] g,[c e] g,[c e] g,[c e] g,[c e] g,[c e] } }
-  \tag #'common { s1 s1 }
-  % |
-
-  \tag #'right { \clef treble bes'!4 r <bes' bes>4\pp-. <a' a>-. }
-  \tag #'left { \clef bass g,4 <e' bes g> <e' bes g> <e' bes g> }
+  \tag #'left { \clef bass <es' c' as>4 <es' c' as>4 <es' c' as>4 <es' c' as>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <bes' bes>4-. r <bes' bes>-. <a' a>-. }
-  \tag #'left { \clef bass <e' bes g>4 <e' bes g> <e' bes g> <e' bes g>\once \tupletSpan 4 }
+  \tag #'right { \clef treble bes'!4 r4 <bes' bes>4\pp-. <a' a>4-. }
+  \tag #'left { \clef bass \tuplet 3/2 { g,8[ c8 e8] g,8[ c8 e8] g,8[ c8 e8] g,8[ c8 e8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble bes'1^\markup {\translate #(cons 10 -1) {\musicglyph "scripts.turn" } } }
-  \tag #'left { \clef bass \tuplet 3/2 { f,8[c f] f,[c f] f,[c f] f,[c f] f,[c f] f,[c f] f,[c f] f,[c f] } }
-  \tag #'common { s1 s1 }
-  % |
+  \tag #'right { \clef treble <bes' bes>4-. r4 <bes' bes>4-. <a' a>4-. }
+  \tag #'left { \tuplet 3/2 { g,8[ c8 e8] g,8[ c8 e8] g,8[ c8 e8] g,8[ c8 e8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble bes'1^\markup \line { \translate #(cons 10 -1) \musicglyph "scripts.turn"} }
+  \tag #'left { \clef bass g,4 <e' bes g>4 <e' bes g>4 <e' bes g>4 }
+  \tag #'common { s1 }
+  |
 
   \tag #'right { \clef treble bes''2.\sf bes'4 }
-  \tag #'left { \clef bass f,4 <as f> <as f> <as f> }
+  \tag #'left { \clef bass <e' bes g>4 <e' bes g>4 <e' bes g>4 <e' bes g>4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble as'!4 r <as' as>\pp-. <g' g>-. }
-  \tag #'left { \clef bass << { <as f>4 <as f> <as f> <as f> }\\ { des1\sf } >> }
+  \tag #'right { \clef treble as'!4 r4 <as' as>4\pp-. <g' g>4-. }
+  \tag #'left { \clef bass \tuplet 3/2 { f,8[ c8 f8] f,8[ c8 f8] f,8[ c8 f8] f,8[ c8 f8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <as' as>4-. r <as' as>-. <g' g>-. }
-  \tag #'left { \clef bass << { <as ges>4 <as ges> <as ges> <as ges> }\\ { c1\sf } >> }
+  \tag #'right { \clef treble <as' as>4-. r4 <as' as>4-. <g' g>4-. }
+  \tag #'left { \tuplet 3/2 { f,8[ c8 f8] f,8[ c8 f8] f,8[ c8 f8] f,8[ c8 f8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble as'1^\markup {\translate #(cons 10 -1) {\musicglyph "scripts.turn" } } }
-  \tag #'left { \clef bass << { <as ges>4 <as ges> <as ges> <as ges> }\\ { es1\sf } >> }
+  \tag #'right { \clef treble as'1^\markup \line { \translate #(cons 10 -1) \musicglyph "scripts.turn"} }
+  \tag #'left { \clef bass f,4 <as f>4 <as f>4 <as f>4 }
   \tag #'common { s1 }
-  % |
-
-  \tag #'right { \clef treble as''2.\sf( as'4) }
-  \tag #'left { \clef bass << { <as f>4 <as f> <as f> <as f> }\\ { des1\sf } >> }
-  \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble as''2.\sf( as'4) }
-  \tag #'left { \clef bass << { <f es>4 <f es> <f es> <f es> }\\ { c1\sf } >> }
+  \tag #'left { \clef bass << { <as f>4 <as f>4 <as f>4 <as f>4 } \\ { des1\sf } >> }
   \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble as''2.\sf( as'4) }
-  \tag #'left { \clef bass << { r4 <f des> <f des> <f des> }\\ { bes,1\ff } >> }
+  \tag #'left { \clef bass << { <as ges>4 <as ges>4 <as ges>4 <as ges>4 } \\ { c1\sf } >> }
   \tag #'common { s1 }
-  % |
+  |
 
   \tag #'right { \clef treble as''2.\sf( as'4) }
-  \tag #'left { \clef bass << { r4 <g des> r <g d> }\\ { bes,2 b,2 } >> }
+  \tag #'left { \clef bass << { <as ges>4 <as ges>4 <as ges>4 <as ges>4 } \\ { es1\sf } >> }
   \tag #'common { s1 }
-  % |
+  |
+
+  \tag #'right { \clef treble as''2.\sf( as'4) }
+  \tag #'left { \clef bass << { <as f>4 <as f>4 <as f>4 <as f>4 } \\ { des1\sf } >> }
+  \tag #'common { s1 }
+  |
 
   \tag #'right { \clef treble a''2.\sf( a'4) }
-  \tag #'left { \clef bass \once \tupletSpan 4 \tuplet 3/2 { c8[e g] } r4 c'4-. c'-. }
+  \tag #'left { \clef bass << { <f es>4 <f es>4 <f es>4 <f es>4 } \\ { c1\sf } >> }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble << { bes''2.\ff }\\ { r4 bes'2 } >> <as''! as'!>4 }
-  \tag #'left { \clef bass c'4-. r c-. b,-.\once \tupletSpan 4 }
+  \tag #'right { \clef treble << { bes''2.\ff } \\ { r4 bes'2 } >> <as''! as'!>4 }
+  \tag #'left { \clef bass << { r4 <f des>4 <f des>4 <f des>4 } \\ { bes,1\ff } >> }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble g''4( g' f'' f') }
-  \tag #'left { \clef bass \tuplet 3/2 { c8[e g] } r4 c'4-. c'-. }
+  \tag #'right { \clef treble g''4( g'4 f''4 f'4) }
+  \tag #'left { \clef bass << { r4 <g des>4 r4 <g d>4 } \\ { bes,2 b,2 } >> }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble e''4\once \tupletSpan 4 \tuplet 3/2 { c'8\p [e' g'] c''[g' e'] b'[as' f'] c''[g' e'] c'[g' e'] r8 g'[e'] r as'[f'] } }
-  \tag #'left { \clef bass c'4-. r c-. b,-. }
-  \tag #'common { s1 s1 }
-  % |
-
-  \tag #'right { \clef treble r4\once \tupletSpan 4 \tuplet 3/2 { c'8[e' g'] c''[g' e'] b'[as' f'] c''[g' e'] c'[g' e'] r g'[e'] r as'[f'] r g'[e'] c''[g' e'] } }
-  \tag #'left { \clef bass << { r2 bes!4^\accent( a }\\ { c1~ } >> }
-  \tag #'common { s1 s1 s2 }
-  % |
-
-  \tag #'right { \clef treble << { des''4^\accent( c'' des'') }\\ {\override TupletNumber.transparent = ##t\once \tupletSpan 4 \tuplet 3/2 { des''8[g' e'] c''[g' e'] des''[g' e'] } } >>\once \tupletSpan 4 \tuplet 3/2 { r8 g'8[e'] } }
-  \tag #'left { \clef bass << { bes4) r bes^\accent( a }\\ { c4 c2.\sf ~ } >> }
+  \tag #'right { \clef treble e''4 \once \tupletSpan 4 \tuplet 3/2 { c'8\p[ e'8 g'8] c''8[ g'8 e'8] b'8[ as'8 f'8] } }
+  \tag #'left { \clef bass \once \tupletSpan 4 \tuplet 3/2 { c8[ e8 g8] } r4 c'4-. c'4-. }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble << { des''4^\accent( c'' des'') }\\ {\override TupletNumber.transparent = ##t\once \tupletSpan 4 \tuplet 3/2 { des''8[g' e'] c''[g' e'] des''[g' e'] } } >>\once \tupletSpan 4 \tuplet 3/2 { r8 g'8[e'] } }
-  \tag #'left { \clef bass << { bes4) r bes^\accent( a) }\\ { c4 c2.\sf } >> }
+  \tag #'right { \tuplet 3/2 { c''8[ g'8 e'8] c'8[ g'8 e'8] r8 g'8[ e'8] r8 as'8[ f'8] } }
+  \tag #'left { \clef bass c'4-. r4 c4-. b,4-. }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble << { des''4^\accent c'' des'' c'' }\\ {\override TupletNumber.transparent = ##t\once \tupletSpan 4 \tuplet 3/2 { des''8[g' e'] c''[g' e'] des''[g' e'_\markup {\italic "decresc." }] c''[g' e'] des''[g' e'] c''[g' e'] } } >> }
-  \tag #'left { \clef bass << { bes1 }\\ { c1~ } >> }
-  \tag #'common { s1 s2 }
-  % |
-
-  \tag #'right { \clef treble << { des''4 c'' }\\ { } >>\once \tupletSpan 4 \tuplet 3/2 { des''8([g' e'] c''[g' e'] des''[g' e'] c''[g' e']) des''\>([g' e'] c''[g' e'] des''[g' e'] c''[g' e'] des''[g' e'] c''[g' e'] des''[g' e'] c''[g' e'\!]) } }
-  \tag #'left { \clef bass << { g1 }\\ { c1~ } >> }
-  \tag #'common { s1 s1 s1 s2 }
-  % |
-
-  \tag #'right { \clef treble f'4\f r <f'' c'' as' f'>4-. <e'' des'' bes' g' e'>-. }
-  \tag #'left { \clef bass << { e1 }\\ { c1~ } >> }
+  \tag #'right { \clef treble r4 \once \tupletSpan 4 \tuplet 3/2 { c'8[ e'8 g'8] c''8[ g'8 e'8] b'8[ as'8 f'8] } }
+  \tag #'left { \clef bass \tuplet 3/2 { c8[ e8 g8] } r4 c'4-. c'4-. }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <f'' c'' as' f'>4-. r <c''' as'' f'' c''>-. <c''' bes'' g'' c''>-. }
-  \tag #'left { \clef bass << { bes1 }\\ { c1 } >> }
+  \tag #'right { \tuplet 3/2 { c''8[ g'8 e'8] c'8[ g'8 e'8] r8 g'8[ e'8] r8 as'8[ f'8] } }
+  \tag #'left { \clef bass c'4-. r4 c4-. b,4-. }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <c''' as'' f'' c''>4-. r <f'' c'' as' f'>-. <e'' des'' bes' g' e'>-. }
-  \tag #'left { \clef bass \once \tupletSpan 4 \tuplet 3/2 { f8[as c'] f[as c'] f[as c'] f[bes des'] f[c' as] f[c as,] f,[as, c] e,[g, c] f,[as, c] f[as c'] f[as c'] f[bes des'] f[c' as] f[c as,] f,[as, c] e,[g, c] f,[as, c] f[as c'] } }
-  \tag #'common { s1 s1 s1 s1 s2 }
-  % |
-
-  \tag #'right { \clef treble <f'' c'' as' f'>4-. r <c''' as'' f'' c''>-. <c''' bes'' g'' c''>-. }
-  \tag #'left { \clef bass << { des'4( bes) c'2 }\\ { g2\p as } >> }
+  \tag #'right { \tuplet 3/2 { r8 g'8[ e'8] c''8[ g'8 e'8] } \clef treble << { des''4^>( c''4 } \\ { \once \tupletSpan 4 \tuplet 3/2 { des''8[ g'8 e'8] c''8[ g'8 e'8] } } >> }
+  \tag #'left { \clef bass << { r2 bes!4^>( a4 } \\ { c1 ~ } >> }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <c''' as'' f'' c''>4-. r es''!\p-.( es''-.) }
-  \tag #'left { \clef bass << { des'4( bes) c'2 }\\ { g2 as } >> }
+  \tag #'right { << { des''4) } \\ { \tuplet 3/2 { des''8[ g'8 e'8] } } >> \once \tupletSpan 4 \tuplet 3/2 { r8 g'8[ e'8] } \clef treble << { des''4^>( c''4 } \\ { \once \tupletSpan 4 \tuplet 3/2 { des''8[ g'8 e'8] c''8[ g'8 e'8] } } >> }
+  \tag #'left { \clef bass << { bes4) r4 bes4^>( a4 } \\ { c4 c2.\sf ~ } >> }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble es''4( as'') es''-.( es''-.) }
-  \tag #'left { \clef bass << { des'4( bes) }\\ { g2 } >> <c' as>4( <g e> }
+  \tag #'right { << { des''4) } \\ { \tuplet 3/2 { des''8[ g'8 e'8] } } >> \once \tupletSpan 4 \tuplet 3/2 { r8 g'8[ e'8] } \clef treble << { des''4^> c''4 } \\ { \once \tupletSpan 4 \tuplet 3/2 { des''8[ g'8 e'8] c''8[ g'8 e'8] } } >> }
+  \tag #'left { \clef bass << { bes4) r4 bes4^>( a4) } \\ { c4 c2.\sf } >> }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble es''4( as'') es''( e'' }
-  \tag #'left { \clef bass <as f>4 <f des>) <e c>4-. c'-.\clef treble }
+  \tag #'right { << { des''4 c'' des'' c'' } \\ { \once \tupletSpan 4 \tuplet 3/2 { des''8[ g'8 e'8_\markup \line { \italic "decresc."}] c''8[ g'8 e'8] des''8[ g'8 e'8] c''8[ g'8 e'8] } } >> }
+  \tag #'left { \clef bass << { bes1 } \\ { c1 ~ } >> }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble f''4 g'' as'' b'') }
-  \tag #'left { \clef bass << { bes'!4( g') as'2 }\\ { e'2 f'2 } >> }
+  \tag #'right { \clef treble \once \tupletSpan 4 \tuplet 3/2 { des''8([ g'8 e'8] c''8[ g'8 e'8] } \tuplet 3/2 { des''8[ g'8 e'8] c''8[ g'8 e'8]) } }
+  \tag #'left { \clef bass << { g1 } \\ { c1 ~ } >> }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble c'''4-. r c''4-.( c''-.) }
-  \tag #'left { \clef bass c'4-.( c'-.) c'4( f')\clef treble }
+  \tag #'right { \tuplet 3/2 { des''8\>([ g'8 e'8] c''8[ g'8 e'8] } \tuplet 3/2 { des''8[ g'8 e'8] c''8[ g'8 e'8] } }
+  \tag #'left { \clef bass << { e1 } \\ { c1 ~ } >> }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble c''4( f'') r8 des'''8([c''' bes'']) }
-  \tag #'left { \clef bass << { bes'4( g') as'2 }\\ { e'2 f'2 } >> }
+  \tag #'right { \tuplet 3/2 { des''8[ g'8 e'8] c''8[ g'8 e'8] } \tuplet 3/2 { des''8[ g'8 e'8] c''8[ g'8 e'8\!]) } }
+  \tag #'left { \clef bass << { bes1 } \\ { c1 } >> }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble bes''8([as'' g'' f'']) c''4-.( c''-.) }
-  \tag #'left { \clef bass c'4-.( c'-.) c'4^\trill( f') }
+  \tag #'right { \clef treble f'4\f r4 <f'' c'' as' f'>4-. <e'' des'' bes' g' e'>4-. }
+  \tag #'left { \clef bass \once \tupletSpan 4 \tuplet 3/2 { f8[ as8 c'8] f8[ as8 c'8] f8[ as8 c'8] f8[ bes8 des'8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble c''4^\trill( f'') r8 des'''8([c''' bes'']) }
-  \tag #'left { \clef bass <g e>4\fp <g e> <as f> r }
+  \tag #'right { \clef treble <f'' c'' as' f'>4-. r4 <c''' as'' f'' c''>4-. <c''' bes'' g'' c''>4-. }
+  \tag #'left { \tuplet 3/2 { f8[ c'8 as8] f8[ c8 as,8] f,8[ as,8 c8] e,8[ g,8 c8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble bes''8([as'' g'' f'']) r8 des'''\fp( c''' bes'') }
-  \tag #'left { \clef bass <f des>4 r\once \tupletSpan 4 \tuplet 3/2 { c8[e g] c[e g] c[e g] c[f as] c[g e] c[g, e,] c,[e, g,] c,[e, g,] c,[e, g,] c[e g] c[e g] c[f as] c[g e] c[g, e,] c,[e, g,] c,[e, g,] c,[e, g,] c[g, e,] c,[e, g,] c,[e, g,] c,[e, g,] c[g, e,] c,[e, g,] c,[e, g,] c,[e, g,] c[g, e,] c,[e, g,] c[g, e,] } }
-  \tag #'common { s1 s1 s1 s1 s1 s1 s1 s2 }
-  % |
+  \tag #'right { \clef treble <c''' as'' f'' c''>4-. r4 <f'' c'' as' f'>4-. <e'' des'' bes' g' e'>4-. }
+  \tag #'left { \tuplet 3/2 { f,8[ as,8 c8] f8[ as8 c'8] f8[ as8 c'8] f8[ bes8 des'8] } }
+  \tag #'common { s1 }
+  |
 
-  \tag #'right { \clef treble bes''8([as'' g'' f''] es''![des'' c'' b']) }
+  \tag #'right { \clef treble <f'' c'' as' f'>4-. r4 <c''' as'' f'' c''>4-. <c''' bes'' g'' c''>4-. }
+  \tag #'left { \tuplet 3/2 { f8[ c'8 as8] f8[ c8 as,8] f,8[ as,8 c8] e,8[ g,8 c8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <c''' as'' f'' c''>4-. r4 es''!4\p-.( es''4-.) }
+  \tag #'left { \tuplet 3/2 { f,8[ as,8 c8] f8[ as8 c'8] } \clef bass << { des'4( bes4) } \\ { g2\p } >> }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble es''4( as''4) es''4-.( es''4-.) }
+  \tag #'left { << { c'2 } \\ { as2 } >> \clef bass << { des'4( bes4) } \\ { g2 } >> }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble es''4( as''4) es''4( e''4 }
+  \tag #'left { << { c'2 } \\ { as2 } >> \clef bass << { des'4( bes4) } \\ { g2 } >> }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble f''4 g''4 as''4 b''4) }
+  \tag #'left { <c' as>4( <g e>4 \clef bass <as f>4 <f des>4) }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble c'''4-. r4 c''4-.( c''4-.) }
+  \tag #'left { <e c>4-. c'4-. \clef bass << { bes'!4( g'4) } \\ { e'2 } >> }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble c''4( f''4) r8 des'''8([ c'''8 bes''8]) }
+  \tag #'left { << { as'2 } \\ { f'2 } >> \clef bass c'4-.( c'4-.) }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble bes''8([ as''8 g''8 f''8]) c''4-.( c''4-.) }
+  \tag #'left { c'4( f'4) \clef bass << { bes'4( g'4) } \\ { e'2 } >> }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble c''4^\trill( f''4) r8 des'''8([ c'''8 bes''8]) }
+  \tag #'left { << { as'2 } \\ { f'2 } >> \clef bass c'4-.( c'4-.) }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble bes''8([ as''8 g''8 f''8]) r8 des'''8\fp( c'''8 bes''8) }
+  \tag #'left { c'4^\trill( f'4) \clef bass <g e>4\fp <g e>4 }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble bes''8([ as''8 g''8 f''8] es''!8[ des''8 c''8 b'8]) }
+  \tag #'left { <as f>4 r4 \clef bass <f des>4 r4 }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble c''4 r4 <c'' g' e' c'>4\p-. <b' as' f' d' b>4-. }
+  \tag #'left { \once \tupletSpan 4 \tuplet 3/2 { c8[ e8 g8] c8[ e8 g8] c8[ e8 g8] c8[ f8 as8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <c'' g' e' c'>4-. r4 <e'' c'' g' e'>4\f-. <e'' c'' g' e'>4-. }
+  \tag #'left { \tuplet 3/2 { c8[ g8 e8] c8[ g,8 e,8] c,8[ e,8 g,8] c,8[ e,8 g,8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <e'' c'' g' e'>4-. r4 <c'' g' e' c'>4\p-. <b' as' f' d' b>4-. }
+  \tag #'left { \tuplet 3/2 { c,8[ e,8 g,8] c8[ e8 g8] c8[ e8 g8] c8[ f8 as8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <c'' g' e' c'>4-. r4 <g'' e'' c'' g'>4\f-. <g'' e'' c'' g'>4-. }
+  \tag #'left { \tuplet 3/2 { c8[ g8 e8] c8[ g,8 e,8] c,8[ e,8 g,8] c,8[ e,8 g,8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <g'' e'' c'' g'>4-. r4 <bes'' g'' e'' bes'>4\f-. <bes'' g'' e'' bes'>4-. }
+  \tag #'left { \tuplet 3/2 { c,8[ e,8 g,8] c8[ g,8 e,8] c,8[ e,8 g,8] c,8[ e,8 g,8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <bes'' g'' e'' bes'>4-. r4 <bes'' g'' e'' bes'>4\ff-. <bes'' g'' e'' bes'>4-. }
+  \tag #'left { \tuplet 3/2 { c,8[ e,8 g,8] c8[ g,8 e,8] c,8[ e,8 g,8] c,8[ e,8 g,8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <bes'' g'' e'' bes'>4-. r4 <bes'' g'' e'' bes'>4-. r4 }
+  \tag #'left { \tuplet 3/2 { c,8[ e,8 g,8] c8[ g,8 e,8] c,8[ e,8 g,8] c8[ g,8 e,8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble \tuplet 3/2 { bes''8\sf[ as''8 g''8] f''8[ e''8 des''8] } \tuplet 3/2 { c''8[ bes'8 as'8] g'8[ f'8 e'8] } }
   \tag #'left { \clef bass c,4 r4 r2 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble c''4 r <c'' g' e' c'>4\p-. <b' as' f' d' b>-. }
-  \tag #'left { \clef bass << { s4\override TupletNumber.transparent = ##t\override TupletBracket.transparent = ##t\once \tupletSpan 4 \tuplet 3/2 { as8[g f] } e4 r }\\ { r2\override TupletNumber.transparent = ##t\override TupletBracket.transparent = ##t\once \tupletSpan 4 \tuplet 3/2 { r8 des[c] bes,[as, g,] } } >> }
+  \tag #'right { \tuplet 3/2 { des'8[ c'8 bes8] } \clef treble s4 s2 }
+  \tag #'left { \clef bass << { s4 \once \tupletSpan 4 \tuplet 3/2 { as8[ g8 f8] } e4 r4 } \\ { r2 \once \tupletSpan 4 \tuplet 3/2 { r8 des8[ c8] bes,8[ as,8 g,8] } } >> }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <c'' g' e' c'>4-. r <e'' c'' g' e'>\f-. <e'' c'' g' e'>-. }
-  \tag #'left { \clef bass f,4( des c b, }
+  \tag #'right { \once \tupletSpan 4 \tuplet 3/2 { r8 f'8[ as'8] des'8[ f'8 as'8] } \tuplet 3/2 { c'8[ f'8 as'8] b8[ f'8 as'8] } }
+  \tag #'left { \clef bass f,4( des4 c4 b,4 }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <e'' c'' g' e'>4-. r <c'' g' e' c'>\p-. <b' as' f' d' b>-. }
-  \tag #'left { \clef bass c4 des c b,) }
+  \tag #'right { \tuplet 3/2 { c'8[ f'8 as'8] des'8[ f'8 as'8] } \tuplet 3/2 { c'8[ f'8 as'8] b8[ f'8 as'8] } }
+  \tag #'left { \clef bass c4 des4 c4 b,4) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <c'' g' e' c'>4-. r <g'' e'' c'' g'>\f-. <g'' e'' c'' g'>-. }
-  \tag #'left { \clef bass c4 <des' des>( <c' c> <b b,>) }
+  \tag #'right { \tuplet 3/2 { c'8[ f'8 as'8] des''8[ as'8 f'8] } \tuplet 3/2 { c''8[ as'8 f'8] b'8[ as'8 f'8] } }
+  \tag #'left { \clef bass c4 <des' des>4( <c' c>4 <b b,>4) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <g'' e'' c'' g'>4-. r <bes'' g'' e'' bes'>\f-. <bes'' g'' e'' bes'>-. }
-  \tag #'left { \clef bass <c' c>4( <des' des> <c' c> <b b,>) }
+  \tag #'right { \tuplet 3/2 { c''8[ as'8 f'8] des''8[ as'8 f'8] } \tuplet 3/2 { c''8[ as'8 f'8] b'8[ as'8 f'8] } }
+  \tag #'left { \clef bass <c' c>4( <des' des>4 <c' c>4 <b b,>4) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <bes'' g'' e'' bes'>4-. r <bes'' g'' e'' bes'>\ff-. <bes'' g'' e'' bes'>-. }
-  \tag #'left { \clef bass <c' c>4( des' d' es') }
+  \tag #'right { \tuplet 3/2 { c''8[ as'8 f'8] f''8[ as'8 f'8] } \tuplet 3/2 { f''8[ bes'8 as'8] es''8[ bes'8 ges'8] } }
+  \tag #'left { \clef bass <c' c>4( des'4 d'4 es'4) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <bes'' g'' e'' bes'>4-. r <bes'' g'' e'' bes'>-. r\once \tupletSpan 4 }
-  \tag #'left { \clef bass a4( bes g! as) }
+  \tag #'right { \tuplet 3/2 { es''8[ c''8 f'8] des''8[ bes'8 f'8] } \tuplet 3/2 { des''8[ bes'8 e'8] c''8[ as'8 f'8] } }
+  \tag #'left { \clef bass a4( bes4 g!4 as4) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble \tuplet 3/2 { bes''8\sf [as'' g''] f''[e'' des''] c''[bes' as'] g'[f' e'] des'[c' bes] } }
-  \tag #'left { \clef bass e4( f bes, b,) }
-  \tag #'common { s1 s4 }
-  % |
-
-  \tag #'right { \clef treble s4 s2\once \tupletSpan 4 \tuplet 3/2 { r8 f'[as'] des'[f' as'] c'[f' as'] b[f' as'] c'[f' as'] des'[f' as'] c'[f' as'] b[f' as'] c'[f' as'] des''[as' f'] c''[as' f'] b'[as' f'] c''[as' f'] des''[as' f'] c''[as' f'] b'[as' f'] c''[as' f'] f''[as' f'] f''[bes' as'] es''[bes' ges'] es''[c'' f'] des''[bes' f'] des''[bes' e'] c''[as' f'] bes'[g'! c'] as'[f' c'] g'[des' bes] f'[d' as] f'[c' as] f'[c' as] e'[c' g] e'[c' g] f'[as' c''] f''[c'' as'] f''[bes' as'] es''[bes' ges'] es''[c'' f'] des''![bes' f'] des''[bes' e'] c''[as' f'] bes'[g' c'] as'[f' c'] g'[des' bes] f'[d' as] f'[c' as] f'[c' as] e'[c' g] e'[c' g] } }
-  \tag #'left { \clef bass c,8[c c, c] c,[c c, c] }
-  \tag #'common { s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s2. }
-  % |
-
-  \tag #'right { \clef treble <f' as>4 r4 <as'' as'>4\p <as'' as'> }
-  \tag #'left { \clef bass f,4 f8([f'] d[d' es es']) }
+  \tag #'right { \tuplet 3/2 { bes'8[ g'!8 c'8] as'8[ f'8 c'8] } \tuplet 3/2 { g'8[ des'8 bes8] f'8[ d'8 as8] } }
+  \tag #'left { \clef bass e4( f4 bes,4 b,4) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <g'' g'>4( <f'' f'> <es'' es'> <des'' des'>) }
-  \tag #'left { \clef bass a,8([a bes, bes] g,![g! a, a] }
+  \tag #'right { \tuplet 3/2 { f'8[ c'8 as8] f'8[ c'8 as8] } \tuplet 3/2 { e'8[ c'8 g8] e'8[ c'8 g8] } }
+  \tag #'left { \clef bass c,8[ c8 c,8 c8] c,8[ c8 c,8 c8] }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <c'' c'>2 <f'' f'>4 <f'' f'> }
-  \tag #'left { \clef bass e,8[e f, f]) bes,,([bes, b,, b,]) }
+  \tag #'right { \tuplet 3/2 { f'8[ as'8 c''8] f''8[ c''8 as'8] } \tuplet 3/2 { f''8[ bes'8 as'8] es''8[ bes'8 ges'8] } }
+  \tag #'left { \clef bass f,4 f8([ f'8] d8[ d'8 es8 es'8]) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <es'' es'>4( <des'' des'> <c'' c'> <bes' bes>) }
-  \tag #'left { \clef bass c,8([c c, c] c,[c c, c])\once \tupletSpan 4 }
+  \tag #'right { \tuplet 3/2 { es''8[ c''8 f'8] des''!8[ bes'8 f'8] } \tuplet 3/2 { des''8[ bes'8 e'8] c''8[ as'8 f'8] } }
+  \tag #'left { \clef bass a,8([ a8 bes,8 bes8] g,!8[ g!8 a,8 a8] }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble as'!2 <c''' c''>4 <c''' c''> }
-  \tag #'left { \clef bass \tuplet 3/2 { f,8[as, c] f,[as, c] f,[as, des] f,[as, des] g,[bes, des] g,[bes, des] g,[bes, es] g,[bes, es] as,[c es] as,[c es] a,[c f] a,[c f] bes,[des f] bes,[des f] bes,[des g] bes,[des g] c[es as!] c[es as] c[es a] c[es a] des[f bes] des[f bes] d[f b] d[f b] c[f as] c[f as] c[f as] c[f as] c[e g] c[e g] c[e g] c[e g] f,[as, c] f,[as, c] f,[as, des] f,[as, des] g,[bes, des] g,[bes, des] g,[bes, es] g,[bes, es] as,[c es] as,[c es] a,[c f] a,[c f] bes,[des f] bes,[des f] bes,[des g] bes,[des g] c[es as!] c[es as] c[es a] c[es a] des[f bes] des[f bes] d[f b] d[f b] c[f as] c[f as] c[f as] c[f as] c[e g] c[e g] c[e g] c[e g] } }
-  \tag #'common { s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 s1 }
-  % |
-
-  \tag #'right { \clef treble <bes'' bes'>4( <as''! as'!> <g'' g'> <f'' f'>) }
-  \tag #'left { \clef bass <f f,>4\f r\clef treble <c'' as' f'>-. <des'' bes' f'>-. }
+  \tag #'right { \tuplet 3/2 { bes'8[ g'8 c'8] as'8[ f'8 c'8] } \tuplet 3/2 { g'8[ des'8 bes8] f'8[ d'8 as8] } }
+  \tag #'left { \clef bass e,8[ e8 f,8 f8]) bes,,8([ bes,8 b,,8 b,8]) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <c'' c'>2 <c'' c'>4-.( <c'' c'>-.) }
-  \tag #'left { \clef bass <c'' as' f'>4-. r\clef bass <c' as f>-. <c' g c>-. }
+  \tag #'right { \tuplet 3/2 { f'8[ c'8 as8] f'8[ c'8 as8] } \tuplet 3/2 { e'8[ c'8 g8] e'8[ c'8 g8] } }
+  \tag #'left { \clef bass c,8([ c8 c,8 c8] c,8[ c8 c,8 c8]) }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <c'' c'>2 <c'' c'>4-.( <c'' c'>-.) }
-  \tag #'left { \clef bass <c' as f>4-. r\clef treble <c'' as' f'>-. <des'' bes' f'>-. }
+  \tag #'right { \clef treble <f' as>4 r4 <as'' as'>4\p <as'' as'>4 }
+  \tag #'left { \clef bass \tuplet 3/2 { f,8[ as,8 c8] f,8[ as,8 c8] f,8[ as,8 des8] f,8[ as,8 des8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble f'4 r4 <as'' as'>4\p <as'' as'> }
-  \tag #'left { \clef bass <c'' as' f'>4-. r\clef bass <c' as f>-. <c' g c>-. }
+  \tag #'right { \clef treble <g'' g'>4( <f'' f'>4 <es'' es'>4 <des'' des'>4) }
+  \tag #'left { \tuplet 3/2 { g,8[ bes,8 des8] g,8[ bes,8 des8] g,8[ bes,8 es8] g,8[ bes,8 es8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <g'' g'>4( <f'' f'> <es'' es'> <des'' des'>) }
-  \tag #'left { \clef bass <c' as f>4-. r <c' as f>\ff-. <des' bes f>-. }
+  \tag #'right { \clef treble <c'' c'>2 <f'' f'>4 <f'' f'>4 }
+  \tag #'left { \tuplet 3/2 { as,8[ c8 es8] as,8[ c8 es8] a,8[ c8 f8] a,8[ c8 f8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <c'' c'>2 <f'' f'>4 <f'' f'> }
-  \tag #'left { \clef bass <c' as f>4-. r <c' as f>-. <des' bes f>-. }
+  \tag #'right { \clef treble <es'' es'>4( <des'' des'>4 <c'' c'>4 <bes' bes>4) }
+  \tag #'left { \tuplet 3/2 { bes,8[ des8 f8] bes,8[ des8 f8] bes,8[ des8 g8] bes,8[ des8 g8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble <es'' es'>4( <des'' des'> <c'' c'> <bes' bes>) }
-  \tag #'left { \clef bass <c' as f>4-. r4 r\once \tupletSpan 4 \tuplet 3/2 { f8[c as,] } }
+  \tag #'right { \clef treble as'!2 <c''' c''>4 <c''' c''>4 }
+  \tag #'left { \tuplet 3/2 { c8[ es8 as!8] c8[ es8 as8] c8[ es8 a8] c8[ es8 a8] } }
   \tag #'common { s1 }
-  % |
+  |
 
-  \tag #'right { \clef treble as'!2 <c''' c''>4 <c''' c''> }
+  \tag #'right { \clef treble <bes'' bes'>4( <as''! as'!>4 <g'' g'>4 <f'' f'>4) }
+  \tag #'left { \tuplet 3/2 { des8[ f8 bes8] des8[ f8 bes8] d8[ f8 b8] d8[ f8 b8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <c'' c'>2 <c'' c'>4-.( <c'' c'>4-.) }
+  \tag #'left { \tuplet 3/2 { c8[ f8 as8] c8[ f8 as8] c8[ f8 as8] c8[ f8 as8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <c'' c'>2 <c'' c'>4-.( <c'' c'>4-.) }
+  \tag #'left { \tuplet 3/2 { c8[ e8 g8] c8[ e8 g8] c8[ e8 g8] c8[ e8 g8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble f'4 r4 <as'' as'>4\p <as'' as'>4 }
+  \tag #'left { \tuplet 3/2 { f,8[ as,8 c8] f,8[ as,8 c8] f,8[ as,8 des8] f,8[ as,8 des8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <g'' g'>4( <f'' f'>4 <es'' es'>4 <des'' des'>4) }
+  \tag #'left { \tuplet 3/2 { g,8[ bes,8 des8] g,8[ bes,8 des8] g,8[ bes,8 es8] g,8[ bes,8 es8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <c'' c'>2 <f'' f'>4 <f'' f'>4 }
+  \tag #'left { \tuplet 3/2 { as,8[ c8 es8] as,8[ c8 es8] a,8[ c8 f8] a,8[ c8 f8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <es'' es'>4( <des'' des'>4 <c'' c'>4 <bes' bes>4) }
+  \tag #'left { \tuplet 3/2 { bes,8[ des8 f8] bes,8[ des8 f8] bes,8[ des8 g8] bes,8[ des8 g8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble as'!2 <c''' c''>4 <c''' c''>4 }
+  \tag #'left { \tuplet 3/2 { c8[ es8 as!8] c8[ es8 as8] c8[ es8 a8] c8[ es8 a8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <bes'' bes'>4( <as''! as'!>4 <g'' g'>4 <f'' f'>4) }
+  \tag #'left { \tuplet 3/2 { des8[ f8 bes8] des8[ f8 bes8] d8[ f8 b8] d8[ f8 b8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <c'' c'>2 <c'' c'>4-.( <c'' c'>4-.) }
+  \tag #'left { \tuplet 3/2 { c8[ f8 as8] c8[ f8 as8] c8[ f8 as8] c8[ f8 as8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble <c'' c'>2 <c'' c'>4-.( <c'' c'>4-.) }
+  \tag #'left { \tuplet 3/2 { c8[ e8 g8] c8[ e8 g8] c8[ e8 g8] c8[ e8 g8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \clef treble \tuplet 3/2 { f'8\f[ as'8 c''8] f''8[ as''8 c'''8] } \tuplet 3/2 { f'''8[ c'''8 as''8] e'''8[ des'''8 bes''8] } }
+  \tag #'left { \clef bass <f f,>4\f r4 \clef treble <c'' as' f'>4-. <des'' bes' f'>4-. }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \tuplet 3/2 { f'''8[ c'''8 as''8] f''8[ c''8 as'8] } \tuplet 3/2 { f'8[ as'8 c''8] e'8[ g'8 c''8] } }
+  \tag #'left { \clef bass <c'' as' f'>4-. r4 \clef bass <c' as f>4-. <c' g c>4-. }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \tuplet 3/2 { f'8[ as'8 c''8] f''8[ as''8 c'''8] } \tuplet 3/2 { f'''8[ c'''8 as''8] e'''8[ des'''8 bes''8] } }
+  \tag #'left { \clef bass <c' as f>4-. r4 \clef treble <c'' as' f'>4-. <des'' bes' f'>4-. }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \tuplet 3/2 { f'''8[ c'''8 as''8] f''8[ c''8 as'8] } \tuplet 3/2 { f'8[ as'8 c''8] e'8[ g'8 c''8] } }
+  \tag #'left { \clef bass <c'' as' f'>4-. r4 \clef bass <c' as f>4-. <c' g c>4-. }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \tuplet 3/2 { f'8[ as'8 c''8] f''8[ as''8 c'''8] } \tuplet 3/2 { f'''8\ff[ c'''8 as''8] e'''8[ des'''8 bes''8] } }
+  \tag #'left { \clef bass <c' as f>4-. r4 <c' as f>4\ff-. <des' bes f>4-. }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \tuplet 3/2 { f'''8[ c'''8 as''8] f''8[ as''8 c'''8] } \tuplet 3/2 { f'''8[ c'''8 as''8] e'''8[ des'''8 bes''8] } }
+  \tag #'left { \clef bass <c' as f>4-. r4 <c' as f>4-. <des' bes f>4-. }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { \tuplet 3/2 { f'''8[ c'''8 as''8] f''8[ c''8 as'8] } \tuplet 3/2 { f'8[ c'8 as8] } \clef treble r4 }
+  \tag #'left { \clef bass <c' as f>4-. r4 r4 \once \tupletSpan 4 \tuplet 3/2 { f8[ c8 as,8] } }
+  \tag #'common { s1 }
+  |
+
+  \tag #'right { s2 r2^\fermata }
   \tag #'left { \clef bass f,4 r4 r2^\fermata }
   \tag #'common { s1 }
-  % |
-
-  \tag #'right { \clef treble <bes'' bes'>4( <as''! as'!> <g'' g'> <f'' f'>) }
-  \tag #'left { \clef bass  }
-  \tag #'common { s1 }
-  % |
-
-  \tag #'right { \clef treble <c'' c'>2 <c'' c'>4-.( <c'' c'>-.) }
-  \tag #'left { \clef bass  }
-  \tag #'common { s1 }
-  % |
-
-  \tag #'right { \clef treble <c'' c'>2 <c'' c'>4-.( <c'' c'>-.)\once \tupletSpan 4 }
-  \tag #'left { \clef bass  }
-  \tag #'common { s1 }
-  % |
-
-  \tag #'right { \clef treble \tuplet 3/2 { f'8\f [as' c''] f''[as'' c'''] f'''[c''' as''] e'''[des''' bes''] f'''[c''' as''] f''[c'' as'] f'[as' c''] e'[g' c''] f'[as' c''] f''[as'' c'''] f'''[c''' as''] e'''[des''' bes''] f'''[c''' as''] f''[c'' as'] f'[as' c''] e'[g' c''] f'[as' c''] f''[as'' c'''] f'''\ff [c''' as''] e'''[des''' bes''] f'''[c''' as''] f''[as'' c'''] f'''[c''' as''] e'''[des''' bes''] f'''[c''' as''] f''[c'' as'] f'[c' as] } }
-  \tag #'left { \clef bass  }
-  \tag #'common { s1 s1 s1 s1 s1 s1 s2. }
-
-  \tag #'right { \clef treble r4 s4 s4 r2^\fermata }
-  \tag #'left { \clef bass  }
-  \tag #'common { s1 s4 }
+  |
 
   }
+
+  \bar "|."
 
 }
