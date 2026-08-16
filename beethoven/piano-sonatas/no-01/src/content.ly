@@ -227,7 +227,7 @@ firstMovement = {
 
   \tag #'right { \clef bass as4) r4  \clef treble\acciaccatura d'16 ces''4.( bes'8) }
   \tag #'left { \clef bass as,4 as r <ces' as f d> }
-  \tag #'common { s2 s2 \tweak extra-offset #'(-0.7 . 0) -\markup {\italic "con espressione" } }
+  \tag #'common { s2 s2 \tweak extra-offset #'(-1.2 . -0.2) -\markup {\italic "con espressione" } }
   |
 
   \tag #'right { \clef treble as'2 g'4.( es''8) }
@@ -730,7 +730,7 @@ firstMovement = {
 
   \tag #'right { \clef treble f4) r4 as'4.( g'8) }
   \tag #'left { \clef bass f,4 f r <b f des>-. }
-  \tag #'common { s2 s2 \tweak Y-offset #0 \tweak extra-offset #'(0 . 1) -\markup { \italic "con espressione" } }
+  \tag #'common { s2 s2 \tweak Y-offset #0 \tweak extra-offset #'(0 . 1) -\markup \whiteout { \italic "con espressione" } }
   |
 
   \tag #'right { \clef treble f'2 e'4.( c''8) }

@@ -55,17 +55,17 @@ firstMovement = {
 
   \tag #'right { \clef treble <f'' bes' as'>8 <bes' g'> <es'' as'>) }
   \tag #'left { \clef bass d'8 des' c') }
-  \tag #'common { s4 s8\! }
+  \tag #'common { s4 s16 s\! }
   |
 
   \tag #'right { \clef treble <as' f'>8^( <des'' bes' fes'> <c'' as' es'> }
   \tag #'left { \clef bass f8( g as) }
-  \tag #'common { s4-\p-\cresc s8\! }
+  \tag #'common { s4-\p\tweak extra-offset #'(0 . -0.5) -\cresc s16 s\! }
   |
 
   \tag #'right { \clef treble \split { <a' fis'>8 <bes' g'>16) r  es'16. es'32-. } { es'4 s8 } }
   \tag #'left { \clef bass \split { s4 es16. es32-. } { es4 r8 } }
-  \tag #'common { s4.-\p }
+  \tag #'common { s4. \tweak extra-offset #'(0 . -1) -\p }
   |
 
   \tag #'right { \clef treble \split { es'16( as') as'-. as'-. as'-. as'-. } { c'4. } }
@@ -85,22 +85,22 @@ firstMovement = {
 
   \tag #'right { \clef treble \split { des''16.[( c''32) bes'8]-. \acciaccatura { c''8 } bes'32( a' bes' c'') } { <as' es' c'>8 <g' es' bes> s } }
   \tag #'left { \clef bass <es as,>8 <es es,> r }
-  \tag #'common { s8-\sf s8 s8 }
+  \tag #'common { s8 \tweak extra-offset #'(0 . -0.6) -\sf s8 s8 }
   |
 
   \tag #'right { \clef treble <des'' as'>4( <c'' as'>8 }
   \tag #'left { \clef bass f8( f' es' }
-  \tag #'common { s4.-\cresc }
+  \tag #'common { s4. \tweak extra-offset #'(0 . 1) -\cresc }
   |
 
   \tag #'right { \clef treble <f'' bes' as'>8 <bes' g'> <es'' as'>) }
   \tag #'left { \clef bass d'8 des' c') }
-  \tag #'common { s4 s8\! }
+  \tag #'common { s4 s16 s\! }
   |
 
   \tag #'right { \clef treble \acciaccatura { bes'8 } as'32[( g' as' bes']) <c'' as' es'>8( <bes' g' des'> }
   \tag #'left { \clef bass r8 es( es,) }
-  \tag #'common { s4.\p }
+  \tag #'common { s4. \tweak extra-offset #'(0 . -1) \p }
   |
 
   \tag #'right { \clef treble <as' c'>8) r8 r }
@@ -135,7 +135,7 @@ firstMovement = {
 
   \tag #'right { \clef treble \split { <f'' f'>8[ <g'' g'>]) as''16.( f''32) } { s4 as'8 } }
   \tag #'left { \clef bass \split { c'8) c' c' } { as8 e f16 as) } }
-  \tag #'common { s4 s16 s16\! }
+  \tag #'common { s4 s16. s32\! }
   |
 
   \tag #'right { \clef treble
@@ -150,7 +150,7 @@ firstMovement = {
 
   \tag #'right { \clef treble \split { es''4( g''16. f''32) } { <g' es'>8 c'' <c'' f'> } }
   \tag #'left { \clef bass <c' c>8 <as as,> <a a,>) }
-  \tag #'common { s4-\cresc s8\!-\sf }
+  \tag #'common { s4 \tweak extra-offset #'(0 . -1.2) -\cresc s8\! \tweak extra-offset #'(0 . -1.2) -\sf }
   |
 
   \tag #'right { \clef treble
@@ -274,9 +274,9 @@ firstMovement = {
   \tag #'common { s8 s\cresc s }
   |
 
-  \tag #'right { \clef treble \split { <es' as>8 <es' bes g> \acciaccatura { c'8 } bes32[( a bes c']) } { des'16^\sf c') s4 } }
+  \tag #'right { \clef treble \split { <es' as>8 <es' bes g> \acciaccatura { c'8 } bes32[( a bes c']) } { des'16 c') s4 } }
   \tag #'left { \clef bass <es as,>8 <es es,> r }
-  \tag #'common { s8\! s s\p }
+  \tag #'common { s8\!\sf s s\p }
   |
 
   \tag #'right { \clef treble des'32[-. des'( f' as'] des''8-> c''16) r }
@@ -445,7 +445,7 @@ firstMovement = {
 
   \tag #'right { \clef treble r32 <es' c'>[ r <es' c'>] }
   \tag #'left { \clef bass <es es,>16 <es es,> }
-  \tag #'common { s8 }
+  \tag #'common { s8 \tweak extra-offset #'(0 . -1) \p }
   |
 
   \tag #'right { \clef treble r32 <es' c'>[ r <es' c'> r <es' c'> r <es' c'> r <es' c'> r <es' c'>] }
@@ -1207,7 +1207,12 @@ firstMovement = {
 
   \tag #'right { \clef treble \split { as'8 r r16 a' } { <es' c'>16 <es' c'> <es' c'> <es' c'> <es' c'> <es' c'> } }
   \tag #'left { \clef bass r8 es( as) }
-  \tag #'common { s4 s8\decresc }
+  \tag #'common {
+    s4
+    \once \override DynamicTextSpanner.bound-details.left.text = \markup \whiteout \italic "decresc."
+    \once \override DynamicTextSpanner.bound-details.left-broken.text = ##f
+    s8\decresc
+  }
   |
 
   \tag #'right { \clef treble \split { bes'8 r r16 c'' } { <es' des'>16 <es' des'> <es' des'> <es' des'> <es' des'> <es' des'> } }
@@ -1227,7 +1232,7 @@ firstMovement = {
 
   \tag #'right { \clef treble \split { as'4.~ } { <es' c'>16 <es' c'> <es' c'> <es' c'> <es' c'> <es' c'> } }
   \tag #'left { \clef bass \split { s8 as,4~ } { r8 as,( es, } }
-  \tag #'common { s4.\!\pp }
+  \tag #'common { s4.\! \tweak extra-offset #'(0.7 . 0) \pp }
   |
 
   \tag #'right { \clef treble \split { as'8 as' as' } { <es' c'>16 <es' c'> <es' c'> <es' c'> <es' c'> <es' c'> } }
@@ -1371,9 +1376,9 @@ secondMovement = {
     \tag #'common { s2 s4\f }
     |
 
-    \tag #'right { \clef treble <c'' ges'>4-. <es'' c''>-. <ges'' es''>~ }
+    \tag #'right { \clef treble <c'' ges'>4-. <es'' c''>-. <ges'' es''>~\sf }
     \tag #'left { \clef bass as,,4 as, as,, }
-    \tag #'common { s2 s4\sf }
+    \tag #'common { s2 s4 }
     |
 
     \tag #'right { \clef treble <ges'' es''>4( <f'' d''>) <d' bes>8([ <es' c'>)] }
@@ -1391,7 +1396,7 @@ secondMovement = {
     \tag #'common { s2 s4\f }
     |
 
-    \tag #'right { \clef treble <d'' as'>4-. <f'' d''>-. <as'' f''>~ }
+    \tag #'right { \clef treble <d'' as'>4-. <f'' d''>-. <as'' f''>~\sf }
     \tag #'left { \clef bass bes,,4 bes, bes,, }
     \tag #'common { s2. }
     |
@@ -1598,7 +1603,11 @@ secondMovement = {
 
     \tag #'right { \clef treble <as'' c'' as'>4-. r <bes'' g'' bes'>-. }
     \tag #'left { \clef bass as,,8([ c, es, des, c, bes,,] }
-    \tag #'common { s2 s4-\cresc }
+    \tag #'common {
+      s2
+      \once \override DynamicTextSpanner.bound-details.left.text = \markup \whiteout \italic "cresc."
+      \once \override DynamicTextSpanner.bound-details.left-broken.text = ##f
+      s4-\cresc }
     |
 
     \tag #'right { \clef treble <c''' as'' c''>4-. r <g'' bes' g'>-. }
@@ -1931,7 +1940,7 @@ thirdMovement = {
   |
 
   \tag #'right { \clef bass <es' ces' as es>4 <es' ces' as es>8.[ <es' ces' as es>16] <es' des' bes es>4 <es' ces' as es>8.[ <es' ces' as es>16] }
-  \tag #'left { \clef bass ces4.\sf\trill bes,16[ as,] g,4 as,8.[ as,16] }
+  \tag #'left { \clef bass ces4.\sf \tweak extra-offset #'(2.5 . -1) \trill bes,16[ as,] g,4 as,8.[ as,16] }
   \tag #'common { s1 }
   |
 
@@ -2137,7 +2146,7 @@ thirdMovement = {
   |
 
   \tag #'right { \clef bass <es' ces' as es>4 <es' ces' as es>8.[ <es' ces' as es>16] <es' des' bes es>4 <es' ces' as es>8.[ <es' ces' as es>16] }
-  \tag #'left { \clef bass ces4.\sf\trill bes,16[ as,] g,4 as,8.[ as,16] }
+  \tag #'left { \clef bass ces4.\sf \tweak extra-offset #'(2.5 . -1) \trill bes,16[ as,] g,4 as,8.[ as,16] }
   \tag #'common { s1 }
   |
 
