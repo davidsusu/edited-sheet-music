@@ -365,6 +365,46 @@ renderMovementForEdition =
   >>
 #})
 
+renderMovementForMidi =
+#(define-music-function (edition movementContent) (symbol? ly:music?)
+#{
+  \new PianoStaff <<
+    \new Staff = "right" <<
+      \new Voice = "right-main-voice" {
+        \keepForEdition #edition #'right $movementContent
+      }
+      \context Voice = "right-main-voice" {
+        \keepForEdition #edition #'common $movementContent
+      }
+      \context Voice = "right-middle-voice" {
+        \keepForEdition #edition #'common $movementContent
+      }
+      \context Voice = "right-lower-voice" {
+        \keepForEdition #edition #'common $movementContent
+      }
+    >>
+    \new Staff = "left" <<
+      \new Voice = "left-main-voice" {
+        \keepForEdition #edition #'left $movementContent
+      }
+      \context Voice = "left-main-voice" {
+        \keepForEdition #edition #'common $movementContent
+      }
+      \context Voice = "right-middle-voice" {
+        \keepForEdition #edition #'common $movementContent
+      }
+      \context Voice = "right-lower-voice" {
+        \keepForEdition #edition #'common $movementContent
+      }
+    >>
+  >>
+#})
+
+movementPause = {
+  \tempo 4 = 60
+  s4*5
+}
+
 renderMovement =
 #(define-music-function (movementContent) (ly:music?)
 #{

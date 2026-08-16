@@ -1,6 +1,7 @@
 \version "2.24.1"
 
 \include "content.ly"
+\include "../../shared/rectify.ly"
 
 mainEditionSubtitle = "Pragmatic edition"
 
@@ -43,20 +44,19 @@ mainHeaderData = \header {
   \score {
     \unfoldRepeats
     \articulate
+    \rectify
 
     {
-      \renderMovementForEdition #'main \firstMovement
-      \renderMovementForEdition #'main \secondMovement
-      \renderMovementForEdition #'main \thirdMovement
-      \renderMovementForEdition #'main \fourthMovement
+      \renderMovementForMidi #'main \firstMovement
+      \movementPause
+      \renderMovementForMidi #'main \secondMovement
+      \movementPause
+      \renderMovementForMidi #'main \thirdMovement
+      \movementPause
+      \renderMovementForMidi #'main \fourthMovement
     }
 
-    \midi {
-      \context {
-        \Staff
-        \accepts Dynamics
-      }
-    }
+    \midi { }
   }
 
 }
