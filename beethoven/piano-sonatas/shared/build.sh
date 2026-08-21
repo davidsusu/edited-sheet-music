@@ -41,7 +41,7 @@ BUILD_DIR="${PROJECT_DIR}/build"
 OUT_DIR="${PROJECT_DIR}/out"
 RUN_DIR="${BUILD_DIR}/current"
 OUT_STAGE_DIR="${RUN_DIR}/out"
-EXTENDED_INITIAL_PAGES=1
+EXTENDED_INITIAL_PAGES=3
 
 log() {
   printf '[build] %s\n' "$*"
@@ -127,6 +127,19 @@ ensure_lilypond_tools() {
 ensure_base_tools() {
   ensure_lilypond_tools
 
+  require_command fc-match fontconfig
+  local fontawesome_family
+  fontawesome_family="$(fc-match -f '%{family}' FontAwesome)"
+  if [[ "$fontawesome_family" != *FontAwesome* ]]; then
+    install_debian_packages fonts-font-awesome
+    fontawesome_family="$(fc-match -f '%{family}' FontAwesome)"
+  fi
+
+  if [[ "$fontawesome_family" != *FontAwesome* ]]; then
+    echo "Required font still missing after install attempt: FontAwesome" >&2
+    exit 1
+  fi
+
   if ! command -v pdflatex >/dev/null 2>&1; then
     install_debian_packages texlive-latex-base texlive-latex-recommended
   fi
@@ -136,8 +149,17 @@ ensure_base_tools() {
     exit 1
   fi
 
+  if ! kpsewhich tgschola.sty >/dev/null 2>&1; then
+    install_debian_packages texlive-fonts-recommended
+  fi
+
+  if ! kpsewhich tgschola.sty >/dev/null 2>&1; then
+    echo "Required TeX package still missing after install attempt: tgschola" >&2
+    exit 1
+  fi
+
   local missing_poppler=0
-  for command_name in pdfinfo pdftotext pdfseparate pdfunite; do
+  for command_name in pdfinfo pdftotext pdfseparate; do
     if ! command -v "$command_name" >/dev/null 2>&1; then
       missing_poppler=1
     fi
@@ -147,12 +169,15 @@ ensure_base_tools() {
     install_debian_packages poppler-utils
   fi
 
-  for command_name in pdfinfo pdftotext pdfseparate pdfunite; do
+  for command_name in pdfinfo pdftotext pdfseparate; do
     if ! command -v "$command_name" >/dev/null 2>&1; then
       echo "Required command still missing after install attempt: ${command_name}" >&2
       exit 1
     fi
   done
+
+  require_command gs ghostscript
+  require_command exiftool libimage-exiftool-perl
 }
 
 select_fluidsynth_soundfont() {
@@ -271,16 +296,6 @@ build_lilypond_view() {
   lilypond -dno-point-and-click -o "${view_dir}/${output_name}" "${SRC_DIR}/${view_name}.ly"
 }
 
-build_lilypond_debug_view() {
-  local view_name="$1"
-  local output_name="$2"
-  local view_dir="${RUN_DIR}/${output_name}"
-
-  mkdir -p "$view_dir"
-  log "Engraving ${view_name} with source links"
-  lilypond -o "${view_dir}/${output_name}" "${SRC_DIR}/${view_name}.ly"
-}
-
 build_lilypond_debug_source() {
   local source_file="$1"
   local output_name="$2"
@@ -295,12 +310,19 @@ run_quick_build() {
   local quick_source="${RUN_DIR}/main-debug.ly"
 
   prepare_build_dir
-  ensure_lilypond_tools
+  ensure_base_tools
 
-  generate_quick_main_debug_source "$quick_source"
+  generate_main_debug_source "$quick_source"
   build_lilypond_debug_source "$quick_source" main-debug
 
-  cp "${RUN_DIR}/main-debug/main-debug.pdf" "${OUT_STAGE_DIR}/main-debug.pdf"
+  assemble_publication_pdf \
+    "${RUN_DIR}/main-debug/main-debug.pdf" \
+    "${SRC_DIR}/appendix-main.tex" \
+    main-debug \
+    "Pragmatic edition" \
+    "${OUT_STAGE_DIR}/main-debug.pdf" \
+    "${RUN_DIR}/main-debug/main-debug.pdf" \
+    1
   publish_out_dir "$OUT_STAGE_DIR"
 
   log "Done"
@@ -314,7 +336,7 @@ lilypond_string_escape() {
   printf '%s' "$value"
 }
 
-generate_quick_main_debug_source() {
+generate_main_debug_source() {
   local output_source="$1"
   local escaped_content_path
 
@@ -332,34 +354,49 @@ mainHeaderData = \header {
   composer = \workComposer
   opus = \workOpus
   date = \workDate
+  pdfauthor = #(string-append workComposer "; edited by " workEditor)
+  pdfsubject = \mainEditionSubtitle
 }
 
 \book {
   \mainHeaderData
-  \editionCoverPage \workTitle \mainEditionSubtitle \workComposer \workOpus
-  \pageBreak
 
-  \score {
-    \renderMovementForEdition #'main \firstMovement
-    \defaultLayout
+  \bookpart {
+    \frontMatterPaper
+    \editionCoverPage \workTitle \mainEditionSubtitle \workComposer \workOpus
   }
-  \pageBreak
 
-  \score {
-    \renderMovementForEdition #'main \secondMovement
-    \defaultLayout
+  \bookpart {
+    \frontMatterPaper
+    \editionInfoPage \workTitle \mainEditionSubtitle \workComposer \workOpus \workDate \workEditor
   }
-  \pageBreak
 
-  \score {
-    \renderMovementForEdition #'main \thirdMovement
-    \defaultLayout
+  \bookpart {
+    \score {
+      \renderMovementForEdition #'main-debug \firstMovement
+      \defaultLayout
+    }
   }
-  \pageBreak
 
-  \score {
-    \renderMovementForEdition #'main \fourthMovement
-    \defaultLayout
+  \bookpart {
+    \score {
+      \renderMovementForEdition #'main-debug \secondMovement
+      \defaultLayout
+    }
+  }
+
+  \bookpart {
+    \score {
+      \renderMovementForEdition #'main-debug \thirdMovement
+      \defaultLayout
+    }
+  }
+
+  \bookpart {
+    \score {
+      \renderMovementForEdition #'main-debug \fourthMovement
+      \defaultLayout
+    }
   }
 }
 EOF
@@ -471,48 +508,73 @@ extendedHeaderData = \header {
   composer = \workComposer
   opus = \workOpus
   date = \workDate
+  pdfauthor = #(string-append workComposer "; edited by " workEditor)
+  pdfsubject = \extendedEditionSubtitle
 }
 
 \book {
   \extendedHeaderData
-  \editionCoverPage \workTitle \extendedEditionSubtitle \workComposer \workOpus
-  \pageBreak
 
-  \score {
-    \renderMovementForEdition #'extended \firstMovement
-    \defaultLayout
-  }
-  \pageBreak
-
-  \score {
-    \renderMovementForEdition #'extended \secondMovement
-    \defaultLayout
-  }
-  \pageBreak
-
-  \score {
-    \renderMovementForEdition #'extended \thirdMovement
-    \defaultLayout
-  }
-  \pageBreak
-
-  \score {
-    \renderMovementForEdition #'extended \fourthMovement
-    \defaultLayout
+  \bookpart {
+    \frontMatterPaper
+    \editionCoverPage \workTitle \extendedEditionSubtitle \workComposer \workOpus
   }
 
-  \pageBreak
-  \markup \column {
-    \line { "CRITICAL_NOTE_INDEX_START" }
+  \bookpart {
+    \frontMatterPaper
+    \editionInfoPage \workTitle \extendedEditionSubtitle \workComposer \workOpus \workDate \workEditor
+  }
+
+  \bookpart {
+    \frontMatterPaper
+    \markup \null
+  }
+
+  \bookpart {
+    \extendedMusicPaper
+    \score {
+      \renderMovementForEdition #'extended \firstMovement
+      \defaultLayout
+    }
+  }
+
+  \bookpart {
+    \extendedMusicPaper
+    \score {
+      \renderMovementForEdition #'extended \secondMovement
+      \defaultLayout
+    }
+  }
+
+  \bookpart {
+    \extendedMusicPaper
+    \score {
+      \renderMovementForEdition #'extended \thirdMovement
+      \defaultLayout
+    }
+  }
+
+  \bookpart {
+    \extendedMusicPaper
+    \score {
+      \renderMovementForEdition #'extended \fourthMovement
+      \defaultLayout
+    }
+  }
+
+  \bookpart {
+    \frontMatterPaper
+    \markup \column {
+      \line { "CRITICAL_NOTE_INDEX_START" }
 EOF
     while IFS=$'\t' read -r note_id marker location text; do
       [ -n "$note_id" ] || continue
-      printf "    \\\\line { \"CRITICAL_NOTE_PAGE|%s|\" \\\\page-ref #'%s \"?\" \"?\" }\n" "$note_id" "$note_id"
+      printf "      \\\\line { \"CRITICAL_NOTE_PAGE|%s|\" \\\\page-ref #'%s \"?\" \"?\" }\n" "$note_id" "$note_id"
     done < "$notes_tsv"
     cat <<'EOF'
-    \line { "CRITICAL_NOTE_INDEX_END" }
+      \line { "CRITICAL_NOTE_INDEX_END" }
+    }
   }
-
 }
 EOF
   } > "$index_source"
@@ -542,6 +604,8 @@ generate_note_pages() {
   local note_page
   local page
   local resolved_page
+  local score_display_page
+  local note_display_page
   local text
 
   pdftotext "$index_pdf" "$index_text"
@@ -602,18 +666,32 @@ generate_note_pages() {
 
   {
     cat <<'EOF'
-\documentclass[a4paper,10pt]{article}
+\documentclass[a4paper,10pt,twoside]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[margin=18mm]{geometry}
-\pagestyle{empty}
+\usepackage[margin=18mm,headheight=14pt,headsep=6mm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{multicol}
+\usepackage{tgschola}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{7pt}
+\setlength{\columnsep}{8mm}
+\raggedcolumns
 \begin{document}
 EOF
 
     for page in $(seq $((initial_pages + 1)) "$music_pages"); do
-      printf '\\thispagestyle{empty}\n'
+      score_display_page=$((2 * page - initial_pages - 1))
+      note_display_page=$((score_display_page + 1))
+      printf '\\setcounter{page}{%d}\n' "$note_display_page"
+      printf '\\fancyhf{}\n'
+      printf '\\fancyhead[LO]{\\small Extended critical edition}\n'
+      printf '\\fancyhead[RO]{\\thepage}\n'
+      printf '\\section*{Editorial notes to page %d}\n' "$score_display_page"
+      printf '\\begin{multicols}{2}\n'
+      printf '\\raggedright\n'
       found=0
 
       while IFS=$'\t' read -r note_page marker location text; do
@@ -629,6 +707,7 @@ EOF
       if [ "$found" -eq 0 ]; then
         printf '\\null\n'
       fi
+      printf '\\end{multicols}\n'
       if [ "$page" -ne "$music_pages" ]; then
         printf '\\newpage\n'
       fi
@@ -644,6 +723,138 @@ compile_latex_pdf() {
 
   mkdir -p "$output_dir"
   pdflatex -interaction=nonstopmode -halt-on-error -output-directory "$output_dir" "$tex_file" >/dev/null
+}
+
+generate_appendix_source() {
+  local body_file="$1"
+  local edition_title="$2"
+  local first_page="$3"
+  local tex_file="$4"
+  local escaped_edition_title
+
+  if [ ! -f "$body_file" ]; then
+    echo "Appendix source does not exist: ${body_file}" >&2
+    exit 1
+  fi
+
+  escaped_edition_title="$(tex_escape "$edition_title")"
+
+  cat > "$tex_file" <<EOF
+\\documentclass[a4paper,10pt,twoside]{article}
+\\usepackage[T1]{fontenc}
+\\usepackage[utf8]{inputenc}
+\\usepackage[margin=18mm,headheight=14pt,headsep=6mm]{geometry}
+\\usepackage{fancyhdr}
+\\usepackage{graphicx}
+\\usepackage{microtype}
+\\usepackage{multicol}
+\\usepackage{tgschola}
+\\setlength{\\parindent}{0pt}
+\\setlength{\\parskip}{7pt}
+\\setlength{\\columnsep}{8mm}
+\\raggedcolumns
+\\fancyhf{}
+\\fancyhead[LE,RO]{\\thepage}
+\\fancyhead[LO,RE]{\\small ${escaped_edition_title}}
+\\pagestyle{fancy}
+\\begin{document}
+\\setcounter{page}{${first_page}}
+\\section*{Editorial appendix}
+\\begin{multicols*}{2}
+\\raggedright
+\\input{${body_file}}
+\\end{multicols*}
+\\end{document}
+EOF
+}
+
+ensure_blank_page_pdf() {
+  local blank_source="${RUN_DIR}/blank-page.tex"
+  local blank_dir="${RUN_DIR}/blank-page"
+
+  if [ -f "${blank_dir}/blank-page.pdf" ]; then
+    return
+  fi
+
+  cat > "$blank_source" <<'EOF'
+\documentclass[a4paper]{article}
+\usepackage[margin=0mm]{geometry}
+\pagestyle{empty}
+\begin{document}
+\null
+\end{document}
+EOF
+  compile_latex_pdf "$blank_source" "$blank_dir"
+}
+
+copy_pdf_metadata() {
+  local source_pdf="$1"
+  local target_pdf="$2"
+
+  exiftool -overwrite_original -TagsFromFile "$source_pdf" -all:all "$target_pdf" >/dev/null
+}
+
+combine_pdfs() {
+  local output_pdf="$1"
+  local preserve_annotations="$2"
+  shift 2
+  local actual_pages
+  local expected_pages=0
+  local input_pdf
+
+  case "$preserve_annotations" in
+    1|true) preserve_annotations=true ;;
+    *) preserve_annotations=false ;;
+  esac
+
+  for input_pdf in "$@"; do
+    expected_pages=$((expected_pages + $(pdf_pages "$input_pdf")))
+  done
+
+  gs -q -dSAFER -dBATCH -dNOPAUSE \
+    -sDEVICE=pdfwrite \
+    -dCompatibilityLevel=1.5 \
+    -dAutoRotatePages=/None \
+    -dPreserveAnnots="$preserve_annotations" \
+    -sOutputFile="$output_pdf" \
+    "$@"
+
+  actual_pages="$(pdf_pages "$output_pdf")"
+  if [ "$actual_pages" -ne "$expected_pages" ]; then
+    echo "PDF assembly failed: expected ${expected_pages} pages, got ${actual_pages}." >&2
+    exit 1
+  fi
+}
+
+assemble_publication_pdf() {
+  local base_pdf="$1"
+  local appendix_body="$2"
+  local edition_name="$3"
+  local edition_title="$4"
+  local output_pdf="$5"
+  local metadata_pdf="$6"
+  local preserve_annotations="${7:-0}"
+
+  local appendix_dir="${RUN_DIR}/${edition_name}-appendix"
+  local appendix_source="${RUN_DIR}/${edition_name}-appendix.tex"
+  local base_pages
+  local first_appendix_page
+  local parts=("$base_pdf")
+
+  base_pages="$(pdf_pages "$base_pdf")"
+  first_appendix_page=$((base_pages + 1))
+  if [ $((first_appendix_page % 2)) -eq 0 ]; then
+    ensure_blank_page_pdf
+    parts+=("${RUN_DIR}/blank-page/blank-page.pdf")
+    first_appendix_page=$((first_appendix_page + 1))
+  fi
+
+  generate_appendix_source "$appendix_body" "$edition_title" "$first_appendix_page" "$appendix_source"
+  compile_latex_pdf "$appendix_source" "$appendix_dir"
+  parts+=("${appendix_dir}/${edition_name}-appendix.pdf")
+
+  combine_pdfs "$output_pdf" "$preserve_annotations" "${parts[@]}"
+  copy_pdf_metadata "$metadata_pdf" "$output_pdf"
 }
 
 assemble_extended_pdf() {
@@ -678,7 +889,7 @@ assemble_extended_pdf() {
     parts+=("${RUN_DIR}/notes-page-${notes_page}.pdf")
   done
 
-  pdfunite "${parts[@]}" "$output_pdf"
+  combine_pdfs "$output_pdf" false "${parts[@]}"
 }
 
 if [ "$QUICK" -eq 1 ]; then
@@ -690,15 +901,15 @@ prepare_build_dir
 ensure_base_tools
 ensure_audio_tools
 
+MAIN_DEBUG_SOURCE="${RUN_DIR}/main-debug.ly"
+generate_main_debug_source "$MAIN_DEBUG_SOURCE"
+
 build_lilypond_view main main
-build_lilypond_debug_view main main-debug
+build_lilypond_debug_source "$MAIN_DEBUG_SOURCE" main-debug
 build_lilypond_view urtext urtext
 build_lilypond_view extended extended-music
 
-cp "${RUN_DIR}/main/main.pdf" "${OUT_STAGE_DIR}/main.pdf"
 cp "${RUN_DIR}/main/main.midi" "${OUT_STAGE_DIR}/main.midi"
-cp "${RUN_DIR}/main-debug/main-debug.pdf" "${OUT_STAGE_DIR}/main-debug.pdf"
-cp "${RUN_DIR}/urtext/urtext.pdf" "${OUT_STAGE_DIR}/urtext.pdf"
 
 NOTES_TSV="${RUN_DIR}/critical-notes.tsv"
 INDEX_SOURCE="${RUN_DIR}/extended-index.ly"
@@ -718,7 +929,39 @@ MUSIC_PAGES="$(pdf_pages "$MUSIC_PDF")"
 
 generate_note_pages "$NOTES_TSV" "${INDEX_DIR}/extended-index.pdf" "$MUSIC_PAGES" "$EXTENDED_INITIAL_PAGES" "$NOTES_TEX"
 compile_latex_pdf "$NOTES_TEX" "$NOTES_DIR"
-assemble_extended_pdf "$MUSIC_PDF" "${NOTES_DIR}/extended-notes.pdf" "${OUT_STAGE_DIR}/extended.pdf" "$MUSIC_PAGES" "$EXTENDED_INITIAL_PAGES"
+EXTENDED_BODY_PDF="${RUN_DIR}/extended-body.pdf"
+assemble_extended_pdf "$MUSIC_PDF" "${NOTES_DIR}/extended-notes.pdf" "$EXTENDED_BODY_PDF" "$MUSIC_PAGES" "$EXTENDED_INITIAL_PAGES"
+
+log "Assembling publication PDFs"
+assemble_publication_pdf \
+  "${RUN_DIR}/main/main.pdf" \
+  "${SRC_DIR}/appendix-main.tex" \
+  main \
+  "Pragmatic edition" \
+  "${OUT_STAGE_DIR}/main.pdf" \
+  "${RUN_DIR}/main/main.pdf"
+assemble_publication_pdf \
+  "${RUN_DIR}/main-debug/main-debug.pdf" \
+  "${SRC_DIR}/appendix-main.tex" \
+  main-debug \
+  "Pragmatic edition" \
+  "${OUT_STAGE_DIR}/main-debug.pdf" \
+  "${RUN_DIR}/main-debug/main-debug.pdf" \
+  1
+assemble_publication_pdf \
+  "${RUN_DIR}/urtext/urtext.pdf" \
+  "${SRC_DIR}/appendix-urtext.tex" \
+  urtext \
+  "Urtext-ish edition" \
+  "${OUT_STAGE_DIR}/urtext.pdf" \
+  "${RUN_DIR}/urtext/urtext.pdf"
+assemble_publication_pdf \
+  "$EXTENDED_BODY_PDF" \
+  "${SRC_DIR}/appendix-extended.tex" \
+  extended \
+  "Extended critical edition" \
+  "${OUT_STAGE_DIR}/extended.pdf" \
+  "$MUSIC_PDF"
 
 log "Rendering main.wav with FluidSynth"
 WAV_RENDER="${RUN_DIR}/main-render.wav"

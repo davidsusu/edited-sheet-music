@@ -6,6 +6,7 @@ workTitle = "Piano Sonata No. 12"
 workComposer = "Ludwig van Beethoven"
 workOpus = "Op. 26"
 workDate = "1800–1801"
+workEditor = "Dávid Horváth"
 
 firstMovement = {
   \override Score.RehearsalMark.self-alignment-X = #LEFT
@@ -210,7 +211,7 @@ firstMovement = {
 
   \bar "||"
   
-  \break
+  \breakLine
 
   \mark \markup { \bold "Variation I" }
   \partial 8
@@ -439,7 +440,7 @@ firstMovement = {
 
   \bar "||"
 
-  \break
+  \breakLine
 
   \mark \markup { \bold "Variation II" }
   \partial 8
@@ -620,7 +621,7 @@ firstMovement = {
 
   \bar "||"
 
-  \break
+  \breakLine
 
   \mark \markup { \bold "Variation III" }
   \key as \minor
@@ -803,7 +804,7 @@ firstMovement = {
 
   \bar "||"
 
-  \break
+  \breakLine
 
   \mark \markup { \bold "Variation IV" }
   \key as \major
@@ -985,7 +986,7 @@ firstMovement = {
 
   \bar "||"
 
-  \break
+  \breakLine
 
   \mark \markup { \bold "Variation V" }
   \partial 8

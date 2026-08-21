@@ -11,34 +11,49 @@ mainHeaderData = \header {
   composer = \workComposer
   opus = \workOpus
   date = \workDate
+  pdfauthor = #(string-append workComposer "; edited by " workEditor)
+  pdfsubject = \mainEditionSubtitle
 }
 
 \book {
   \mainHeaderData
-  \editionCoverPage \workTitle \mainEditionSubtitle \workComposer \workOpus
-  \pageBreak
 
-  \score {
-    \renderMovementForEdition #'main \firstMovement
-    \defaultLayout
+  \bookpart {
+    \frontMatterPaper
+    \editionCoverPage \workTitle \mainEditionSubtitle \workComposer \workOpus
   }
-  \pageBreak
 
-  \score {
-    \renderMovementForEdition #'main \secondMovement
-    \defaultLayout
+  \bookpart {
+    \frontMatterPaper
+    \editionInfoPage \workTitle \mainEditionSubtitle \workComposer \workOpus \workDate \workEditor
   }
-  \pageBreak
 
-  \score {
-    \renderMovementForEdition #'main \thirdMovement
-    \defaultLayout
+  \bookpart {
+    \score {
+      \renderMovementForEdition #'main \firstMovement
+      \defaultLayout
+    }
   }
-  \pageBreak
 
-  \score {
-    \renderMovementForEdition #'main \fourthMovement
-    \defaultLayout
+  \bookpart {
+    \score {
+      \renderMovementForEdition #'main \secondMovement
+      \defaultLayout
+    }
+  }
+
+  \bookpart {
+    \score {
+      \renderMovementForEdition #'main \thirdMovement
+      \defaultLayout
+    }
+  }
+
+  \bookpart {
+    \score {
+      \renderMovementForEdition #'main \fourthMovement
+      \defaultLayout
+    }
   }
 
   \score {
@@ -58,5 +73,4 @@ mainHeaderData = \header {
 
     \midi { }
   }
-
 }

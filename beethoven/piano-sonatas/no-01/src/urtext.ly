@@ -10,34 +10,48 @@ urtextHeaderData = \header {
   composer = \workComposer
   opus = \workOpus
   date = \workDate
+  pdfauthor = #(string-append workComposer "; edited by " workEditor)
+  pdfsubject = \urtextEditionSubtitle
 }
 
 \book {
   \urtextHeaderData
-  \editionCoverPage \workTitle \urtextEditionSubtitle \workComposer \workOpus
-  \pageBreak
 
-  \score {
-    \renderMovementForEdition #'urtext \firstMovement
-    \urtextLayout
-  }
-  \pageBreak
-
-  \score {
-    \renderMovementForEdition #'urtext \secondMovement
-    \urtextLayout
-  }
-  \pageBreak
-
-  \score {
-    \renderMovementForEdition #'urtext \thirdMovement
-    \urtextLayout
-  }
-  \pageBreak
-
-  \score {
-    \renderMovementForEdition #'urtext \fourthMovement
-    \urtextLayout
+  \bookpart {
+    \frontMatterPaper
+    \editionCoverPage \workTitle \urtextEditionSubtitle \workComposer \workOpus
   }
 
+  \bookpart {
+    \frontMatterPaper
+    \editionInfoPage \workTitle \urtextEditionSubtitle \workComposer \workOpus \workDate \workEditor
+  }
+
+  \bookpart {
+    \score {
+      \renderMovementForEdition #'urtext \firstMovement
+      \urtextLayout
+    }
+  }
+
+  \bookpart {
+    \score {
+      \renderMovementForEdition #'urtext \secondMovement
+      \urtextLayout
+    }
+  }
+
+  \bookpart {
+    \score {
+      \renderMovementForEdition #'urtext \thirdMovement
+      \urtextLayout
+    }
+  }
+
+  \bookpart {
+    \score {
+      \renderMovementForEdition #'urtext \fourthMovement
+      \urtextLayout
+    }
+  }
 }

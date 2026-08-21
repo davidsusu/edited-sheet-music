@@ -7,6 +7,7 @@ workTitle = "Piano Sonata No. 1"
 workComposer = "Ludwig van Beethoven"
 workOpus = "Op. 2 No. 1"
 workDate = "1794-1795"
+workEditor = "Dávid Horváth"
 
 firstMovement = {
   \mark \markup { \bold "Allegro" }
@@ -159,6 +160,8 @@ firstMovement = {
   \tag #'common { s1 }
   |
 
+  \breakLine
+
   \tag #'right { \clef treble es''4 r r8 d''8\<( as''\!\> d''\!) }
   \tag #'left { \clef bass es8 es' g es' f d' as d' }
   \tag #'common { s1 }
@@ -208,6 +211,8 @@ firstMovement = {
   \tag #'left { \clef bass c,4 es,2\sf as,4 }
   \tag #'common { s1\f }
   |
+
+  \breakLine
 
   \tag #'right { \clef treble g''8 f'' es'' des'' c'' bes' as' g' }
   \tag #'left { \clef bass des,4 f,2\sf bes,4 }
@@ -264,7 +269,7 @@ firstMovement = {
   \tag #'common { s2.\!\p }
   }
 
-  \break
+  \breakLine
 
   \repeat volta 2 {
   \tag #'right { \clef treble es'4-. }
@@ -944,7 +949,7 @@ secondMovement = {
   \tag #'common { s2. }
   |
 
-  \break
+  \breakLine
 
   \tag #'right { \clef bass \split { c'4\( b\) } { <g f d>2 } <b g f d>4 }
   \tag #'left { \clef bass <g, g,,>4 ~ <g, g,,>16\( a,,32 b,, c, d, e, f,\) g,\( fis, g, a, g, f, e, d,\) }
@@ -1222,7 +1227,7 @@ thirdMovement = {
   \tag #'common { s2. }
   |
 
-  \break 
+  \breakLine
   \tag #'right { \clef treble \once \override Score .NonMusicalPaperColumn .line-break-system-details = #'((alignment-distances . (12))) }
 
   \tag #'right { <ges'' es''>4( <es'' c''>) r }
@@ -1295,12 +1300,12 @@ thirdMovement = {
   \tag #'common { s2. }
   |
 
-  \tag #'right { \clef treble des'''4( bes'') \afterGrace bes''4^\trill { as''16[ bes''] }\break }
+  \tag #'right { \clef treble des'''4( bes'') \afterGrace bes''4^\trill { as''16[ bes''] }\breakLine }
   \tag #'left { \clef bass <g e>4( <bes g>) <bes g> }
   \tag #'common { s2.\sf }
   |
 
-  \break 
+  \breakLine
   \tag #'right { \clef treble \once \override Score .NonMusicalPaperColumn .line-break-system-details = #'((alignment-distances . (12))) }
 
   \tag #'right { \clef treble c'''4( as'') \afterGrace as''4^\trill { g''16[ as''] } }
@@ -1349,7 +1354,7 @@ thirdMovement = {
 
   }
 
-  \break
+  \breakLine
   \key f \major
   \tag #'common { \textMark \markup { "Trio" } }
 
@@ -1887,7 +1892,7 @@ fourthMovement = {
 
   \repeat volta 2 {
 
-  \break
+  \breakLine
 
   \tag #'right { \clef treble \shape #'((0 . -2.2) (0 . -2) (0 . 0) (0 . 0)) Slur es'1^( }
   \tag #'left { \clef bass r4 <c' as> <c' as> <c' as> }
@@ -2139,7 +2144,7 @@ fourthMovement = {
   \tag #'common { s1 }
   |
 
-  \break
+  \breakLine
 
   \tag #'right { \clef treble <as'' as'>4 r <c'' c'>-. <b' b>-. }
   \tag #'left { \clef bass \once \tupletSpan 4 \tuplet 3/2 {
@@ -2243,7 +2248,7 @@ fourthMovement = {
   \tag #'common { s4 s2.\p }
   |
 
-  \break
+  \breakLine
 
   \tag #'right { \clef treble \once \tupletSpan 4 \tuplet 3/2 { c''8[ g' e'] c'[ g' e'] r g'[ e'] r as'[ f'] } }
   \tag #'left { \clef bass c'4-. r c-. b,-. }
@@ -2410,7 +2415,7 @@ fourthMovement = {
   \tag #'common { s1 }
   |
 
-  \break
+  \breakLine
 
   \tag #'right { \clef treble \once \tupletSpan 4 \tuplet 3/2 { r8 f'[ as'] des'[ f' as'] } \once \tupletSpan 4 \tuplet 3/2 { c'8[ f' as'] b[ f' as'] } }
   \tag #'left { \clef bass f,4( des c b, }

@@ -10,34 +10,57 @@ extendedHeaderData = \header {
   composer = \workComposer
   opus = \workOpus
   date = \workDate
+  pdfauthor = #(string-append workComposer "; edited by " workEditor)
+  pdfsubject = \extendedEditionSubtitle
 }
 
 \book {
   \extendedHeaderData
-  \editionCoverPage \workTitle \extendedEditionSubtitle \workComposer \workOpus
-  \pageBreak
 
-  \score {
-    \renderMovementForEdition #'extended \firstMovement
-    \defaultLayout
-  }
-  \pageBreak
-
-  \score {
-    \renderMovementForEdition #'extended \secondMovement
-    \defaultLayout
-  }
-  \pageBreak
-
-  \score {
-    \renderMovementForEdition #'extended \thirdMovement
-    \defaultLayout
-  }
-  \pageBreak
-
-  \score {
-    \renderMovementForEdition #'extended \fourthMovement
-    \defaultLayout
+  \bookpart {
+    \frontMatterPaper
+    \editionCoverPage \workTitle \extendedEditionSubtitle \workComposer \workOpus
   }
 
+  \bookpart {
+    \frontMatterPaper
+    \editionInfoPage \workTitle \extendedEditionSubtitle \workComposer \workOpus \workDate \workEditor
+  }
+
+  \bookpart {
+    \frontMatterPaper
+    \markup \null
+  }
+
+  \bookpart {
+    \extendedMusicPaper
+    \score {
+      \renderMovementForEdition #'extended \firstMovement
+      \defaultLayout
+    }
+  }
+
+  \bookpart {
+    \extendedMusicPaper
+    \score {
+      \renderMovementForEdition #'extended \secondMovement
+      \defaultLayout
+    }
+  }
+
+  \bookpart {
+    \extendedMusicPaper
+    \score {
+      \renderMovementForEdition #'extended \thirdMovement
+      \defaultLayout
+    }
+  }
+
+  \bookpart {
+    \extendedMusicPaper
+    \score {
+      \renderMovementForEdition #'extended \fourthMovement
+      \defaultLayout
+    }
+  }
 }

@@ -2,6 +2,30 @@
 
 \paper {
   bookTitleMarkup = \markup \null
+  tagline = ##f
+}
+
+frontMatterPaper = \paper {
+  print-page-number = ##f
+  oddHeaderMarkup = ##f
+  evenHeaderMarkup = ##f
+  oddFooterMarkup = ##f
+  evenFooterMarkup = ##f
+}
+
+#(define-markup-command (facingScorePageNumber layout props initial-pages) (integer?)
+   (let* ((source-page (chain-assoc-get 'page:page-number props 0))
+          (printed-page (- (* 2 source-page) initial-pages 1)))
+     (interpret-markup layout props
+       (make-simple-markup (number->string printed-page)))))
+
+extendedMusicPaper = \paper {
+  oddHeaderMarkup = \markup \fill-line {
+    \facingScorePageNumber #3
+    \fromproperty #'header:instrument
+    ""
+  }
+  evenHeaderMarkup = \oddHeaderMarkup
 }
 
 editionCoverPage =
@@ -17,6 +41,35 @@ editionCoverPage =
       \line { #composer }
       \line { #opus }
     }
+  }
+#})
+
+editionInfoPage =
+#(define-scheme-function (title subtitle composer opus date editor)
+   (string? string? string? string? string? string?)
+#{
+  \markup \fill-line {
+    \null
+    \override #'(baseline-skip . 3.2)
+    \column {
+      \vspace #4
+      \line { \abs-fontsize #17 \bold "Publication information" }
+      \vspace #2
+      \line { \bold "Work" }
+      \line { #title }
+      \line { #composer }
+      \line { #opus }
+      \line { #date }
+      \vspace #1
+      \line { \bold "Edition" }
+      \line { #subtitle }
+      \vspace #1
+      \line { \bold "Editor" }
+      \line { #editor }
+      \vspace #2
+      \line { #(format #f "Engraved with GNU LilyPond ~a." (lilypond-version)) }
+    }
+    \null
   }
 #})
 
@@ -306,8 +359,8 @@ altFinger =
                'text (markup #:altFingerMarkup spec)))
 
 #(define edition-staff-tags '(score right left common))
-#(define edition-content-tags '(urtext main main-only extended critical fingering))
-#(define edition-exclusive-tags '(urtext main-only extended critical))
+#(define edition-content-tags '(urtext main main-only extended critical fingering debug))
+#(define edition-exclusive-tags '(urtext main-only extended critical debug))
 
 #(define (tags-contain-any? tags candidates)
    (any (lambda (tag) (memq tag candidates)) tags))
@@ -319,6 +372,7 @@ altFinger =
    (case edition
      ((urtext) '(urtext))
      ((main) '(main main-only fingering))
+     ((main-debug) '(main main-only fingering debug))
      ((extended) '(main extended critical fingering))
      (else (list edition))))
 
@@ -354,6 +408,39 @@ critRef =
 #{
   \label #id
 #})
+
+breakLine = {
+  \tag #'common {
+    \tag #'debug {
+      \tweak self-alignment-X #LEFT
+      \tweak extra-offset #'(0.4 . 0)
+      \tweak outside-staff-priority ##f
+      \textEndMark \markup
+        \with-dimensions #'(0 . 0) #'(0 . 0)
+        \with-color #(x11-color 'grey60)
+        \fontsize #-1
+        "↲"
+    }
+    \break
+  }
+}
+
+breakPage = {
+  \tag #'common {
+    \tag #'debug {
+      \tweak self-alignment-X #LEFT
+      \tweak extra-offset #'(0.4 . 0)
+      \tweak outside-staff-priority ##f
+      \textEndMark \markup
+        \with-dimensions #'(0 . 0) #'(0 . 0)
+        \with-color #(x11-color 'grey60)
+        \override #'(font-name . "FontAwesome")
+        \fontsize #-3
+        \char ##xF016
+    }
+    \pageBreak
+  }
+}
 
 renderMovementForEdition = 
 #(define-music-function (edition movementContent) (symbol? ly:music?)
