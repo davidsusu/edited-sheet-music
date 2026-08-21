@@ -10,6 +10,7 @@ workDate = "1800–1801"
 firstMovement = {
   \override Score.RehearsalMark.self-alignment-X = #LEFT
   \set Score.tempoHideNote = ##t
+  \set Score.alternativeNumberingStyle = #'numbers
 
   \mark \markup { \bold "Andante con variazioni" }
   \tempo 8 = 90
@@ -1258,6 +1259,7 @@ firstMovement = {
 secondMovement = {
   \override Score.RehearsalMark.self-alignment-X = #LEFT
   \set Score.tempoHideNote = ##t
+  \set Score.alternativeNumberingStyle = #'numbers
 
   \mark \markup { \bold "Scherzo. Allegro molto" }
   \tempo 4 = 280
@@ -1806,6 +1808,7 @@ secondMovement = {
 thirdMovement = {
   \override Score.RehearsalMark.self-alignment-X = #LEFT
   \set Score.tempoHideNote = ##t
+  \set Score.alternativeNumberingStyle = #'numbers
 
   \mark \markup {
     \column {
@@ -2227,6 +2230,7 @@ thirdMovement = {
 fourthMovement = {
   \override Score.RehearsalMark.self-alignment-X = #LEFT
   \set Score.tempoHideNote = ##t
+  \set Score.alternativeNumberingStyle = #'numbers
 
   \mark \markup { \bold "Allegro" }
   \tempo 4 = 144
