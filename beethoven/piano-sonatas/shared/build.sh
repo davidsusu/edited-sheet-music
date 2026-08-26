@@ -296,6 +296,16 @@ build_lilypond_view() {
   lilypond -dno-point-and-click -o "${view_dir}/${output_name}" "${SRC_DIR}/${view_name}.ly"
 }
 
+build_lilypond_source() {
+  local source_file="$1"
+  local output_name="$2"
+  local view_dir="${RUN_DIR}/${output_name}"
+
+  mkdir -p "$view_dir"
+  log "Engraving ${output_name}"
+  lilypond -dno-point-and-click -o "${view_dir}/${output_name}" "$source_file"
+}
+
 build_lilypond_debug_source() {
   local source_file="$1"
   local output_name="$2"
@@ -312,17 +322,9 @@ run_quick_build() {
   prepare_build_dir
   ensure_base_tools
 
-  generate_main_debug_source "$quick_source"
+  generate_bare_view_source main-debug "$quick_source"
   build_lilypond_debug_source "$quick_source" main-debug
-
-  assemble_publication_pdf \
-    "${RUN_DIR}/main-debug/main-debug.pdf" \
-    "${SRC_DIR}/appendix-main.tex" \
-    main-debug \
-    "Pragmatic edition" \
-    "${OUT_STAGE_DIR}/main-debug.pdf" \
-    "${RUN_DIR}/main-debug/main-debug.pdf" \
-    1
+  cp "${RUN_DIR}/main-debug/main-debug.pdf" "${OUT_STAGE_DIR}/main-debug.pdf"
   publish_out_dir "$OUT_STAGE_DIR"
 
   log "Done"
@@ -336,68 +338,93 @@ lilypond_string_escape() {
   printf '%s' "$value"
 }
 
-generate_main_debug_source() {
-  local output_source="$1"
+generate_bare_view_source() {
+  local edition="$1"
+  local output_source="$2"
   local escaped_content_path
+  local layout
+  local render_edition
+  local subtitle
 
   escaped_content_path="$(lilypond_string_escape "$SRC_DIR/content.ly")"
+
+  case "$edition" in
+    main)
+      subtitle="Pragmatic edition"
+      render_edition="main"
+      layout="defaultLayout"
+      ;;
+    main-debug)
+      subtitle="Pragmatic edition"
+      render_edition="main-debug"
+      layout="defaultLayout"
+      ;;
+    urtext)
+      subtitle="Urtext-ish edition"
+      render_edition="urtext"
+      layout="urtextLayout"
+      ;;
+    extended)
+      subtitle="Extended critical edition"
+      render_edition="extended"
+      layout="defaultLayout"
+      ;;
+    *)
+      echo "Unknown bare edition: ${edition}" >&2
+      exit 1
+      ;;
+  esac
 
   {
     printf '\\version "2.24.1"\n\n'
     printf '\\include "%s"\n\n' "$escaped_content_path"
+    printf 'bareEditionSubtitle = "%s"\n\n' "$subtitle"
     cat <<'EOF'
-mainEditionSubtitle = "Pragmatic edition"
-
-mainHeaderData = \header {
+bareHeaderData = \header {
   title = \workTitle
-  subtitle = \mainEditionSubtitle
+  subtitle = \bareEditionSubtitle
   composer = \workComposer
   opus = \workOpus
   date = \workDate
   pdfauthor = #(string-append workComposer "; edited by " workEditor)
-  pdfsubject = \mainEditionSubtitle
+  pdfsubject = \bareEditionSubtitle
 }
+EOF
+
+    if [ "$edition" = "extended" ]; then
+      cat <<'EOF'
+
+extendedBareMusicPaper = \paper {
+  oddHeaderMarkup = \markup \fill-line {
+    \facingScorePageNumber #0
+    \fromproperty #'header:instrument
+    ""
+  }
+  evenHeaderMarkup = \oddHeaderMarkup
+}
+EOF
+    fi
+
+    cat <<'EOF'
 
 \book {
-  \mainHeaderData
+  \bareHeaderData
+EOF
 
-  \bookpart {
-    \frontMatterPaper
-    \editionCoverPage \workTitle \mainEditionSubtitle \workComposer \workOpus
-  }
+    local movement
+    for movement in firstMovement secondMovement thirdMovement fourthMovement; do
+      printf '\n  \\bookpart {\n'
+      if [ "$edition" = "extended" ]; then
+        printf '    \\extendedBareMusicPaper\n'
+      fi
+      printf '    \\score {\n'
+      printf '%s\n' "      \\renderMovementForEdition #'${render_edition} \\${movement}"
+      printf '      \\%s\n' "$layout"
+      printf '    }\n'
+      printf '  }\n'
+    done
 
-  \bookpart {
-    \frontMatterPaper
-    \editionInfoPage \workTitle \mainEditionSubtitle \workComposer \workOpus \workDate \workEditor
-  }
-
-  \bookpart {
-    \score {
-      \renderMovementForEdition #'main-debug \firstMovement
-      \defaultLayout
-    }
-  }
-
-  \bookpart {
-    \score {
-      \renderMovementForEdition #'main-debug \secondMovement
-      \defaultLayout
-    }
-  }
-
-  \bookpart {
-    \score {
-      \renderMovementForEdition #'main-debug \thirdMovement
-      \defaultLayout
-    }
-  }
-
-  \bookpart {
-    \score {
-      \renderMovementForEdition #'main-debug \fourthMovement
-      \defaultLayout
-    }
-  }
+    cat <<'EOF'
 }
 EOF
   } > "$output_source"
@@ -488,6 +515,7 @@ extract_critical_notes() {
 generate_extended_index_source() {
   local notes_tsv="$1"
   local index_source="$2"
+  local initial_pages="${3:-$EXTENDED_INITIAL_PAGES}"
   local escaped_content_path
   local marker
   local location
@@ -514,7 +542,10 @@ extendedHeaderData = \header {
 
 \book {
   \extendedHeaderData
+EOF
 
+    if [ "$initial_pages" -gt 0 ]; then
+      cat <<'EOF'
   \bookpart {
     \frontMatterPaper
     \editionCoverPage \workTitle \extendedEditionSubtitle \workComposer \workOpus
@@ -529,38 +560,35 @@ extendedHeaderData = \header {
     \frontMatterPaper
     \markup \null
   }
+EOF
+    else
+      cat <<'EOF'
 
-  \bookpart {
-    \extendedMusicPaper
-    \score {
-      \renderMovementForEdition #'extended \firstMovement
-      \defaultLayout
+  \paper {
+    oddHeaderMarkup = \markup \fill-line {
+      \facingScorePageNumber #0
+      \fromproperty #'header:instrument
+      ""
     }
+    evenHeaderMarkup = \oddHeaderMarkup
   }
+EOF
+    fi
 
-  \bookpart {
-    \extendedMusicPaper
-    \score {
-      \renderMovementForEdition #'extended \secondMovement
-      \defaultLayout
-    }
-  }
+    local movement
+    for movement in firstMovement secondMovement thirdMovement fourthMovement; do
+      printf '\n  \\bookpart {\n'
+      if [ "$initial_pages" -gt 0 ]; then
+        printf '    \\extendedMusicPaper\n'
+      fi
+      printf '    \\score {\n'
+      printf '%s\n' "      \\renderMovementForEdition #'extended \\${movement}"
+      printf '      \\defaultLayout\n'
+      printf '    }\n'
+      printf '  }\n'
+    done
 
-  \bookpart {
-    \extendedMusicPaper
-    \score {
-      \renderMovementForEdition #'extended \thirdMovement
-      \defaultLayout
-    }
-  }
-
-  \bookpart {
-    \extendedMusicPaper
-    \score {
-      \renderMovementForEdition #'extended \fourthMovement
-      \defaultLayout
-    }
-  }
+    cat <<'EOF'
 
   \bookpart {
     \frontMatterPaper
@@ -901,36 +929,67 @@ prepare_build_dir
 ensure_base_tools
 ensure_audio_tools
 
+MAIN_BARE_SOURCE="${RUN_DIR}/main-bare.ly"
 MAIN_DEBUG_SOURCE="${RUN_DIR}/main-debug.ly"
-generate_main_debug_source "$MAIN_DEBUG_SOURCE"
+URTEXT_BARE_SOURCE="${RUN_DIR}/urtext-bare.ly"
+EXTENDED_BARE_SOURCE="${RUN_DIR}/extended-bare.ly"
+
+generate_bare_view_source main "$MAIN_BARE_SOURCE"
+generate_bare_view_source main-debug "$MAIN_DEBUG_SOURCE"
+generate_bare_view_source urtext "$URTEXT_BARE_SOURCE"
+generate_bare_view_source extended "$EXTENDED_BARE_SOURCE"
 
 build_lilypond_view main main
+build_lilypond_source "$MAIN_BARE_SOURCE" main-bare
 build_lilypond_debug_source "$MAIN_DEBUG_SOURCE" main-debug
 build_lilypond_view urtext urtext
+build_lilypond_source "$URTEXT_BARE_SOURCE" urtext-bare
 build_lilypond_view extended extended-music
+build_lilypond_source "$EXTENDED_BARE_SOURCE" extended-bare-music
 
 cp "${RUN_DIR}/main/main.midi" "${OUT_STAGE_DIR}/main.midi"
+cp "${RUN_DIR}/main-bare/main-bare.pdf" "${OUT_STAGE_DIR}/main-bare.pdf"
+cp "${RUN_DIR}/main-debug/main-debug.pdf" "${OUT_STAGE_DIR}/main-debug.pdf"
+cp "${RUN_DIR}/urtext-bare/urtext-bare.pdf" "${OUT_STAGE_DIR}/urtext-bare.pdf"
 
 NOTES_TSV="${RUN_DIR}/critical-notes.tsv"
 INDEX_SOURCE="${RUN_DIR}/extended-index.ly"
 INDEX_DIR="${RUN_DIR}/extended-index"
 NOTES_TEX="${RUN_DIR}/extended-notes.tex"
 NOTES_DIR="${RUN_DIR}/extended-notes"
+BARE_INDEX_SOURCE="${RUN_DIR}/extended-bare-index.ly"
+BARE_INDEX_DIR="${RUN_DIR}/extended-bare-index"
+BARE_NOTES_TEX="${RUN_DIR}/extended-bare-notes.tex"
+BARE_NOTES_DIR="${RUN_DIR}/extended-bare-notes"
 
 extract_critical_notes "$NOTES_TSV"
-generate_extended_index_source "$NOTES_TSV" "$INDEX_SOURCE"
+generate_extended_index_source "$NOTES_TSV" "$INDEX_SOURCE" "$EXTENDED_INITIAL_PAGES"
+generate_extended_index_source "$NOTES_TSV" "$BARE_INDEX_SOURCE" 0
 
 mkdir -p "$INDEX_DIR"
 log "Resolving critical note pages"
 lilypond -dno-point-and-click -o "${INDEX_DIR}/extended-index" "$INDEX_SOURCE"
 
+mkdir -p "$BARE_INDEX_DIR"
+log "Resolving bare critical note pages"
+lilypond -dno-point-and-click -o "${BARE_INDEX_DIR}/extended-bare-index" "$BARE_INDEX_SOURCE"
+
 MUSIC_PDF="${RUN_DIR}/extended-music/extended-music.pdf"
 MUSIC_PAGES="$(pdf_pages "$MUSIC_PDF")"
+BARE_MUSIC_PDF="${RUN_DIR}/extended-bare-music/extended-bare-music.pdf"
+BARE_MUSIC_PAGES="$(pdf_pages "$BARE_MUSIC_PDF")"
 
 generate_note_pages "$NOTES_TSV" "${INDEX_DIR}/extended-index.pdf" "$MUSIC_PAGES" "$EXTENDED_INITIAL_PAGES" "$NOTES_TEX"
 compile_latex_pdf "$NOTES_TEX" "$NOTES_DIR"
 EXTENDED_BODY_PDF="${RUN_DIR}/extended-body.pdf"
 assemble_extended_pdf "$MUSIC_PDF" "${NOTES_DIR}/extended-notes.pdf" "$EXTENDED_BODY_PDF" "$MUSIC_PAGES" "$EXTENDED_INITIAL_PAGES"
+
+generate_note_pages "$NOTES_TSV" "${BARE_INDEX_DIR}/extended-bare-index.pdf" "$BARE_MUSIC_PAGES" 0 "$BARE_NOTES_TEX"
+compile_latex_pdf "$BARE_NOTES_TEX" "$BARE_NOTES_DIR"
+EXTENDED_BARE_PDF="${RUN_DIR}/extended-bare.pdf"
+assemble_extended_pdf "$BARE_MUSIC_PDF" "${BARE_NOTES_DIR}/extended-bare-notes.pdf" "$EXTENDED_BARE_PDF" "$BARE_MUSIC_PAGES" 0
+cp "$EXTENDED_BARE_PDF" "${OUT_STAGE_DIR}/extended-bare.pdf"
+copy_pdf_metadata "$BARE_MUSIC_PDF" "${OUT_STAGE_DIR}/extended-bare.pdf"
 
 log "Assembling publication PDFs"
 assemble_publication_pdf \
@@ -940,14 +999,6 @@ assemble_publication_pdf \
   "Pragmatic edition" \
   "${OUT_STAGE_DIR}/main.pdf" \
   "${RUN_DIR}/main/main.pdf"
-assemble_publication_pdf \
-  "${RUN_DIR}/main-debug/main-debug.pdf" \
-  "${SRC_DIR}/appendix-main.tex" \
-  main-debug \
-  "Pragmatic edition" \
-  "${OUT_STAGE_DIR}/main-debug.pdf" \
-  "${RUN_DIR}/main-debug/main-debug.pdf" \
-  1
 assemble_publication_pdf \
   "${RUN_DIR}/urtext/urtext.pdf" \
   "${SRC_DIR}/appendix-urtext.tex" \
