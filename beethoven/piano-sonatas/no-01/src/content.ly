@@ -1,7 +1,7 @@
 
 \version "2.24.1"
 
-\include "../../shared/lib.ly"
+\include "../../shared/src/lilypond/lib.ly"
 
 workTitle = "Piano Sonata No. 1"
 workComposer = "Ludwig van Beethoven"

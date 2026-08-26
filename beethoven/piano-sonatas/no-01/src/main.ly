@@ -1,7 +1,7 @@
 \version "2.24.1"
 
 \include "content.ly"
-\include "../../shared/rectify.ly"
+\include "../../shared/src/lilypond/rectify.ly"
 
 mainEditionSubtitle = "Pragmatic edition"
 
