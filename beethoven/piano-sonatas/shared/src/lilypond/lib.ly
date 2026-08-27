@@ -358,7 +358,7 @@ altFinger =
                'tags '(fingering)
                'text (markup #:altFingerMarkup spec)))
 
-#(define edition-staff-tags '(score right left common))
+#(define edition-staff-tags '(score right left common layout))
 #(define edition-content-tags '(urtext main main-only extended critical fingering debug))
 #(define edition-exclusive-tags '(urtext main-only extended critical debug))
 
@@ -380,6 +380,7 @@ altFinger =
    (let ((staff-tags (matching-tags tags edition-staff-tags)))
      (or (null? staff-tags)
          (memq 'score staff-tags)
+         (and (eq? staff 'right) (memq 'layout staff-tags))
          (memq staff staff-tags))))
 
 #(define (edition-content-visible? tags edition)
@@ -410,7 +411,7 @@ critRef =
 #})
 
 breakLine = {
-  \tag #'common {
+  \tag #'layout {
     \tag #'debug {
       \tweak self-alignment-X #LEFT
       \tweak extra-offset #'(0.4 . 0)
@@ -426,7 +427,7 @@ breakLine = {
 }
 
 breakPage = {
-  \tag #'common {
+  \tag #'layout {
     \tag #'debug {
       \tweak self-alignment-X #LEFT
       \tweak extra-offset #'(0.4 . 0)
