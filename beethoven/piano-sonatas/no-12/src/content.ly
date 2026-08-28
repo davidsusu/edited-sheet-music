@@ -992,9 +992,7 @@ firstMovement = {
   \partial 8
   
   \set Timing.beamExceptions = \beamExceptions {
-    \tuplet 3/2 { 16[ 16 16] }
-    \tuplet 3/2 { 16[ 16 16] }
-    \tuplet 3/2 { 16[ 16 16] } |
+    \tuplet 3/2 8 { 16[ 16 16] 16[ 16 16] 16[ 16 16] } |
   }
 
   \tag #'right { \clef treble \tuplet 3/2 { c'16( f' es' } }
@@ -1002,43 +1000,43 @@ firstMovement = {
   \tag #'common { s8\p }
   |
 
-  \tag #'right { \clef treble \tuplet 3/2 { c'16 f' es' } \tuplet 3/2 { c'16 bes' as' } \tuplet 3/2 { c'16 bes' as') } }
-  \tag #'left { \clef bass \tuplet 3/2 { as,16( es as } \tuplet 3/2 { as,16 es as } \tuplet 3/2 { as,16 es as) } }
+  \tag #'right { \clef treble \tuplet 3/2 8 { c'16 f' es' c' bes' as' c' bes' as') } }
+  \tag #'left { \clef bass \tuplet 3/2 8 { as,16( es as as, es as as, es as) } }
   \tag #'common { s4. }
   |
 
-  \tag #'right { \clef treble \tuplet 3/2 { des'16( as' g' } \tuplet 3/2 { des'16 g' f' } \tuplet 3/2 { des'16 g' es') } }
-  \tag #'left { \clef bass \tuplet 3/2 { bes,16( es bes } \tuplet 3/2 { bes,16 es bes } \tuplet 3/2 { bes,16 es bes) } }
+  \tag #'right { \clef treble \tuplet 3/2 8 { des'16( as' g' des' g' f' des' g' es') } }
+  \tag #'left { \clef bass \tuplet 3/2 8 { bes,16( es bes bes, es bes bes, es bes) } }
   \tag #'common { s4. }
   |
 
-  \tag #'right { \clef treble \tuplet 3/2 { es'16( bes' as' } \tuplet 3/2 { es'16 bes' as' } \tuplet 3/2 { es'16 c'' bes') } }
-  \tag #'left { \clef bass \tuplet 3/2 { c16 es c' } \tuplet 3/2 { c16 es c' } \tuplet 3/2 { g,16 es g } }
+  \tag #'right { \clef treble \tuplet 3/2 8 { es'16( bes' as' es' bes' as' es' c'' bes') } }
+  \tag #'left { \clef bass \tuplet 3/2 8 { c16 es c' c es c' g, es g } }
   \tag #'common { s4. }
   |
 
-  \tag #'right { \clef treble \tuplet 3/2 { es'16( <des'' bes'> <c'' as'> } \tuplet 3/2 { es'16 <c'' as'> <bes' g'>) } \acciaccatura { c''8 } bes'32( a' bes' c'') }
-  \tag #'left { \clef bass \tuplet 3/2 { as,16 es as } \tuplet 3/2 { es,16 es es } \tuplet 3/2 { ges,16 es ges } }
+  \tag #'right { \clef treble \tuplet 3/2 8 { es'16( <des'' bes'> <c'' as'> es' <c'' as'> <bes' g'>) } \acciaccatura { c''8 } bes'32( a' bes' c'') }
+  \tag #'left { \clef bass \tuplet 3/2 8 { as,16 es as es, es es ges, es ges } }
   \tag #'common { s4. }
   |
 
-  \tag #'right { \clef treble \tuplet 3/2 { as'16( es'' des'' } \tuplet 3/2 { as'16 es'' des'' } \tuplet 3/2 { as'16 des'' c'') } }
-  \tag #'left { \clef bass \tuplet 3/2 { f,16 f as } \tuplet 3/2 { f16( as des' } \tuplet 3/2 { es16 as c' } }
+  \tag #'right { \clef treble \tuplet 3/2 8 { as'16( es'' des'' as' es'' des'' as' des'' c'') } }
+  \tag #'left { \clef bass \tuplet 3/2 8 { f,16 f as f( as des' es as c' } }
   \tag #'common { s4. }
   |
 
-  \tag #'right { \clef treble \tuplet 3/2 { as'16( g'' f'' } \tuplet 3/2 { g'16 c'' bes' } \tuplet 3/2 { as'16 f'' es'') } }
-  \tag #'left { \clef bass \tuplet 3/2 { d16 f bes } \tuplet 3/2 { des16 es bes } \tuplet 3/2 { c16 es as) } }
+  \tag #'right { \clef treble \tuplet 3/2 8 { as'16( g'' f'' g' c'' bes' as' f'' es'') } }
+  \tag #'left { \clef bass \tuplet 3/2 8 { d16 f bes des es bes c es as) } }
   \tag #'common { s8 s4\cresc }
   |
 
-  \tag #'right { \clef treble \tuplet 3/2 { as'16( es'' d'' } \tuplet 3/2 { fes'16 <es'' c''> <des'' bes'> } \tuplet 3/2 { es'16 <des'' bes'> <c'' as'>) } }
-  \tag #'left { \clef bass \tuplet 3/2 { f,16 f as } \tuplet 3/2 { g,16 g bes } \tuplet 3/2 { as,16 as c' } }
+  \tag #'right { \clef treble \tuplet 3/2 8 { as'16( es'' d''  fes'16 <es'' c''> <des'' bes'> } \tuplet 3/2 { es'16 <des'' bes'> <c'' as'>) } }
+  \tag #'left { \clef bass \tuplet 3/2 8 { f,16 f as g, g bes as, as c' } }
   \tag #'common { s4 s16. s32\! }
   |
 
   \tag #'right { \clef treble <a' fis'>8( <bes' g'>) es'32( es'') es'( es'') }
-  \tag #'left { \clef bass \tuplet 3/2 { es,16 es es } \tuplet 3/2 { es16 f es } \tuplet 3/2 { des16 c bes, } }
+  \tag #'left { \clef bass \tuplet 3/2 8 { es,16 es es es f es des c bes, } }
   \tag #'common { s4.\p }
   |
 
