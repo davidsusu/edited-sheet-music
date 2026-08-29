@@ -290,7 +290,7 @@ firstMovement = {
   |
 
   \tag #'right { \clef treble as'4-. c''-. es''-. as''-. }
-  \tag #'left { \clef treble R1\clef bass }
+  \tag #'left { \clef treble R1 }
   \tag #'common { s1 }
   |
 
@@ -614,7 +614,7 @@ firstMovement = {
   \breakLine
 
   \tag #'right { \clef treble R1 }
-  \tag #'left { \clef bass f4-. as-. c'-. f'-.\clef treble }
+  \tag #'left { \clef bass f4-. as-. c'-. f'-. }
   \tag #'common { s1 }
   |
 
@@ -1365,7 +1365,7 @@ thirdMovement = {
   |
 
   \tag #'right { \clef treble bes''4( g'') \afterGrace g''4^\trill { f''16[ g''] } }
-  \tag #'left { \clef bass <e' bes g>4_( <e' des' bes>) <e' des' bes>\clef treble }
+  \tag #'left { \clef bass <e' bes g>4_( <e' des' bes>) <e' des' bes> }
   \tag #'common { s2. \tweak extra-offset #'(0 . 0.7) \sf }
   |
 
@@ -1380,7 +1380,7 @@ thirdMovement = {
   |
 
   \tag #'right { \clef treble f''4 r4 es''!8( des'') }
-  \tag #'left { \clef treble <as' f'>4 r r\clef bass }
+  \tag #'left { \clef treble <as' f'>4 r r }
   \tag #'common { s2 s4\pp }
   |
 
@@ -1529,7 +1529,7 @@ thirdMovement = {
   |
 
   \tag #'right { \clef treble <e'' bes'>8[ <f'' c''> <e'' bes'> <d'' a'> <c'' g'> <d'' a'>]) }
-  \tag #'left { \clef treble g'8[a' g' f' e' f'])\clef bass }
+  \tag #'left { \clef treble g'8[a' g' f' e' f']) }
   \tag #'common { s2. }
   |
 
