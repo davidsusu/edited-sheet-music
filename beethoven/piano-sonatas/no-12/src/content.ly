@@ -1354,14 +1354,12 @@ secondMovement = {
   \tag #'common { s2. }
   |
 
-  \partial 2
   \tag #'right { \clef treble \split { as''4-. r } { c''4-. r } }
   \tag #'left { \clef treble as4-. r }
   \tag #'common { s2 }
-  |
 
   \repeat volta 2 {
-    \partial 4
+
     \tag #'right { \clef treble <c' as>8([ <des' bes>)] }
     \tag #'left { \clef treble r4 }
     \tag #'common { s4\p }
@@ -1621,7 +1619,6 @@ secondMovement = {
     \tag #'common { s2 s4\!\ff }
     |
 
-    \partial 2
     \tag #'right { \clef treble <as' c' as>4-. r }
     \tag #'left { \clef bass as,,4-.) r }
     \tag #'common { s2 }
@@ -1633,7 +1630,7 @@ secondMovement = {
   \tag #'common { \tweak after-line-breaking ##f \tweak Y-offset #0 \tweak extra-offset #'(7 . 0.5) \textMark \markup { \column { \bold "Trio" \italic "sempre legato" } } }
 
   \repeat volta 2 {
-    \partial 4
+
     \tag #'right { \clef treble as4( }
     \tag #'left { \clef bass r4 }
     \tag #'common { s4\p }
@@ -1674,7 +1671,6 @@ secondMovement = {
     \tag #'common { s2.\p }
     |
 
-    \partial 2
     \tag #'right { \clef treble <es' c'>4 r }
     \tag #'left { \clef bass <as as,>4 r }
     \tag #'common { s2 }
@@ -1682,7 +1678,7 @@ secondMovement = {
   }
 
   \repeat volta 2 {
-    \partial 4
+
     \tag #'right { \clef treble as'4( }
     \tag #'left { \clef bass r4 }
     \tag #'common { s4 }
@@ -1765,7 +1761,6 @@ secondMovement = {
   }
   \alternative {
     {
-      \partial 2
       \tag #'right { \clef treble \split { des''4) } { f'4 } r }
       \tag #'left { \clef bass \split { des4 } { des4 } r }
       \tag #'common { s2 }
