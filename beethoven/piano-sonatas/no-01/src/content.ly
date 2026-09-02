@@ -483,17 +483,17 @@ firstMovement = {
   \tag #'common { s1 }
   |
 
-  \tag #'right { \clef treble <e''' e''>4-.)\set doubleSlurs = ##f r4 r\afterGrace c''4^\trill( { b'16[c''] } }
+  \tag #'right { \clef treble <e''' e''>4-.)\set doubleSlurs = ##f r4 r \afterGrace c''4^\trill( { b'16[c''] } }
   \tag #'left { \clef bass c'8 c e c e c g c }
   \tag #'common { s1 }
   |
 
-  \tag #'right { \clef treble as'4-.) as'-. r4\afterGrace f''4^\trill( { e''16[f''] } }
+  \tag #'right { \clef treble as'4-.) as'-. r4 \afterGrace f''4^\trill( { e''16[f''] } }
   \tag #'left { \clef bass f8 c f c f c as c }
   \tag #'common { s1 }
   |
 
-  \tag #'right { \clef treble e''4-.) e''-. r4\afterGrace c'''4^\trill( { b''16[c'''] } }
+  \tag #'right { \clef treble e''4-.) e''-. r4 \afterGrace c'''4^\trill( { b''16[c'''] } }
   \tag #'left { \clef bass g8 c g c g c bes! c }
   \tag #'common { s1 }
   |
