@@ -75,6 +75,10 @@ editionInfoPage =
 
 defaultLayout = \layout {
   \context {
+    \PianoStaff
+    \consists "Span_stem_engraver"
+  }
+  \context {
     \Voice
     \override Script.avoid-slur = #'inside
     \override Script.outside-staff-priority = ##f
@@ -82,6 +86,10 @@ defaultLayout = \layout {
 }
 
 urtextLayout = \layout {
+  \context {
+    \PianoStaff
+    \consists "Span_stem_engraver"
+  }
   \context {
     \Voice
     \override Script.avoid-slur = #'inside
@@ -119,8 +127,17 @@ visualTurn = #(make-articulation 'visualturn)
                (append items
                        (list (make-fontsize-markup -4 lower)))))
      (make-override-markup
-      '(baseline-skip . 0.7)
-      (make-center-column-markup items))))
+     '(baseline-skip . 0.7)
+     (make-center-column-markup items))))
+
+#(define (trill-accidental-markup accidental)
+   (if accidental
+       (make-override-markup
+        '(baseline-skip . 0.7)
+        (make-center-column-markup
+         (list (make-fontsize-markup -4 accidental)
+               (make-musicglyph-markup "scripts.trill"))))
+       (make-musicglyph-markup "scripts.trill")))
 
 turnInside =
 #(define-music-function (delta y extra upper lower music)
@@ -185,6 +202,37 @@ turnAccidental =
   >>
 #})
 
+trillAccidental =
+#(define-music-function (accidental music) ((maybe-markup? #f) ly:music?)
+#{
+  $music
+    -\tweak avoid-slur #'inside
+    -\tweak outside-staff-priority ##f
+    -\tweak script-priority #-100
+    -\tweak stencil
+      #(lambda (grob)
+         (grob-interpret-markup grob (trill-accidental-markup accidental)))
+    ^\trill
+#})
+
+prallAccidental =
+#(define-music-function (accidental music) (markup? ly:music?)
+#{
+  $music
+    -\tweak script-priority #-100
+    ^\prall
+    ^\markup { \fontsize #-4 $accidental }
+#})
+
+mordentAccidental =
+#(define-music-function (accidental music) (markup? ly:music?)
+#{
+  $music
+    -\tweak script-priority #-100
+    ^\mordent
+    ^\markup { \fontsize #-4 $accidental }
+#})
+
 split = 
 #(define-music-function (voiceA voiceB) (ly:music? ly:music?)
 #{
@@ -202,6 +250,19 @@ splitThree =
     { \voiceOne $voiceA }
     \context Voice = "right-middle-voice" { \voiceThree $voiceB }
     \context Voice = "right-lower-voice" { \voiceTwo $voiceC }
+  >>
+  \oneVoice
+#})
+
+splitFour =
+#(define-music-function (voiceA voiceB voiceC voiceD)
+   (ly:music? ly:music? ly:music? ly:music?)
+#{
+  <<
+    { \voiceOne $voiceA }
+    \context Voice = "right-middle-voice" { \voiceThree $voiceB }
+    \context Voice = "right-lower-middle-voice" { \voiceFour $voiceC }
+    \context Voice = "right-lower-voice" { \voiceTwo $voiceD }
   >>
   \oneVoice
 #})
@@ -443,6 +504,72 @@ breakPage = {
   }
 }
 
+beginRevisionSection = {
+  \tag #'debug {
+    \override Staff.NoteHead.color = #red
+    \override Staff.Stem.color = #red
+    \override Staff.Beam.color = #red
+    \override Staff.Flag.color = #red
+    \override Staff.Rest.color = #red
+    \override Staff.Dots.color = #red
+    \override Staff.Accidental.color = #red
+    \override Staff.Clef.color = #red
+    \override Staff.ClefModifier.color = #red
+    \override Staff.KeyCancellation.color = #red
+    \override Staff.KeySignature.color = #red
+    \override Staff.Script.color = #red
+    \override Staff.TextScript.color = #red
+    \override Staff.TimeSignature.color = #red
+    \override Staff.Slur.color = #red
+    \override Staff.PhrasingSlur.color = #red
+    \override Staff.Tie.color = #red
+    \override Staff.TupletNumber.color = #red
+    \override Staff.TupletBracket.color = #red
+    \override Staff.StaffSymbol.color = #red
+    \override Staff.BarLine.color = #red
+    \override PianoStaff.SpanBar.color = #red
+    \override PianoStaff.Stem.color = #red
+    \override PianoStaff.StemStub.color = #red
+    \override Dynamics.DynamicText.color = #red
+    \override Dynamics.Hairpin.color = #red
+    \override Score.TextMark.color = #red
+    \override Score.RehearsalMark.color = #red
+  }
+}
+
+endRevisionSection = {
+  \tag #'debug {
+    \revert Staff.NoteHead.color
+    \revert Staff.Stem.color
+    \revert Staff.Beam.color
+    \revert Staff.Flag.color
+    \revert Staff.Rest.color
+    \revert Staff.Dots.color
+    \revert Staff.Accidental.color
+    \revert Staff.Clef.color
+    \revert Staff.ClefModifier.color
+    \revert Staff.KeyCancellation.color
+    \revert Staff.KeySignature.color
+    \revert Staff.Script.color
+    \revert Staff.TextScript.color
+    \revert Staff.TimeSignature.color
+    \revert Staff.Slur.color
+    \revert Staff.PhrasingSlur.color
+    \revert Staff.Tie.color
+    \revert Staff.TupletNumber.color
+    \revert Staff.TupletBracket.color
+    \revert Staff.StaffSymbol.color
+    \revert Staff.BarLine.color
+    \revert PianoStaff.SpanBar.color
+    \revert PianoStaff.Stem.color
+    \revert PianoStaff.StemStub.color
+    \revert Dynamics.DynamicText.color
+    \revert Dynamics.Hairpin.color
+    \revert Score.TextMark.color
+    \revert Score.RehearsalMark.color
+  }
+}
+
 renderMovementForEdition = 
 #(define-music-function (edition movementContent) (symbol? ly:music?)
 #{
@@ -467,6 +594,9 @@ renderMovementForMidi =
       \context Voice = "right-middle-voice" {
         \keepForEdition #edition #'common $movementContent
       }
+      \context Voice = "right-lower-middle-voice" {
+        \keepForEdition #edition #'common $movementContent
+      }
       \context Voice = "right-lower-voice" {
         \keepForEdition #edition #'common $movementContent
       }
@@ -479,6 +609,9 @@ renderMovementForMidi =
         \keepForEdition #edition #'common $movementContent
       }
       \context Voice = "right-middle-voice" {
+        \keepForEdition #edition #'common $movementContent
+      }
+      \context Voice = "right-lower-middle-voice" {
         \keepForEdition #edition #'common $movementContent
       }
       \context Voice = "right-lower-voice" {
