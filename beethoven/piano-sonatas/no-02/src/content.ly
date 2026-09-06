@@ -2783,7 +2783,7 @@ fourthMovement = {
   |
 
   \tag #'right { \clef treble r4 r32 cis' e' a' cis'' e'' a'' cis''' e'''4 e''' }
-  \tag #'left { \clef bass \tuplet 3/2 { a,,16 cis, e, a, cis e } a32 r r16 r8 a e' cis' e' }
+  \tag #'left { \clef bass \tuplet 6/4 { a,,16 cis, e, a, cis e } a32 r r16 r8 a e' cis' e' }
   \tag #'common { s1 }
   |
 
@@ -2942,17 +2942,17 @@ fourthMovement = {
   |
 
   \tag #'right { \clef treble \tuplet 3/2 4 { r8 d' e' f' fis' g' gis' a' bes' b' c'' cis'' } }
-  \tag #'left { \clef bass \split { g4 f s2 } { d2 r } }
+  \tag #'left { \clef bass \split { g4 f! s2 } { d2 r } }
   \tag #'common { s1 }
   |
 
-  \tag #'right { \clef treble \split { d''4 c'' r2 } { e'2 s } }
+  \tag #'right { \clef treble \split { d''4 c''! r2 } { e'2 s } }
   \tag #'left { \clef bass \tuplet 3/2 4 { r8 a, b, c cis d dis e f fis g gis } }
   \tag #'common { s1 }
   |
 
   \tag #'right { \clef treble \tuplet 3/2 4 { r8 e' fis' g' a' ais' b' c'' cis'' d'' dis'' e'' } }
-  \tag #'left { \clef bass \split { a4 g s2 } { e2 r } }
+  \tag #'left { \clef bass \split { a4 g! s2 } { e2 r } }
   \tag #'common { s1 }
   |
 
@@ -3007,17 +3007,17 @@ fourthMovement = {
   |
 
   \tag #'right { \clef treble \tuplet 3/2 4 { r8 d' e' f' fis' g' gis' a' bes' b' c'' cis'' } }
-  \tag #'left { \clef bass \split { g4 f } { d2 } r2 }
+  \tag #'left { \clef bass \split { g4 f! } { d2 } r2 }
   \tag #'common { s1 }
   |
 
-  \tag #'right { \clef treble \split { d''4 c'' } { e'2 } r2 }
+  \tag #'right { \clef treble \split { d''4 c''! } { e'2 } r2 }
   \tag #'left { \clef bass \tuplet 3/2 4 { r8 a, b, c cis d dis e f fis g gis } }
   \tag #'common { s1 }
   |
 
   \tag #'right { \clef treble \tuplet 3/2 4 { r8 e' fis' g' a' ais' b' c'' cis'' d'' dis'' e'' } }
-  \tag #'left { \clef bass \split { a4 g } { e2 } r2 }
+  \tag #'left { \clef bass \split { a4 g! } { e2 } r2 }
   \tag #'common { s1 }
   |
 
@@ -3363,8 +3363,8 @@ fourthMovement = {
   \tag #'common { s1 }
   |
 
-  \tag #'right { \clef treble <e' cis'>4 \tuplet 6/4 { a16 cis' e' a' cis'' e'' } a''4 a'' }
-  \tag #'left { \clef bass <a g>8 <a g> <a g> <a g> <cis' a g> <cis' a g> <cis' a g> <cis' a g> }
+  \tag #'right { \clef treble <e' cis'>4 \split { \tuplet 6/4 { a16 cis' e' a' cis'' e'' } } { \crossStaff { a8 } s8 } a''4 a'' }
+  \tag #'left { \clef bass <a g>8 <a g> \crossStaff { <g> } <a g> <cis' a g> <cis' a g> <cis' a g> <cis' a g> }
   \tag #'common { s1 }
   |
 
