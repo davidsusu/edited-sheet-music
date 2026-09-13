@@ -5,8 +5,8 @@
 choirPaper = \paper {
   left-margin = 20\mm
   right-margin = 14\mm
-  top-margin = 24\mm
-  bottom-margin = 24\mm
+  top-margin = 20\mm
+  bottom-margin = 20\mm
   tagline = ##f
 }
 

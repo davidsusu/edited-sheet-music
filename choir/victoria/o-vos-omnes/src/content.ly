@@ -4,12 +4,11 @@
 
 workTitle = "O vos omnes"
 workComposer = "Tomás Luis de Victoria"
-workDate = ""
+workDate = "1572"
 workEditor = "Dávid Horváth"
 
 scoreMusic = {
   \tag #'global {
-    \mark \markup { \bold "O vos omnes" }
     \tempo 2 = 54
     \set Score.tempoHideNote = ##t
     \time 2/2

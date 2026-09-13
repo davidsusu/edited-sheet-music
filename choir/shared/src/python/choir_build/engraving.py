@@ -71,8 +71,8 @@ def generate_view_source(
     sections.append(
 """buildHeaderData = \\header {
   title = \\workTitle
-  composer = \\workComposer
-  date = \\workDate
+  subtitle = \\workComposer
+  composer = \\workDate
   pdfauthor = #(string-append workComposer "; edited by " workEditor)
   pdfsubject = \\buildPdfSubject
 }
