@@ -41,8 +41,8 @@ scoreMusic = {
   \barCheck
 
   \tag #'cantus { \clef treble bes'2 a'~ \appendLyrics "_ [m]nes __" }
-  \tag #'altus { \clef treble g'2 c' \appendLyrics "_ nes" }
-  \tag #'tenor { \clef "treble_8" e'2 f'~ \appendLyrics "_ nes __" }
+  \tag #'altus { \clef treble g'2 c' \appendLyrics "_ [m]nes" }
+  \tag #'tenor { \clef "treble_8" e'2 f'~ \appendLyrics "_ [m]nes __" }
   \tag #'bassus { \clef bass g2 f~ \appendLyrics "_ nes __" }
   \barCheck
 
@@ -161,8 +161,8 @@ scoreMusic = {
   \breakPage
 
   \tag #'cantus { \clef treble r4 a'2 a'4 \appendLyrics "sic -- ut" }
-  \tag #'altus { \clef treble e'4 e' e' e' \appendLyrics "_ ut do -- lor" }
-  \tag #'tenor { \clef "treble_8" a4 a a a \appendLyrics "_ ut do -- lor" }
+  \tag #'altus { \clef treble e'4 e' e' e' \appendLyrics "_ [c]ut do -- lor" }
+  \tag #'tenor { \clef "treble_8" a4 a a a \appendLyrics "_ [c]ut do -- lor" }
   \tag #'bassus { \clef bass R1 \appendLyrics "" }
   \barCheck
 
@@ -398,9 +398,9 @@ scoreMusic = {
 
   \breakLine
 
-  \tag #'cantus { \clef treble cis''4 cis''! cis'' cis'' \appendLyrics "_ ut do -- lor" }
+  \tag #'cantus { \clef treble cis''4 cis''! cis'' cis'' \appendLyrics "_ [c]ut do -- lor" }
   \tag #'altus { \clef treble r4 a'2 a'4 \appendLyrics "sic -- ut" }
-  \tag #'tenor { \clef "treble_8" e'4 e' e' e' \appendLyrics "_ ut do -- lor" }
+  \tag #'tenor { \clef "treble_8" e'4 e' e' e' \appendLyrics "_ [c]ut do -- lor" }
   \tag #'bassus { \clef bass a4 a a a \appendLyrics "_ ut do -- lor" }
   \barCheck
 
@@ -412,7 +412,7 @@ scoreMusic = {
 
   \tag #'cantus { \clef treble c''1 \appendLyrics "us" }
   \tag #'altus { \clef treble a'2 g' \appendLyrics "_ _" }
-  \tag #'tenor { \clef "treble_8" g'8 f' f'4 ~ f' e' \appendLyrics "_ _ _ _" }
+  \tag #'tenor { \clef "treble_8" g'8 f' f'4 ~ f' e' \appendLyrics "_ _ _ _ _" }
   \tag #'bassus { \clef bass c'1 \appendLyrics "_" }
   \barCheck
 
@@ -430,7 +430,7 @@ scoreMusic = {
 
   \tag #'cantus { \clef treble bes'2 a'~ \appendLyrics "_ us. __" }
   \tag #'altus { \clef treble g'4 f' e'2~ \appendLyrics "_ _ _" }
-  \tag #'tenor { \clef "treble_8" e'4 d'~ d' cis'8 b \appendLyrics "me -- _ _ _" }
+  \tag #'tenor { \clef "treble_8" e'4 d'~ d' cis'8 b \appendLyrics "me -- _ _ _ _" }
   \tag #'bassus { \clef bass g2 a~ \appendLyrics "_ _" }
   \barCheck
 
