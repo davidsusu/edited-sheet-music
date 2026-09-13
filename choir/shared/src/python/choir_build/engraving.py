@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from fractions import Fraction
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
@@ -52,6 +53,7 @@ def generate_view_source(
     debug: bool,
     midi: bool,
     transpose: Optional[tuple[str, str]],
+    scale: int = 0,
 ) -> None:
     content_path = lilypond_string_escape(context.source_dir / "content.ly")
     subject = work_subject = "Score"
@@ -64,6 +66,7 @@ def generate_view_source(
         f'buildPdfSubject = "{lilypond_string_escape(subject)}"\n\n',
     ]
     append_transpose_function(sections, transpose)
+    sections.append(f"printMusic = \\scaleNotation #{scale} \\scoreMusic\n\n")
     sections.append(
 """buildHeaderData = \\header {
   title = \\workTitle
@@ -80,15 +83,20 @@ def generate_view_source(
   \\score {
 """
     )
-    append_choir_staff(sections, context.source_dir, debug=debug)
+    append_choir_staff(sections, context.source_dir, debug=debug, music="printMusic")
     sections.append(
         """
     \\choirLayout
 """
     )
-    if midi:
+    if midi and not scale:
         sections.append("    \\midi { }\n")
-    sections.append("  }\n}\n")
+    sections.append("  }\n")
+    if midi and scale:
+        sections.append("  \\score {\n")
+        append_choir_staff(sections, context.source_dir, debug=False)
+        sections.append("    \\midi { }\n  }\n")
+    sections.append("}\n")
     write_text(output, "".join(sections))
 
 
@@ -120,7 +128,7 @@ def append_transpose_function(
 
 
 def append_choir_staff(
-    sections: List[str], source_dir: Path, *, debug: bool
+    sections: List[str], source_dir: Path, *, debug: bool, music: str = "scoreMusic"
 ) -> None:
     keep_tags = "#(list '{tag} 'global 'debug)" if debug else "#(list '{tag} 'global)"
     sections.append("    <<\n      \\new ChoirStaff <<\n")
@@ -134,7 +142,7 @@ def append_choir_staff(
                 '          midiInstrument = "choir aahs"\n',
                 "        } <<\n",
                 f'          \\new Voice = "{spec.tag}" {{\n',
-                f"            \\transposeMusic \\keepWithTag {tag_expression} \\scoreMusic\n",
+                f"            \\transposeMusic \\keepWithTag {tag_expression} \\{music}\n",
                 "          }\n",
                 "        >>\n",
             ]
@@ -148,6 +156,18 @@ def append_choir_staff(
             ]
         )
     sections.append("      >>\n    >>\n")
+
+
+def parse_scale(value: str) -> int:
+    """Return the duration-log shift for a positive power-of-two factor."""
+    try:
+        factor = Fraction(value)
+    except (ValueError, ZeroDivisionError):
+        raise BuildError("Scale must be a positive power of two, e.g. 1/2 or 2") from None
+    n, d = factor.numerator, factor.denominator
+    if n <= 0 or n & (n - 1) or d & (d - 1):
+        raise BuildError("Scale must be a positive power of two, e.g. 1/2 or 2")
+    return d.bit_length() - n.bit_length()
 
 
 def parse_transpose(value: str) -> tuple[str, str]:

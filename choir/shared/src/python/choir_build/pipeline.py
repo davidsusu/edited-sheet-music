@@ -27,26 +27,26 @@ class ChoirBuilder:
         )
 
     def build(
-        self, *, quick: bool = False, transpose: Optional[tuple[str, str]] = None
+        self, *, quick: bool = False, transpose: Optional[tuple[str, str]] = None, scale: int = 0
     ) -> None:
         self.dependencies.require_base_tools()
         if quick:
             self.prepare_build_directory()
-            self.build_quick(transpose=transpose)
+            self.build_quick(transpose=transpose, scale=scale)
         else:
             soundfont = self.dependencies.require_audio_tools()
             self.prepare_build_directory()
-            self.build_full(soundfont, transpose=transpose)
+            self.build_full(soundfont, transpose=transpose, scale=scale)
         log("Done")
 
     def prepare_build_directory(self) -> None:
         remove_path(self.context.build_dir)
         self.context.stage_dir.mkdir(parents=True)
 
-    def build_quick(self, *, transpose: Optional[tuple[str, str]]) -> None:
+    def build_quick(self, *, transpose: Optional[tuple[str, str]], scale: int = 0) -> None:
         source = self.context.run_dir / "main-debug.ly"
         generate_view_source(
-            self.context, source, debug=True, midi=False, transpose=transpose
+            self.context, source, debug=True, midi=False, transpose=transpose, scale=scale
         )
         debug_pdf = self.build_lilypond_source(
             source, "main-debug", point_and_click=True
@@ -56,15 +56,15 @@ class ChoirBuilder:
         self.publish_output()
 
     def build_full(
-        self, soundfont: Path, *, transpose: Optional[tuple[str, str]]
+        self, soundfont: Path, *, transpose: Optional[tuple[str, str]], scale: int = 0
     ) -> None:
         main_source = self.context.run_dir / "main.ly"
         debug_source = self.context.run_dir / "main-debug.ly"
         generate_view_source(
-            self.context, main_source, debug=False, midi=True, transpose=transpose
+            self.context, main_source, debug=False, midi=True, transpose=transpose, scale=scale
         )
         generate_view_source(
-            self.context, debug_source, debug=True, midi=False, transpose=transpose
+            self.context, debug_source, debug=True, midi=False, transpose=transpose, scale=scale
         )
 
         main_pdf = self.build_lilypond_source(main_source, "main")

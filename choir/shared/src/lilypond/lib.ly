@@ -8,12 +8,37 @@ choirPaper = \paper {
 
 choirLayout = \layout {
   \context {
+    \Lyrics
+    \override LyricHyphen.minimum-distance = #1.0
+  }
+  \context {
     \Staff
     \consists "Ambitus_engraver"
   }
 }
 
 debugColor = #(x11-color 'firebrick)
+
+% Change written values on a copy; tempo units and the original MIDI music stay intact.
+scaleNotation =
+#(define-music-function (shift music) (integer? ly:music?)
+   (let ((factor (expt 2 (- shift))))
+     (music-map
+      (lambda (item)
+        (if (eq? (ly:music-property item 'name) 'TimeSignatureMusic)
+            (let* ((n (ly:music-property item 'numerator))
+                   (d (/ (ly:music-property item 'denominator) factor)))
+              (set! (ly:music-property item 'numerator) (* n (denominator d)))
+              (set! (ly:music-property item 'denominator) (numerator d))))
+        (if (and (eq? (ly:music-property item 'name) 'PropertySet)
+                 (memq (ly:music-property item 'symbol)
+                       '(baseMoment beatBase measureLength tupletSpannerDuration)))
+            (let ((value (ly:music-property item 'value)))
+              (if (ly:moment? value)
+                  (set! (ly:music-property item 'value)
+                        (ly:moment-mul value (ly:make-moment factor))))))
+        (shift-one-duration-log item shift 0))
+      (ly:music-deep-copy music))))
 
 barCheck = \tag #'global { | }
 
@@ -85,9 +110,7 @@ barCheck = \tag #'global { | }
             (cond
              ((string=? token "__")
               (append-lyric-continuation! state (make-music 'ExtenderEvent))
-              (let ((skip (lyric-event " ")))
-                (set-car! state skip)
-                (loop (cdr tokens) (cons skip result))))
+              (loop (cdr tokens) result))
              ((string=? token "--")
               (append-lyric-continuation! state (make-music 'HyphenEvent))
               (loop (cdr tokens) result))
@@ -146,6 +169,10 @@ barCheck = \tag #'global { | }
              copy)
            (empty-sequential-music)))))))
 
+% Whitespace separates tokens: -- requests hyphens, __ an extender, and _
+% consumes one additional note position. Put -- or __ after the syllable.
+% All other tokens are literal syllables, including punctuation. Bracketed
+% parts (e.g. [m]nes) are editorial helpers, printed literally with brackets.
 appendLyrics =
 #(define-music-function (text) (string?)
    (make-music
