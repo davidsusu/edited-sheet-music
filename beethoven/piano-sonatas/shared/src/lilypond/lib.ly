@@ -511,6 +511,9 @@ beginRevisionSection = {
     \override Staff.Beam.color = #red
     \override Staff.Flag.color = #red
     \override Staff.Rest.color = #red
+    \override Staff.MultiMeasureRest.color = #red
+    \override Staff.MultiMeasureRestNumber.color = #red
+    \override Staff.MultiMeasureRestText.color = #red
     \override Staff.Dots.color = #red
     \override Staff.Accidental.color = #red
     \override Staff.Clef.color = #red
@@ -543,6 +546,9 @@ endRevisionSection = {
     \revert Staff.Beam.color
     \revert Staff.Flag.color
     \revert Staff.Rest.color
+    \revert Staff.MultiMeasureRest.color
+    \revert Staff.MultiMeasureRestNumber.color
+    \revert Staff.MultiMeasureRestText.color
     \revert Staff.Dots.color
     \revert Staff.Accidental.color
     \revert Staff.Clef.color

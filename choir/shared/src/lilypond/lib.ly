@@ -166,6 +166,9 @@ beginRevisionSection = {
     \override Staff.Beam.color = \debugColor
     \override Staff.Flag.color = \debugColor
     \override Staff.Rest.color = \debugColor
+    \override Staff.MultiMeasureRest.color = \debugColor
+    \override Staff.MultiMeasureRestNumber.color = \debugColor
+    \override Staff.MultiMeasureRestText.color = \debugColor
     \override Staff.Dots.color = \debugColor
     \override Staff.Accidental.color = \debugColor
     \override Staff.Clef.color = \debugColor
@@ -196,6 +199,9 @@ endRevisionSection = {
     \revert Staff.Beam.color
     \revert Staff.Flag.color
     \revert Staff.Rest.color
+    \revert Staff.MultiMeasureRest.color
+    \revert Staff.MultiMeasureRestNumber.color
+    \revert Staff.MultiMeasureRestText.color
     \revert Staff.Dots.color
     \revert Staff.Accidental.color
     \revert Staff.Clef.color
