@@ -54,6 +54,7 @@ def generate_view_source(
     midi: bool,
     transpose: Optional[tuple[str, str]],
     scale: int = 0,
+    layout: bool = True,
 ) -> None:
     content_path = lilypond_string_escape(context.source_dir / "content.ly")
     subject = work_subject = "Score"
@@ -83,18 +84,16 @@ def generate_view_source(
   \\score {
 """
     )
-    append_choir_staff(sections, context.source_dir, debug=debug, music="printMusic")
+    append_choir_staff(sections, context.source_dir, debug=debug, music="printMusic", layout=layout)
     sections.append(
         """
     \\choirLayout
 """
     )
-    if midi and not scale:
-        sections.append("    \\midi { }\n")
     sections.append("  }\n")
-    if midi and scale:
+    if midi:
         sections.append("  \\score {\n")
-        append_choir_staff(sections, context.source_dir, debug=False)
+        append_choir_staff(sections, context.source_dir, debug=False, layout=False)
         sections.append("    \\midi { }\n  }\n")
     sections.append("}\n")
     write_text(output, "".join(sections))
@@ -128,9 +127,13 @@ def append_transpose_function(
 
 
 def append_choir_staff(
-    sections: List[str], source_dir: Path, *, debug: bool, music: str = "scoreMusic"
+    sections: List[str], source_dir: Path, *, debug: bool, music: str = "scoreMusic",
+    layout: bool = True,
 ) -> None:
-    keep_tags = "#(list '{tag} 'global 'debug)" if debug else "#(list '{tag} 'global)"
+    tags = "'{tag} 'global" + (" 'debug" if debug else "") + (" 'layout" if layout else "")
+    keep_tags = "#(list " + tags + ")"
+    excluded = ([] if debug else ["debug"]) + ([] if layout else ["layout"])
+    remove = ("\\removeWithTag #'(" + " ".join(excluded) + ") ") if excluded else ""
     sections.append("    <<\n      \\new ChoirStaff <<\n")
     for spec in extract_voice_specs(source_dir):
         tag_expression = keep_tags.format(tag=spec.tag)
@@ -142,7 +145,7 @@ def append_choir_staff(
                 '          midiInstrument = "choir aahs"\n',
                 "        } <<\n",
                 f'          \\new Voice = "{spec.tag}" {{\n',
-                f"            \\transposeMusic \\keepWithTag {tag_expression} \\{music}\n",
+                f"            \\transposeMusic \\keepWithTag {tag_expression} {remove}\\{music}\n",
                 "          }\n",
                 "        >>\n",
             ]
@@ -151,7 +154,7 @@ def append_choir_staff(
             [
                 f'        \\new Lyrics \\lyricsto "{spec.tag}" {{\n',
                 "          \\set ignoreMelismata = ##t\n",
-                f"          \\extractLyrics #'{spec.tag} \\scoreMusic\n",
+                f"          \\extractLyrics #'{spec.tag} {remove}\\scoreMusic\n",
                 "        }\n",
             ]
         )

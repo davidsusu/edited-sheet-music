@@ -25,12 +25,15 @@ def main(project_dir: Path, argv: Optional[Sequence[str]] = None) -> int:
     )
     parser.add_argument("--scale", metavar="FACTOR", default="1",
                         help="scale printed durations and meter by a power of two (e.g. 1/2 or 2); audio is unchanged")
+    parser.add_argument("--no-layout", action="store_true",
+                        help="omit layout-tagged final touches and manual adjustments")
     arguments = parser.parse_args(argv)
     return run(
         project_dir,
         quick=arguments.quick,
         transpose_value=arguments.transpose,
         scale_value=arguments.scale,
+        no_layout=arguments.no_layout,
     )
 
 
@@ -49,22 +52,27 @@ def module_main(argv: Optional[Sequence[str]] = None) -> int:
     )
     parser.add_argument("--scale", metavar="FACTOR", default="1",
                         help="scale printed durations and meter by a power of two (e.g. 1/2 or 2); audio is unchanged")
+    parser.add_argument("--no-layout", action="store_true",
+                        help="omit layout-tagged final touches and manual adjustments")
     arguments = parser.parse_args(argv)
     return run(
         arguments.project_dir,
         quick=arguments.quick,
         transpose_value=arguments.transpose,
         scale_value=arguments.scale,
+        no_layout=arguments.no_layout,
     )
 
 
 def run(
-    project_dir: Path, *, quick: bool, transpose_value: Optional[str], scale_value: str = "1"
+    project_dir: Path, *, quick: bool, transpose_value: Optional[str], scale_value: str = "1",
+    no_layout: bool = False,
 ) -> int:
     try:
         context = BuildContext.for_project(project_dir)
         transpose = parse_transpose(transpose_value) if transpose_value else None
-        ChoirBuilder(context).build(quick=quick, transpose=transpose, scale=parse_scale(scale_value))
+        ChoirBuilder(context).build(quick=quick, transpose=transpose,
+                                   scale=parse_scale(scale_value), layout=not no_layout)
     except (BuildError, OSError, ValueError) as exc:
         print(f"[build] error: {exc}", file=sys.stderr)
         return 1

@@ -44,24 +44,24 @@ class SonataBuilder:
         )
         self.pdf = PdfAssembler(context, self.runner)
 
-    def build(self, *, quick: bool = False) -> None:
+    def build(self, *, quick: bool = False, layout: bool = True) -> None:
         self.dependencies.require_base_tools()
         if quick:
             self.prepare_build_directory()
-            self.build_quick()
+            self.build_quick(layout=layout)
         else:
             soundfont = self.dependencies.require_audio_tools()
             self.prepare_build_directory()
-            self.build_full(soundfont)
+            self.build_full(soundfont, layout=layout)
         log("Done")
 
     def prepare_build_directory(self) -> None:
         remove_path(self.context.build_dir)
         self.context.stage_dir.mkdir(parents=True)
 
-    def build_quick(self) -> None:
+    def build_quick(self, *, layout: bool = True) -> None:
         source = self.context.run_dir / "main-debug.ly"
-        generate_bare_view_source(self.context.source_dir, "main-debug", source)
+        generate_bare_view_source(self.context.source_dir, "main-debug", source, layout=layout)
         debug_pdf = self.build_lilypond_source(
             source, "main-debug", point_and_click=True
         )
@@ -69,7 +69,7 @@ class SonataBuilder:
         self.verify_staged_artifacts({"main-debug.pdf"})
         self.publish_output()
 
-    def build_full(self, soundfont: Path) -> None:
+    def build_full(self, soundfont: Path, *, layout: bool = True) -> None:
         run_dir = self.context.run_dir
         stage_dir = self.context.stage_dir
         generated_sources = {
@@ -78,13 +78,13 @@ class SonataBuilder:
         }
         generated_sources["main-debug"] = run_dir / "main-debug.ly"
         for edition, source in generated_sources.items():
-            generate_bare_view_source(self.context.source_dir, edition, source)
+            generate_bare_view_source(self.context.source_dir, edition, source, layout=layout)
         publication_sources = {
             edition: run_dir / f"{edition}.ly"
             for edition in ("main", "urtext", "extended")
         }
         for edition, source in publication_sources.items():
-            generate_publication_view_source(self.context.source_dir, edition, source)
+            generate_publication_view_source(self.context.source_dir, edition, source, layout=layout)
 
         main_pdf = self.build_lilypond_source(publication_sources["main"], "main")
         main_bare_pdf = self.build_lilypond_source(
@@ -121,12 +121,14 @@ class SonataBuilder:
             extended_music_pdf,
             initial_pages=self.context.extended_initial_pages,
             name="extended",
+            layout=layout,
         )
         extended_bare_pdf = self.build_extended_edition(
             notes,
             extended_bare_music_pdf,
             initial_pages=0,
             name="extended-bare",
+            layout=layout,
         )
         shutil.copy2(extended_bare_pdf, stage_dir / "extended-bare.pdf")
         self.pdf.copy_pdf_metadata(
@@ -194,13 +196,14 @@ class SonataBuilder:
         *,
         initial_pages: int,
         name: str,
+        layout: bool = True,
     ) -> Path:
         index_source = self.context.run_dir / f"{name}-index.ly"
         index_dir = self.context.run_dir / f"{name}-index"
         notes_source = self.context.run_dir / f"{name}-notes.tex"
         notes_dir = self.context.run_dir / f"{name}-notes"
         generate_extended_index_source(
-            self.context.source_dir, notes, index_source, initial_pages
+            self.context.source_dir, notes, index_source, initial_pages, layout=layout
         )
 
         index_dir.mkdir(parents=True, exist_ok=True)

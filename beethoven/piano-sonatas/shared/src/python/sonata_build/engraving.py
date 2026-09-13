@@ -67,7 +67,7 @@ def extract_movement_specs(source_dir: Path) -> List[MovementSpec]:
 
 
 def generate_publication_view_source(
-    source_dir: Path, edition_name: str, output: Path
+    source_dir: Path, edition_name: str, output: Path, *, layout: bool = True
 ) -> None:
     try:
         edition = BARE_EDITIONS[edition_name]
@@ -80,6 +80,7 @@ def generate_publication_view_source(
     sections = [
         '\\version "2.24.1"\n\n',
         f'\\include "{content_path}"\n',
+        f"#(set! build-use-layout {'#t' if layout else '#f'})\n",
     ]
     if edition_name == "main":
         rectify_path = lilypond_string_escape(
@@ -139,7 +140,7 @@ def generate_publication_view_source(
 
 
 def generate_bare_view_source(
-    source_dir: Path, edition_name: str, output: Path
+    source_dir: Path, edition_name: str, output: Path, *, layout: bool = True
 ) -> None:
     try:
         edition = BARE_EDITIONS[edition_name]
@@ -150,6 +151,7 @@ def generate_bare_view_source(
     sections = [
         '\\version "2.24.1"\n\n',
         f'\\include "{content_path}"\n\n',
+        f"#(set! build-use-layout {'#t' if layout else '#f'})\n",
         f'bareEditionSubtitle = "{edition.subtitle}"\n\n',
         """bareHeaderData = \\header {
   title = \\workTitle
@@ -221,11 +223,14 @@ def generate_extended_index_source(
     notes: Sequence[CriticalNote],
     output: Path,
     initial_pages: int,
+    *,
+    layout: bool = True,
 ) -> None:
     content_path = lilypond_string_escape(source_dir / "content.ly")
     sections = [
         '\\version "2.24.1"\n\n',
         f'\\include "{content_path}"\n\n',
+        f"#(set! build-use-layout {'#t' if layout else '#f'})\n",
         """extendedEditionSubtitle = "Extended critical edition"
 
 extendedHeaderData = \\header {

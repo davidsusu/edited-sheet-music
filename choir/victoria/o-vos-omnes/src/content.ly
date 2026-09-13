@@ -59,6 +59,8 @@ scoreMusic = {
   \tag #'bassus { \clef bass a4 a a2 \appendLyrics "_ tran -- si --" }
   \barCheck
 
+  \breakLine
+
   \tag #'cantus { \clef treble d''2. d''4 \appendLyrics "tis per" }
   \tag #'altus { \clef treble c''4 b'2 a'4 \appendLyrics "_ _ _" }
   \tag #'tenor { \clef "treble_8" g'4 g8 a b c' d'4~ \appendLyrics "tis per __ _ _ _ _" }
@@ -106,6 +108,8 @@ scoreMusic = {
   \tag #'tenor { \clef "treble_8" f'8 e' d' c' d'2 \appendLyrics "_ _ _ _ _" }
   \tag #'bassus { \clef bass bes1 \appendLyrics "de --" }
   \barCheck
+
+  \breakLine
 
   \tag #'cantus { \clef treble cis''2 r \appendLyrics "te:" }
   \tag #'altus { \clef treble a'2 r \appendLyrics "te:" }
@@ -155,6 +159,8 @@ scoreMusic = {
   \tag #'bassus { \clef bass a1 \appendLyrics "lis" }
   \barCheck
 
+  \breakPage
+
   \tag #'cantus { \clef treble r4 a'2 a'4 \appendLyrics "sic -- ut" }
   \tag #'altus { \clef treble e'4 e' e' e' \appendLyrics "_ ut do -- lor" }
   \tag #'tenor { \clef "treble_8" a4 a a a \appendLyrics "_ ut do -- lor" }
@@ -197,6 +203,8 @@ scoreMusic = {
   \tag #'bassus { \clef bass f4 d2 d4 \appendLyrics "us, sic -- ut" }
   \barCheck
 
+  \breakLine
+
   \tag #'cantus { \clef treble a'4 a' bes'2~ \appendLyrics "do -- lor me --" }
   \tag #'altus { \clef treble e'4 fis' g'2~ \appendLyrics "do -- lor me --" }
   \tag #'tenor { \clef "treble_8" d'4 cis' d' d' \appendLyrics "_ ut do -- lor" }
@@ -238,6 +246,8 @@ scoreMusic = {
   \tag #'tenor { \clef "treble_8" a'4. a'8 a'4 g' \appendLyrics "u -- ni -- ver -- si" }
   \tag #'bassus { \clef bass a4. a8 a4 c' \appendLyrics "u -- ni -- ver -- si" }
   \barCheck
+
+  \breakLine
 
   \tag #'cantus { \clef treble d''2. d''4 \appendLyrics "po -- pu --" }
   \tag #'altus { \clef treble bes'4 a'2 g'4 \appendLyrics "po -- _ pu --" }
@@ -287,6 +297,8 @@ scoreMusic = {
   \tag #'bassus { \clef bass bes2 a~ \appendLyrics "me -- um __" }
   \barCheck
 
+  \breakPage
+
   \tag #'cantus { \clef treble e''2 f'' \appendLyrics "_ lo --" }
   \tag #'altus { \clef treble r4 a' c''2~ \appendLyrics "do -- lo --" }
   \tag #'tenor { \clef "treble_8" cis'4 a a'2~ \appendLyrics "_ do -- lo --" }
@@ -335,6 +347,8 @@ scoreMusic = {
   \tag #'bassus { \clef bass c'2 bes \appendLyrics "est do --" }
   \barCheck
 
+\breakLine
+
   \tag #'cantus { \clef treble d''2 c'' \appendLyrics "_ est" }
   \tag #'altus { \clef treble a'1 \appendLyrics "do --" }
   \tag #'tenor { \clef "treble_8" e'1 \appendLyrics "lor" }
@@ -382,6 +396,8 @@ scoreMusic = {
   \tag #'tenor { \clef "treble_8" bes2 a4 e'~ \appendLyrics "_ us, sic --" }
   \tag #'bassus { \clef bass r2 r4 a~ \appendLyrics "sic --" }
   \barCheck
+
+  \breakLine
 
   \tag #'cantus { \clef treble cis''4 cis''! cis'' cis'' \appendLyrics "_ ut do -- lor" }
   \tag #'altus { \clef treble r4 a'2 a'4 \appendLyrics "sic -- ut" }

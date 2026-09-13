@@ -17,8 +17,10 @@ def main(project_dir: Path, argv: Optional[Sequence[str]] = None) -> int:
         action="store_true",
         help="build only the source-linked pragmatic score",
     )
+    parser.add_argument("--no-layout", action="store_true",
+                        help="omit layout-tagged final touches and manual adjustments")
     arguments = parser.parse_args(argv)
-    return run(project_dir, quick=arguments.quick)
+    return run(project_dir, quick=arguments.quick, no_layout=arguments.no_layout)
 
 
 def module_main(argv: Optional[Sequence[str]] = None) -> int:
@@ -29,14 +31,16 @@ def module_main(argv: Optional[Sequence[str]] = None) -> int:
         action="store_true",
         help="build only the source-linked pragmatic score",
     )
+    parser.add_argument("--no-layout", action="store_true",
+                        help="omit layout-tagged final touches and manual adjustments")
     arguments = parser.parse_args(argv)
-    return run(arguments.project_dir, quick=arguments.quick)
+    return run(arguments.project_dir, quick=arguments.quick, no_layout=arguments.no_layout)
 
 
-def run(project_dir: Path, *, quick: bool) -> int:
+def run(project_dir: Path, *, quick: bool, no_layout: bool = False) -> int:
     try:
         context = BuildContext.for_project(project_dir)
-        SonataBuilder(context).build(quick=quick)
+        SonataBuilder(context).build(quick=quick, layout=not no_layout)
     except (BuildError, OSError, ValueError) as exc:
         print(f"[build] error: {exc}", file=sys.stderr)
         return 1

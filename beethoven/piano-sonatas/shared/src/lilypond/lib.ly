@@ -419,7 +419,8 @@ altFinger =
                'tags '(fingering)
                'text (markup #:altFingerMarkup spec)))
 
-#(define edition-staff-tags '(score right left common layout))
+#(define build-use-layout #t)
+#(define edition-staff-tags '(score right left common))
 #(define edition-content-tags '(urtext main main-only extended critical fingering debug))
 #(define edition-exclusive-tags '(urtext main-only extended critical debug))
 
@@ -441,7 +442,6 @@ altFinger =
    (let ((staff-tags (matching-tags tags edition-staff-tags)))
      (or (null? staff-tags)
          (memq 'score staff-tags)
-         (and (eq? staff 'right) (memq 'layout staff-tags))
          (memq staff staff-tags))))
 
 #(define (edition-content-visible? tags edition)
@@ -458,7 +458,8 @@ altFinger =
 #(define (edition-keep-predicate edition staff)
    (lambda (music)
      (let ((tags (ly:music-property music 'tags)))
-       (and (edition-staff-visible? tags staff)
+       (and (or build-use-layout (not (memq 'layout tags)))
+            (edition-staff-visible? tags staff)
             (edition-content-visible? tags edition)))))
 
 keepForEdition =
@@ -472,7 +473,7 @@ critRef =
 #})
 
 breakLine = {
-  \tag #'layout {
+  \tag #'layout \tag #'right {
     \tag #'debug {
       \tweak self-alignment-X #LEFT
       \tweak extra-offset #'(0.4 . 0)
@@ -488,7 +489,7 @@ breakLine = {
 }
 
 breakPage = {
-  \tag #'layout {
+  \tag #'layout \tag #'right {
     \tag #'debug {
       \tweak self-alignment-X #LEFT
       \tweak extra-offset #'(0.4 . 0)
@@ -586,6 +587,10 @@ renderMovementForEdition =
 
 renderMovementForMidi =
 #(define-music-function (edition movementContent) (symbol? ly:music?)
+   (set! movementContent
+         (music-filter
+          (lambda (item) (not (memq 'layout (ly:music-property item 'tags))))
+          (ly:music-deep-copy movementContent)))
 #{
   \new PianoStaff <<
     \new Staff = "right" <<

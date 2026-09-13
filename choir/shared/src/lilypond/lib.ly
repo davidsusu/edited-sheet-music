@@ -3,6 +3,10 @@
 \include "articulate.ly"
 
 choirPaper = \paper {
+  left-margin = 20\mm
+  right-margin = 14\mm
+  top-margin = 24\mm
+  bottom-margin = 24\mm
   tagline = ##f
 }
 
@@ -41,6 +45,40 @@ scaleNotation =
       (ly:music-deep-copy music))))
 
 barCheck = \tag #'global { | }
+
+% Optional output-specific layout instructions, excluded by --no-layout and from MIDI.
+breakLine = {
+  \tag #'layout {
+    \tag #'debug {
+      \tweak self-alignment-X #LEFT
+      \tweak extra-offset #'(0.4 . 0)
+      \tweak outside-staff-priority ##f
+      \textEndMark \markup
+        \with-dimensions #'(0 . 0) #'(0 . 0)
+        \with-color #(x11-color 'grey60)
+        \fontsize #-1
+        "↲"
+    }
+    \break
+  }
+}
+
+breakPage = {
+  \tag #'layout {
+    \tag #'debug {
+      \tweak self-alignment-X #LEFT
+      \tweak extra-offset #'(0.4 . 0)
+      \tweak outside-staff-priority ##f
+      \textEndMark \markup
+        \with-dimensions #'(0 . 0) #'(0 . 0)
+        \with-color #(x11-color 'grey60)
+        \override #'(font-name . "FontAwesome")
+        \fontsize #-3
+        \char ##xF016
+    }
+    \pageBreak
+  }
+}
 
 #(define (empty-sequential-music)
    (make-music 'SequentialMusic 'elements '()))
