@@ -394,7 +394,7 @@ firstMovement = {
   |
 
   \tag #'right { \clef treble <d''' d''>4 <cis''' cis''> }
-  \tag #'left { \clef treble <g' eis'>16 b' <g' eis'> b' <g' eis'> b' <g' eis'> b' }
+  \tag #'left { \clef treble <gis' eis'>16 b' <gis' eis'> b' <gis' eis'> b' <gis' eis'> b' }
   \tag #'common { s2 }
   |
 
@@ -1586,7 +1586,7 @@ firstMovement = {
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble r8 \tuplet 3/2 { a'16 a'' a' } \tuplet 3/2 { e'16 e'' e' } \tuplet 3/2 { c'16 cis'' cis' } }
+  \tag #'right { \clef treble r8 \tuplet 3/2 { a'16 a'' a' } \tuplet 3/2 { e'16 e'' e' } \tuplet 3/2 { cis'16 cis'' cis' } }
   \tag #'left { \clef bass <cis' a e cis>4 r }
   \tag #'common { s2 }
   |
