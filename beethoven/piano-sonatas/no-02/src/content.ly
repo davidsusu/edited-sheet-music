@@ -17,9 +17,9 @@ firstMovement = {
     \set Timing.baseMoment = #(ly:make-moment 1/8)
     \set Timing.beatStructure = #'(2 2)
     \set Timing.beamExceptions = \beamExceptions {
-        8[ 8 8 8] |
-        16[ 16 16 16] 16[ 16 16 16] |
-        8.[ 32 32] 4 |
+      8[ 8 8 8] |
+      16[ 16 16 16] 16[ 16 16 16] |
+      8.[ 32 32] 4 |
       \tuplet 3/2 8 { 16[ 16 16] 16[ 16 16] 16[ 16 16] 16[ 16 16] } |
     }
   \key a \major
@@ -3541,3 +3541,10 @@ fourthMovement = {
   \bar "|."
 
 }
+
+movementSpecs = #'(
+  (firstMovement "Allegro vivace")
+  (secondMovement "Largo appassionato")
+  (thirdMovement "Scherzo. Allegretto")
+  (fourthMovement "Rondo. Grazioso")
+)

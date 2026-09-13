@@ -2653,3 +2653,10 @@ fourthMovement = {
   \bar "|."
 
 }
+
+movementSpecs = #'(
+  (firstMovement "Allegro")
+  (secondMovement "Adagio")
+  (thirdMovement "Menuetto. Allegretto")
+  (fourthMovement "Prestissimo")
+)

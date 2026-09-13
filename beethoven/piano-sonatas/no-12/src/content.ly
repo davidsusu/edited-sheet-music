@@ -1254,7 +1254,6 @@ firstMovement = {
   \bar "|."
 }
 
-
 secondMovement = {
   \override Score.RehearsalMark.self-alignment-X = #LEFT
   \set Score.tempoHideNote = ##t
@@ -2220,7 +2219,6 @@ thirdMovement = {
   \bar "|."
 }
 
-
 fourthMovement = {
   \override Score.RehearsalMark.self-alignment-X = #LEFT
   \set Score.tempoHideNote = ##t
@@ -3102,3 +3100,10 @@ fourthMovement = {
 
   \bar "|."
 }
+
+movementSpecs = #'(
+  (firstMovement "Andante con variazioni")
+  (secondMovement "Scherzo. Allegro molto")
+  (thirdMovement "Marcia funebre sulla morte d’un Eroe")
+  (fourthMovement "Allegro")
+)

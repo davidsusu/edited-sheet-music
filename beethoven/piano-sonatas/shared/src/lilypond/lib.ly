@@ -525,7 +525,6 @@ beginRevisionSection = {
     \override Staff.Tie.color = #red
     \override Staff.TupletNumber.color = #red
     \override Staff.TupletBracket.color = #red
-    \override Staff.StaffSymbol.color = #red
     \override Staff.BarLine.color = #red
     \override PianoStaff.SpanBar.color = #red
     \override PianoStaff.Stem.color = #red
@@ -558,7 +557,6 @@ endRevisionSection = {
     \revert Staff.Tie.color
     \revert Staff.TupletNumber.color
     \revert Staff.TupletBracket.color
-    \revert Staff.StaffSymbol.color
     \revert Staff.BarLine.color
     \revert PianoStaff.SpanBar.color
     \revert PianoStaff.Stem.color

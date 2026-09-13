@@ -10,6 +10,7 @@ from .engraving import (
     extract_critical_notes,
     generate_bare_view_source,
     generate_extended_index_source,
+    generate_publication_view_source,
 )
 from .dependencies import DependencyChecker
 from .publication import PdfAssembler
@@ -78,20 +79,28 @@ class SonataBuilder:
         generated_sources["main-debug"] = run_dir / "main-debug.ly"
         for edition, source in generated_sources.items():
             generate_bare_view_source(self.context.source_dir, edition, source)
+        publication_sources = {
+            edition: run_dir / f"{edition}.ly"
+            for edition in ("main", "urtext", "extended")
+        }
+        for edition, source in publication_sources.items():
+            generate_publication_view_source(self.context.source_dir, edition, source)
 
-        main_pdf = self.build_lilypond_view("main", "main")
+        main_pdf = self.build_lilypond_source(publication_sources["main"], "main")
         main_bare_pdf = self.build_lilypond_source(
             generated_sources["main"], "main-bare"
         )
         main_debug_pdf = self.build_lilypond_source(
             generated_sources["main-debug"], "main-debug", point_and_click=True
         )
-        urtext_pdf = self.build_lilypond_view("urtext", "urtext")
+        urtext_pdf = self.build_lilypond_source(
+            publication_sources["urtext"], "urtext"
+        )
         urtext_bare_pdf = self.build_lilypond_source(
             generated_sources["urtext"], "urtext-bare"
         )
-        extended_music_pdf = self.build_lilypond_view(
-            "extended", "extended-music"
+        extended_music_pdf = self.build_lilypond_source(
+            publication_sources["extended"], "extended-music", label="extended"
         )
         extended_bare_music_pdf = self.build_lilypond_source(
             generated_sources["extended"], "extended-bare-music"
