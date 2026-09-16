@@ -62,7 +62,7 @@ def generate_view_source(
         subject = f"{work_subject}, transposed {transpose[0]}/{transpose[1]}"
 
     sections = [
-        '\\version "2.24.1"\n\n',
+        '\\version "2.26.0"\n\n',
         f'\\include "{content_path}"\n\n',
         f'buildPdfSubject = "{lilypond_string_escape(subject)}"\n\n',
     ]

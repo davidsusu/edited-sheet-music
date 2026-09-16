@@ -78,7 +78,7 @@ def generate_publication_view_source(
 
     content_path = lilypond_string_escape(source_dir / "content.ly")
     sections = [
-        '\\version "2.24.1"\n\n',
+        '\\version "2.26.0"\n\n',
         f'\\include "{content_path}"\n',
         f"#(set! build-use-layout {'#t' if layout else '#f'})\n",
     ]
@@ -149,7 +149,7 @@ def generate_bare_view_source(
 
     content_path = lilypond_string_escape(source_dir / "content.ly")
     sections = [
-        '\\version "2.24.1"\n\n',
+        '\\version "2.26.0"\n\n',
         f'\\include "{content_path}"\n\n',
         f"#(set! build-use-layout {'#t' if layout else '#f'})\n",
         f'bareEditionSubtitle = "{edition.subtitle}"\n\n',
@@ -228,7 +228,7 @@ def generate_extended_index_source(
 ) -> None:
     content_path = lilypond_string_escape(source_dir / "content.ly")
     sections = [
-        '\\version "2.24.1"\n\n',
+        '\\version "2.26.0"\n\n',
         f'\\include "{content_path}"\n\n',
         f"#(set! build-use-layout {'#t' if layout else '#f'})\n",
         """extendedEditionSubtitle = "Extended critical edition"

@@ -1,4 +1,4 @@
-\version "2.24.1"
+\version "2.26.0"
 
 % articulate.ly otherwise uses a fixed 1/64 duration for each generated trill
 % note.  Its input durations already include tuplet and \scaleDurations
