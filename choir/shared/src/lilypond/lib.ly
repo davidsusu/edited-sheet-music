@@ -227,12 +227,15 @@ extractLyrics =
 beginRevisionSection = {
   \tag #'debug {
     \override Staff.NoteHead.color = \debugColor
+    \override Staff.Arpeggio.color = \debugColor
     \override Staff.Stem.color = \debugColor
     \override Staff.Beam.color = \debugColor
     \override Staff.Flag.color = \debugColor
     \override Staff.Rest.color = \debugColor
+    \override Staff.Fingering.color = \debugColor
     \override Staff.MultiMeasureRest.color = \debugColor
     \override Staff.MultiMeasureRestNumber.color = \debugColor
+    \override Staff.MultiMeasureRestScript.color = \debugColor
     \override Staff.MultiMeasureRestText.color = \debugColor
     \override Staff.Dots.color = \debugColor
     \override Staff.Accidental.color = \debugColor
@@ -246,6 +249,10 @@ beginRevisionSection = {
     \override Staff.Slur.color = \debugColor
     \override Staff.PhrasingSlur.color = \debugColor
     \override Staff.Tie.color = \debugColor
+    \override Staff.RepeatTie.color = \debugColor
+    \override Staff.LaissezVibrerTie.color = \debugColor
+    \override Staff.Glissando.color = \debugColor
+    \override Staff.TrillSpanner.color = \debugColor
     \override Staff.TupletNumber.color = \debugColor
     \override Staff.TupletBracket.color = \debugColor
     \override Staff.BarLine.color = \debugColor
@@ -260,12 +267,15 @@ beginRevisionSection = {
 endRevisionSection = {
   \tag #'debug {
     \revert Staff.NoteHead.color
+    \revert Staff.Arpeggio.color
     \revert Staff.Stem.color
     \revert Staff.Beam.color
     \revert Staff.Flag.color
     \revert Staff.Rest.color
+    \revert Staff.Fingering.color
     \revert Staff.MultiMeasureRest.color
     \revert Staff.MultiMeasureRestNumber.color
+    \revert Staff.MultiMeasureRestScript.color
     \revert Staff.MultiMeasureRestText.color
     \revert Staff.Dots.color
     \revert Staff.Accidental.color
@@ -279,6 +289,10 @@ endRevisionSection = {
     \revert Staff.Slur.color
     \revert Staff.PhrasingSlur.color
     \revert Staff.Tie.color
+    \revert Staff.RepeatTie.color
+    \revert Staff.LaissezVibrerTie.color
+    \revert Staff.Glissando.color
+    \revert Staff.TrillSpanner.color
     \revert Staff.TupletNumber.color
     \revert Staff.TupletBracket.color
     \revert Staff.BarLine.color

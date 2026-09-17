@@ -508,12 +508,15 @@ breakPage = {
 beginRevisionSection = {
   \tag #'debug {
     \override Staff.NoteHead.color = #red
+    \override Staff.Arpeggio.color = #red
     \override Staff.Stem.color = #red
     \override Staff.Beam.color = #red
     \override Staff.Flag.color = #red
     \override Staff.Rest.color = #red
+    \override Staff.Fingering.color = #red
     \override Staff.MultiMeasureRest.color = #red
     \override Staff.MultiMeasureRestNumber.color = #red
+    \override Staff.MultiMeasureRestScript.color = #red
     \override Staff.MultiMeasureRestText.color = #red
     \override Staff.Dots.color = #red
     \override Staff.Accidental.color = #red
@@ -527,12 +530,18 @@ beginRevisionSection = {
     \override Staff.Slur.color = #red
     \override Staff.PhrasingSlur.color = #red
     \override Staff.Tie.color = #red
+    \override Staff.RepeatTie.color = #red
+    \override Staff.LaissezVibrerTie.color = #red
+    \override Staff.Glissando.color = #red
+    \override Staff.TrillSpanner.color = #red
     \override Staff.TupletNumber.color = #red
     \override Staff.TupletBracket.color = #red
     \override Staff.BarLine.color = #red
     \override PianoStaff.SpanBar.color = #red
     \override PianoStaff.Stem.color = #red
     \override PianoStaff.StemStub.color = #red
+    \override PianoStaff.PianoPedalBracket.color = #red
+    \override PianoStaff.SustainPedal.color = #red
     \override Dynamics.DynamicText.color = #red
     \override Dynamics.Hairpin.color = #red
     \override Score.TextMark.color = #red
@@ -543,12 +552,15 @@ beginRevisionSection = {
 endRevisionSection = {
   \tag #'debug {
     \revert Staff.NoteHead.color
+    \revert Staff.Arpeggio.color
     \revert Staff.Stem.color
     \revert Staff.Beam.color
     \revert Staff.Flag.color
     \revert Staff.Rest.color
+    \revert Staff.Fingering.color
     \revert Staff.MultiMeasureRest.color
     \revert Staff.MultiMeasureRestNumber.color
+    \revert Staff.MultiMeasureRestScript.color
     \revert Staff.MultiMeasureRestText.color
     \revert Staff.Dots.color
     \revert Staff.Accidental.color
@@ -562,12 +574,18 @@ endRevisionSection = {
     \revert Staff.Slur.color
     \revert Staff.PhrasingSlur.color
     \revert Staff.Tie.color
+    \revert Staff.RepeatTie.color
+    \revert Staff.LaissezVibrerTie.color
+    \revert Staff.Glissando.color
+    \revert Staff.TrillSpanner.color
     \revert Staff.TupletNumber.color
     \revert Staff.TupletBracket.color
     \revert Staff.BarLine.color
     \revert PianoStaff.SpanBar.color
     \revert PianoStaff.Stem.color
     \revert PianoStaff.StemStub.color
+    \revert PianoStaff.PianoPedalBracket.color
+    \revert PianoStaff.SustainPedal.color
     \revert Dynamics.DynamicText.color
     \revert Dynamics.Hairpin.color
     \revert Score.TextMark.color
