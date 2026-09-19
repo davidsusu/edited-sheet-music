@@ -84,7 +84,7 @@ def generate_publication_view_source(
     ]
     if edition_name == "main":
         rectify_path = lilypond_string_escape(
-            source_dir.parent.parent / "shared/src/lilypond/rectify.ly"
+            source_dir.parent.parent / "shared/src/lilypond/rectify.ily"
         )
         sections.append(f'\\include "{rectify_path}"\n')
     header_name = f"{edition_name}HeaderData"

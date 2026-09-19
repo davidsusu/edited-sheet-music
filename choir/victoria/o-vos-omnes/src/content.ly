@@ -1,6 +1,6 @@
 \version "2.26.0"
 
-\include "../../../shared/src/lilypond/lib.ly"
+\include "../../../shared/src/lilypond/lib.ily"
 
 workTitle = "O vos omnes"
 workComposer = "Tomás Luis de Victoria"
