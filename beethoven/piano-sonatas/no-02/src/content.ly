@@ -14,7 +14,7 @@ firstMovement = {
   \set Score.tempoHideNote = ##t
   \set Score.alternativeNumberingStyle = #'numbers
   \time 2/4
-    \set Timing.baseMoment = #(ly:make-moment 1/8)
+    \set Timing.beatBase = #1/8
     \set Timing.beatStructure = #'(2 2)
     \set Timing.beamExceptions = \beamExceptions {
       8[ 8 8 8] |
@@ -1765,7 +1765,7 @@ secondMovement = {
   \set Score.tempoHideNote = ##t
   \set Score.alternativeNumberingStyle = #'numbers
   \time 3/4
-    \set Timing.baseMoment = #(ly:make-moment 1/8)
+    \set Timing.beatBase = #1/8
     \set Timing.beatStructure = #'(6)
     \set Timing.beamExceptions = \beamExceptions {
       16[ 16 16 16] 16[ 16 16 16] 16[ 16 16 16] |

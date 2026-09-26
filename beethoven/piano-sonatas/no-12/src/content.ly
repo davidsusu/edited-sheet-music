@@ -17,7 +17,7 @@ firstMovement = {
   \tempo 8 = 90
   \time 3/8
     \set Timing.beamExceptions = #'()
-    \set Timing.baseMoment = #(ly:make-moment 1/8)
+    \set Timing.beatBase = #1/8
     \set Timing.beatStructure = #'(3)
   \key as \major
     \accidentalStyle modern
@@ -1264,7 +1264,7 @@ secondMovement = {
 
   \time 3/4
   \set Timing.beamExceptions = #'()
-  \set Timing.baseMoment = #(ly:make-moment 1/4)
+  \set Timing.beatBase = #1/4
   \set Timing.beatStructure = #'(3)
 
   \key as \major
@@ -1813,7 +1813,7 @@ thirdMovement = {
 
   \time 4/4
   \set Timing.beamExceptions = #'()
-  \set Timing.baseMoment = #(ly:make-moment 1/4)
+  \set Timing.beatBase = #1/4
   \set Timing.beatStructure = #'(4)
 
   \key as \minor
@@ -2229,7 +2229,7 @@ fourthMovement = {
 
   \time 2/4
   \set Timing.beamExceptions = #'()
-  \set Timing.baseMoment = #(ly:make-moment 1/4)
+  \set Timing.beatBase = #1/4
   \set Timing.beatStructure = #'(2)
 
   \key as \major
