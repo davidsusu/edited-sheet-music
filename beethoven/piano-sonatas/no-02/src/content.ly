@@ -299,7 +299,7 @@ firstMovement = {
   |
 
   \tag #'right { \clef treble R2 }
-  \tag #'left { \clef bass \splitFour { \tweak extra-offset #'(-0.5 . 0) g'4\rest \tweak extra-offset #'(-0.5 . 0) g'8\rest b } { \tweak extra-offset #'(1 . 0) d'4\rest \once \stemDown a_\laissezVibrer } { \tweak extra-offset #'(-0.5 . 0) b8\rest fis4._\laissezVibrer } { dis2~ } }
+  \tag #'left { \clef bass \splitFour { \tweak extra-offset #'(-0.5 . 0) g'4\rest \tweak extra-offset #'(-0.5 . 0) g'8\rest b } { \tweak extra-offset #'(1 . 0) d'4\rest \stemDir #DOWN a_\laissezVibrer } { \tweak extra-offset #'(-0.5 . 0) b8\rest fis4._\laissezVibrer } { dis2~ } }
   \tag #'common { s2 }
   |
 
@@ -543,18 +543,18 @@ firstMovement = {
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble gis8 fis e dis }
+  \tag #'right { \clef bass gis8 fis e dis }
   \tag #'left { \clef bass b,,2 }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble e'2 }
-  \tag #'left { \clef bass \split { e8 fis gis a } { e,2~ } }
+  \tag #'right { \clef bass \split { e'2 } { e8 fis gis a } }
+  \tag #'left { \clef bass e,2~ }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble a'2 }
-  \tag #'left { \clef bass \split { b8 cis' d' dis' } { e,2 } }
+  \tag #'right { \clef treble \split { a'2 } { b8 cis' d' dis' } }
+  \tag #'left { \clef bass e,2 }
   \tag #'common { s2 }
   |
 
@@ -568,13 +568,13 @@ firstMovement = {
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble e'2 }
-  \tag #'left { \clef bass \split { gis8 fis gis a } { <e e,~>2 } }
+  \tag #'right { \clef treble \split { e'2 } { gis8 fis gis a } }
+  \tag #'left { \clef bass <e e,~>2 }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble a'2 }
-  \tag #'left { \clef bass \splitThree { b8 cis' d' dis' } { dis4 fis } { e,2 } }
+  \tag #'right { \clef treble \split { a'2 } { b8 cis' d' dis' } }
+  \tag #'left { \clef bass \split { dis4 fis } { e,2 } }
   \tag #'common { s2 }
   |
 
@@ -724,28 +724,28 @@ firstMovement = {
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <c' aes>16 ees' <c' aes> ees' <c' aes> ees' <c' aes> ees' \stemNeutral }
-  \tag #'left { \clef bass aes,,4 r8 \change Staff = "right" \stemUp ees''' \tweak extra-offset #'(-2.3 . -1.5) ^\markup \right-align { \italic "m.s." } \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <c' aes>16 ees' <c' aes> ees' <c' aes> ees' <c' aes> ees' } }
+  \tag #'left { \clef bass aes,,4 r8 \change Staff = "right" \stemDir #UP { ees''' \tweak extra-offset #'(-2.3 . -1.5) ^\markup \right-align { \italic "m.s." } } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <c' aes>16 ees' <c' aes> ees' <c' aes> ees' <c' aes> ees' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp c'''4 aes'' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <c' aes>16 ees' <c' aes> ees' <c' aes> ees' <c' aes> ees' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { c'''4 aes'' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <c' aes>16 ees' <c' aes> ees' <c' aes> ees' <c' aes> ees' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp ees''4 c'' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <c' aes>16 ees' <c' aes> ees' <c' aes> ees' <c' aes> ees' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { ees''4 c'' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <c' aes>16 ees' <c' aes> ees' <c' aes> ees' <c' aes> ees' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp bes'4 aes' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <c' aes>16 ees' <c' aes> ees' <c' aes> ees' <c' aes> ees' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { bes'4 aes' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <des' bes>16 ees' <des' bes g> ees' <des' bes g> ees' <des' bes g> ees' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp g'4 r8 \stemNeutral \change Staff = "left" ees }
+  \tag #'right { \clef treble \stemDir #DOWN { <des' bes>16 ees' <des' bes g> ees' <des' bes g> ees' <des' bes g> ees' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { g'4 r8 } \change Staff = "left" ees }
   \tag #'common { s2 }
   |
 
@@ -754,28 +754,28 @@ firstMovement = {
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <des' bes g>16 ees' <des' bes g> ees' <des' bes g> ees' <des' bes g> ees' \stemNeutral }
-  \tag #'left { \clef bass ees,4 r8 \change Staff = "right" \stemUp des''' \tweak extra-offset #'(-2.3 . -1.5) ^\markup \right-align { \italic "m.s." } \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <des' bes g>16 ees' <des' bes g> ees' <des' bes g> ees' <des' bes g> ees' } }
+  \tag #'left { \clef bass ees,4 r8 \change Staff = "right" \stemDir #UP { des''' \tweak extra-offset #'(-2.3 . -1.5) ^\markup \right-align { \italic "m.s." } } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <des' bes g>16 ees' <des' bes g> ees' <des' bes g> ees' <des' bes g> ees' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp bes''4 g'' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <des' bes g>16 ees' <des' bes g> ees' <des' bes g> ees' <des' bes g> ees' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { bes''4 g'' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <des' bes g>16 ees' <des' bes g> ees' <des' bes g> ees' <des' bes g> ees' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp des''4 bes' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <des' bes g>16 ees' <des' bes g> ees' <des' bes g> ees' <des' bes g> ees' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { des''4 bes' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <bes g>16 des' <bes g> des' <bes g> des' <bes g> des' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp g'4 f' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <bes g>16 des' <bes g> des' <bes g> des' <bes g> des' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { g'4 f' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <bes g>16 c' <bes g> c' <bes g> c' <bes g> c' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp e'4 r8 \stemNeutral \change Staff = "left" c }
+  \tag #'right { \clef treble \stemDir #DOWN { <bes g>16 c' <bes g> c' <bes g> c' <bes g> c' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { e'4 r8 } \change Staff = "left" c }
   \tag #'common { s2 }
   |
 
@@ -784,68 +784,68 @@ firstMovement = {
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <bes g>16 c' <bes g> c' <bes g> c' <bes g> c' \stemNeutral }
-  \tag #'left { \clef bass c,4 r8 \change Staff = "right" \stemUp bes'' \tweak extra-offset #'(-2.3 . -1.5) ^\markup \right-align { \italic "m.s." } \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <bes g>16 c' <bes g> c' <bes g> c' <bes g> c' } }
+  \tag #'left { \clef bass c,4 r8 \change Staff = "right" \stemDir #UP { bes'' \tweak extra-offset #'(-2.3 . -1.5) ^\markup \right-align { \italic "m.s." } } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <bes g>16 c' <bes g> c' <bes g> c' <bes g> c' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp g''4 e'' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <bes g>16 c' <bes g> c' <bes g> c' <bes g> c' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { g''4 e'' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <bes g>16 c' <bes g> c' <bes g> c' <bes g> c' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp c''4 bes' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <bes g>16 c' <bes g> c' <bes g> c' <bes g> c' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { c''4 bes' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <bes g>16 c' <bes g> c' <bes g> c' <bes g> c' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp g'4 e' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <bes g>16 c' <bes g> c' <bes g> c' <bes g> c' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { g'4 e' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <aes f>16 c' <aes f> c' <aes f> c' <aes f> c' \stemNeutral }
-  \tag #'left { \clef bass <c aes, f, c,>4\arpeggio r8 \change Staff = "right" \stemUp c''' \tweak extra-offset #'(-1 . -0.3) ^\markup \right-align { \italic "m.s." } \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <aes f>16 c' <aes f> c' <aes f> c' <aes f> c' } }
+  \tag #'left { \clef bass <c aes, f, c,>4\arpeggio r8 \change Staff = "right" \stemDir #UP { c''' \tweak extra-offset #'(-1 . -0.3) ^\markup \right-align { \italic "m.s." } } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <aes f>16 c' <aes f> c' <aes f> c' <aes f> c' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp aes''4 f'' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <aes f>16 c' <aes f> c' <aes f> c' <aes f> c' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { aes''4 f'' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <aes f>16 c' <aes f> c' <aes f> c' <aes f> c' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp c''4 c'' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <aes f>16 c' <aes f> c' <aes f> c' <aes f> c' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { c''4 c'' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <aes f>16 c' <aes f> c' <aes f> c' <aes f> c' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp aes'4 f' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <aes f>16 c' <aes f> c' <aes f> c' <aes f> c' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { aes'4 f' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <b aes f>16 d' <b aes f> d' <b aes f> d' <b aes f> d' \stemNeutral }
-  \tag #'left { \clef bass <c aes, f, c,>4\arpeggio r8 \change Staff = "right" \stemUp f''' \tweak extra-offset #'(-1 . -0.3) ^\markup \right-align { \italic "m.s." } \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <b aes f>16 d' <b aes f> d' <b aes f> d' <b aes f> d' } }
+  \tag #'left { \clef bass <c aes, f, c,>4\arpeggio r8 \change Staff = "right" \stemDir #UP { f''' \tweak extra-offset #'(-1 . -0.3) ^\markup \right-align { \italic "m.s." } } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <b aes f>16 d' <b aes f> d' <b aes f> d' <b aes f> d' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp d'''4 b'' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <b aes f>16 d' <b aes f> d' <b aes f> d' <b aes f> d' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { d'''4 b'' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <b aes f>16 d' <b aes f> d' <b aes f> d' <b aes f> d' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp aes''4 f'' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <b aes f>16 d' <b aes f> d' <b aes f> d' <b aes f> d' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { aes''4 f'' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <b aes f>16 d' <b aes f> d' <b aes f> d' <b aes f> d' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp d''4 b' \stemNeutral \change Staff = "left" }
+  \tag #'right { \clef treble \stemDir #DOWN { <b aes f>16 d' <b aes f> d' <b aes f> d' <b aes f> d' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { d''4 b' } \change Staff = "left" }
   \tag #'common { s2 }
   |
 
-  \tag #'right { \clef treble \stemDown <g e>16 c' <g e> c' <g e> c' <g e> c' \stemNeutral }
-  \tag #'left { \clef bass \change Staff = "right" \stemUp c''4 \stemNeutral \change Staff = "left" c }
+  \tag #'right { \clef treble \stemDir #DOWN { <g e>16 c' <g e> c' <g e> c' <g e> c' } }
+  \tag #'left { \clef bass \change Staff = "right" \stemDir #UP { c''4 } \change Staff = "left" c }
   \tag #'common { s2 }
   |
 
@@ -2603,7 +2603,7 @@ fourthMovement = {
   |
 
   \tag #'right { \clef treble r8 a16 cis' \tuplet 6/4 { e'16 a' cis'' e'' a'' cis''' } e'''4 e''' }
-  \tag #'left { \clef bass \stemDown cis8 \change Staff = "right" a \change Staff = "left" e a \stemNeutral b, gis e gis }
+  \tag #'left { \clef bass \stemDir #DOWN { cis8 \change Staff = "right" a \change Staff = "left" e a } b, gis e gis }
   \tag #'common { s1 }
   |
 
@@ -2803,7 +2803,7 @@ fourthMovement = {
   |
 
   \tag #'right { \clef treble r8 a16 cis' \tuplet 6/4 { e'16 a' cis'' e'' a'' cis''' } e'''4 e''' }
-  \tag #'left { \clef bass \stemDown cis8 \change Staff = "right" a \change Staff = "left" e a \stemNeutral b, gis e gis }
+  \tag #'left { \clef bass \stemDir #DOWN { cis8 \change Staff = "right" a \change Staff = "left" e a } b, gis e gis }
   \tag #'common { s1 }
   |
 
@@ -3119,7 +3119,7 @@ fourthMovement = {
   |
 
   \tag #'right { \clef treble a32 b a gis a b cis' dis' e' fis' gis' a' b' cis'' dis'' e'' \tuplet 3/2 { fis''16 gis'' a'' b'' cis''' dis''' } e'''8 e''' }
-  \tag #'left { \clef bass \stemDown cis8 \change Staff = "right" a \change Staff = "left" e a \stemNeutral b, gis e gis }
+  \tag #'left { \clef bass \stemDir #DOWN { cis8 \change Staff = "right" a \change Staff = "left" e a } b, gis e gis }
   \tag #'common { s1 }
   |
 
@@ -3294,7 +3294,7 @@ fourthMovement = {
   |
 
   \tag #'right { \clef treble r8 a16 cis' \tuplet 6/4 { e'16 a' cis'' e'' a'' cis''' } e'''4 e''' }
-  \tag #'left { \clef bass \stemDown cis8 \change Staff = "right" a \change Staff = "left" e a \stemNeutral b, gis e gis }
+  \tag #'left { \clef bass \stemDir #DOWN { cis8 \change Staff = "right" a \change Staff = "left" e a } b, gis e gis }
   \tag #'common { s1 }
   |
 
@@ -3344,7 +3344,7 @@ fourthMovement = {
   |
 
   \tag #'right { \clef treble s4 \split { \tuplet 6/4 { e'16 gis' b' e'' gis'' b'' } } { \crossStaff { e'8 } s8 } d'''4 d''' }
-  \tag #'left { \clef bass \split { \stemNeutral \change Staff = "right" \once \override Beam.positions = #'(-5 . -3.5) <e' d' b>8[ \change Staff = "left" <e' d' b>] } { gis4 } \crossStaff { <d' b>8[ } <e' d' b>] <e' b gis>[ <e' b gis> <e' b gis> <e' b gis>] }
+  \tag #'left { \clef bass \split { \stemDir #AUTO { \change Staff = "right" \once \override Beam.positions = #'(-5 . -3.5) <e' d' b>8[ \change Staff = "left" <e' d' b>] } } { gis4 } \crossStaff { <d' b>8[ } <e' d' b>] <e' b gis>[ <e' b gis> <e' b gis> <e' b gis>] }
   \tag #'common { s1 }
   |
 
@@ -3354,7 +3354,7 @@ fourthMovement = {
   |
 
   \tag #'right { \clef treble s4 \split { \tuplet 6/4 { e'16 gis' b' e'' gis'' b'' } } { \crossStaff { e'8 } s8 } d'''4 d''' }
-  \tag #'left { \clef bass \split { \stemNeutral \change Staff = "right" \once \override Beam.positions = #'(-5 . -3.5) <e' d' b>8[ \change Staff = "left" <e' d' b>] } { gis4 } \crossStaff { <d' b>8[ } <e' d' b>] <e' b gis>[ <e' b gis> <e' b gis> <e' b gis>] }
+  \tag #'left { \clef bass \split { \stemDir #AUTO { \change Staff = "right" \once \override Beam.positions = #'(-5 . -3.5) <e' d' b>8[ \change Staff = "left" <e' d' b>] } } { gis4 } \crossStaff { <d' b>8[ } <e' d' b>] <e' b gis>[ <e' b gis> <e' b gis> <e' b gis>] }
   \tag #'common { s1 }
   |
 
@@ -3379,7 +3379,7 @@ fourthMovement = {
   |
 
   \tag #'right { \clef treble cis'4 \tuplet 6/4 { a16 cis' e' a' cis'' e'' } a''4 a'' }
-  \tag #'left { \clef bass \stemDown a,8 a \change Staff = "right" a \change Staff = "left" a \stemNeutral <cis' a g> <cis' a g> <cis' a g> <cis' a g> }
+  \tag #'left { \clef bass \stemDir #DOWN { a,8 a \change Staff = "right" a \change Staff = "left" a } <cis' a g> <cis' a g> <cis' a g> <cis' a g> }
   \tag #'common { s1 }
   |
 
@@ -3484,7 +3484,7 @@ fourthMovement = {
   |
 
   \tag #'right { \clef treble r8 a16 cis' \tuplet 6/4 { e'16 a' cis'' e'' a'' cis''' } e'''8 dis'''16 e''' dis''' e''' dis''' e''' }
-  \tag #'left { \clef bass \stemDown cis8 \change Staff = "right" a \change Staff = "left" e a \stemNeutral cis a cis ais }
+  \tag #'left { \clef bass \stemDir #DOWN { cis8 \change Staff = "right" a \change Staff = "left" e a } cis a cis ais }
   \tag #'common { s1 }
   |
 
