@@ -2,6 +2,30 @@
 
 \include "articulate.ly"
 
+% Resolve the output-specific tie before edition or staff tag filtering.
+tieToRepeat =
+  \tweak X-extent #'(0 . 0)
+  \tweak details.note-head-gap #-0.8
+  \tweak extra-offset #'(1 . 0)
+  #(make-music 'LaissezVibrerEvent 'tags '(midi))
+
+resolveRepeatTies =
+#(define-music-function (midi music) (boolean? ly:music?)
+   (music-map
+    (lambda (event)
+      (if (and (eq? (ly:music-property event 'name) 'LaissezVibrerEvent)
+               (memq 'midi (ly:music-property event 'tags)))
+          (let ((tags (delq 'midi (list-copy (ly:music-property event 'tags)))))
+            (if midi
+                (make-music 'TieEvent
+                            'origin (ly:music-property event 'origin)
+                            'tags tags)
+                (begin
+                  (set! (ly:music-property event 'tags) tags)
+                  event)))
+          event))
+    (ly:music-deep-copy music)))
+
 choirPaper = \paper {
   left-margin = 20\mm
   right-margin = 14\mm
@@ -22,6 +46,26 @@ choirLayout = \layout {
 }
 
 debugColor = #(x11-color 'firebrick)
+
+AUTO = -97
+
+#(define (stem-dir-or-auto? value)
+   (or (ly:dir? value)
+       (and (integer? value) (= value AUTO))))
+
+stemDir =
+#(define-music-function (direction music) (stem-dir-or-auto? ly:music?)
+   (if (= direction AUTO)
+       #{
+         \temporary \override Stem.direction = #ly:stem::calc-direction
+         $music
+         \revert Stem.direction
+       #}
+       #{
+         \temporary \override Stem.direction = #direction
+         $music
+         \revert Stem.direction
+       #}))
 
 % Change written values on a copy; tempo units and the original MIDI music stay intact.
 scaleNotation =

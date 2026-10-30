@@ -1,8 +1,10 @@
 \version "2.26.0"
 
 % articulate.ly otherwise uses a fixed 1/64 duration for each generated trill
-% note.  Its input durations already include tuplet and \scaleDurations
-% compression, so only the current tempo is needed to target 0.1 seconds.
+% note.  In LilyPond 2.26, both the twiddle duration and ac:currentTempo
+% are rational numbers in whole-note units (not ly:moment objects).
+% The input durations already include tuplet and \scaleDurations
+% compression, so the current tempo is enough to target 0.1 seconds.
 #(define (rectify:trill-note-time music)
    (let* ((trills
            (filter
@@ -16,15 +18,26 @@
            (if (pair? trills)
                (ly:music-property (car trills) 'twiddle)
                '())))
-     (if (ly:moment? preset)
+     (if (number? preset)
          preset
-         (ly:moment-mul ac:currentTempo (ly:make-moment 1/600)))))
+         (/ ac:currentTempo 600))))
 
 % Keep articulate.ly's expansion and after-grace handling, replacing only its
 % hardcoded trill timing decision.
 #(set! ac:twiddletime rectify:trill-note-time)
 
-#(define rectify:current-tempo (ly:make-moment 15))
+% A running trill can reach spacer/rest chords in polyphonic music.  Expanding
+% those produces no notes, so articulate.ly would divide by a zero length.
+#(define rectify:original-trill ac:trill)
+#(set! ac:trill
+   (lambda (music)
+     (if (any (lambda (event)
+                (eq? (ly:music-property event 'name) 'NoteEvent))
+              (ly:music-property music 'elements))
+         (rectify:original-trill music)
+         music)))
+
+#(define rectify:current-tempo 15)
 #(define rectify:arpeggio-direction #f)
 #(define rectify:connect-arpeggios #f)
 
@@ -126,10 +139,9 @@
                 (loop (cdr remaining)))))))
 
 #(define (rectify:seconds-to-moment seconds)
-   (ly:moment-mul
-    rectify:current-tempo
-    (rectify:moment
-     (/ (rationalize (inexact->exact seconds) 1/1000000) 60))))
+   (rectify:moment
+    (* rectify:current-tempo
+       (/ (rationalize (inexact->exact seconds) 1/1000000) 60))))
 
 #(define (rectify:desired-arpeggio-gap note-count)
    (rectify:seconds-to-moment
@@ -405,7 +417,7 @@
 rectify =
 #(define-music-function (music) (ly:music?)
    (let ((copy (music-map rectify:music (ly:music-deep-copy music))))
-     (set! rectify:current-tempo (ly:make-moment 15))
+     (set! rectify:current-tempo 15)
      (set! rectify:arpeggio-direction #f)
      (set! rectify:connect-arpeggios #f)
      (rectify:walk copy)))

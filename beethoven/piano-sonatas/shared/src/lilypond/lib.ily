@@ -1,5 +1,29 @@
 \include "articulate.ly"
 
+% Resolve the output-specific tie before edition or staff tag filtering.
+tieToRepeat =
+  \tweak X-extent #'(0 . 0)
+  \tweak details.note-head-gap #-0.8
+  \tweak extra-offset #'(1 . 0)
+  #(make-music 'LaissezVibrerEvent 'tags '(midi))
+
+resolveRepeatTies =
+#(define-music-function (midi music) (boolean? ly:music?)
+   (music-map
+    (lambda (event)
+      (if (and (eq? (ly:music-property event 'name) 'LaissezVibrerEvent)
+               (memq 'midi (ly:music-property event 'tags)))
+          (let ((tags (delq 'midi (list-copy (ly:music-property event 'tags)))))
+            (if midi
+                (make-music 'TieEvent
+                            'origin (ly:music-property event 'origin)
+                            'tags tags)
+                (begin
+                  (set! (ly:music-property event 'tags) tags)
+                  event)))
+          event))
+    (ly:music-deep-copy music)))
+
 \paper {
   bookTitleMarkup = \markup \null
   tagline = ##f
@@ -75,6 +99,10 @@ editionInfoPage =
 
 defaultLayout = \layout {
   \context {
+    \Score
+    barNumberVisibility = #first-bar-number-invisible-save-broken-bars
+  }
+  \context {
     \PianoStaff
     \consists "Span_stem_engraver"
   }
@@ -86,6 +114,10 @@ defaultLayout = \layout {
 }
 
 urtextLayout = \layout {
+  \context {
+    \Score
+    barNumberVisibility = #first-bar-number-invisible-save-broken-bars
+  }
   \context {
     \PianoStaff
     \consists "Span_stem_engraver"
@@ -224,6 +256,12 @@ prallAccidental =
     ^\markup { \fontsize #-4 $accidental }
 #})
 
+AUTO = -97
+
+#(define (stem-dir-or-auto? value)
+   (or (ly:dir? value)
+       (and (integer? value) (= value AUTO))))
+
 mordentAccidental =
 #(define-music-function (accidental music) (markup? ly:music?)
 #{
@@ -232,6 +270,20 @@ mordentAccidental =
     ^\mordent
     ^\markup { \fontsize #-4 $accidental }
 #})
+
+stemDir =
+#(define-music-function (direction music) (stem-dir-or-auto? ly:music?)
+   (if (= direction AUTO)
+       #{
+         \temporary \override Stem.direction = #ly:stem::calc-direction
+         $music
+         \revert Stem.direction
+       #}
+       #{
+         \temporary \override Stem.direction = #direction
+         $music
+         \revert Stem.direction
+       #}))
 
 split = 
 #(define-music-function (voiceA voiceB) (ly:music? ly:music?)
@@ -595,6 +647,7 @@ endRevisionSection = {
 
 renderMovementForEdition = 
 #(define-music-function (edition movementContent) (symbol? ly:music?)
+   (set! movementContent (resolveRepeatTies #f movementContent))
 #{
   \new PianoStaff <<
     \new Staff = "right" << \keepForEdition #edition #'right $movementContent >>
@@ -605,6 +658,7 @@ renderMovementForEdition =
 
 renderMovementForMidi =
 #(define-music-function (edition movementContent) (symbol? ly:music?)
+   (set! movementContent (resolveRepeatTies #t movementContent))
    (set! movementContent
          (music-filter
           (lambda (item) (not (memq 'layout (ly:music-property item 'tags))))

@@ -92,8 +92,8 @@ def generate_view_source(
     )
     sections.append("  }\n")
     if midi:
-        sections.append("  \\score {\n")
-        append_choir_staff(sections, context.source_dir, debug=False, layout=False)
+        sections.append("  \\score {\n    \\unfoldRepeats\n")
+        append_choir_staff(sections, context.source_dir, debug=False, layout=False, midi=True)
         sections.append("    \\midi { }\n  }\n")
     sections.append("}\n")
     write_text(output, "".join(sections))
@@ -128,7 +128,7 @@ def append_transpose_function(
 
 def append_choir_staff(
     sections: List[str], source_dir: Path, *, debug: bool, music: str = "scoreMusic",
-    layout: bool = True,
+    layout: bool = True, midi: bool = False,
 ) -> None:
     tags = "'{tag} 'global" + (" 'debug" if debug else "") + (" 'layout" if layout else "")
     keep_tags = "#(list " + tags + ")"
@@ -145,7 +145,7 @@ def append_choir_staff(
                 '          midiInstrument = "choir aahs"\n',
                 "        } <<\n",
                 f'          \\new Voice = "{spec.tag}" {{\n',
-                f"            \\transposeMusic \\keepWithTag {tag_expression} {remove}\\{music}\n",
+                f"            \\transposeMusic \\keepWithTag {tag_expression} {remove}\\resolveRepeatTies {'##t' if midi else '##f'} \\{music}\n",
                 "          }\n",
                 "        >>\n",
             ]
