@@ -15,9 +15,11 @@
                         'trill)))
             (ly:music-property music 'elements)))
           (preset
-           (if (pair? trills)
-               (ly:music-property (car trills) 'twiddle)
-               '())))
+           (if (number? (ly:music-property music 'trill-twiddle))
+               (ly:music-property music 'trill-twiddle)
+               (if (pair? trills)
+                   (ly:music-property (car trills) 'twiddle)
+                   '()))))
      (if (number? preset)
          preset
          (/ ac:currentTempo 600))))
@@ -29,13 +31,102 @@
 % A running trill can reach spacer/rest chords in polyphonic music.  Expanding
 % those produces no notes, so articulate.ly would divide by a zero length.
 #(define rectify:original-trill ac:trill)
+% getactions consumes trill articulations before ac:trill runs.  Carry their
+% resolved pitch on the notes and their afterGrace timing on the chord.
+#(define rectify:original-getactions ac:getactions)
+#(set! ac:getactions
+   (lambda (music)
+     (for-each
+      (lambda (event)
+        (if (eq? (ly:music-property event 'articulation-type) 'trill)
+            (begin
+              (set! (ly:music-property music 'trill-twiddle)
+                    (ly:music-property event 'twiddle))
+              (for-each
+               (lambda (note)
+                 (set! (ly:music-property note 'trill-pitch)
+                       (ly:music-property event 'pitch)))
+               (filter (lambda (e)
+                         (eq? (ly:music-property e 'name) 'NoteEvent))
+                       (ly:music-property music 'elements))))))
+      (ly:music-property music 'elements))
+     (rectify:original-getactions music)))
+
 #(set! ac:trill
    (lambda (music)
      (if (any (lambda (event)
                 (eq? (ly:music-property event 'name) 'NoteEvent))
               (ly:music-property music 'elements))
-         (rectify:original-trill music)
+         (let ((up ac:up)
+               (terminal-tie (ly:music-property music 'trill-terminal-tie #f))
+               (events (filter (lambda (e)
+                                 (not (eq? (ly:music-property e 'name)
+                                           'NoteEvent)))
+                               (ly:music-property music 'elements))))
+           (dynamic-wind
+            (lambda ()
+              (set! ac:up
+                    (lambda (note)
+                      (let ((pitch (ly:music-property note 'trill-pitch)))
+                        (if (ly:pitch? pitch)
+                            (set! (ly:music-property note 'pitch) pitch)
+                            (up note))))))
+            (lambda ()
+              (let* ((result (rectify:original-trill music))
+                     (first (car (ly:music-property result 'elements))))
+                (set! (ly:music-property first 'elements)
+                      (append events (ly:music-property first 'elements)))
+                (if terminal-tie
+                    (let ((last (last (ly:music-property result 'elements))))
+                      (set! (ly:music-property last 'elements)
+                            (append (ly:music-property last 'elements)
+                                    (list (make-music 'TieEvent))))))
+                result))
+            (lambda () (set! ac:up up))))
          music)))
+
+\include "trill-spans.ily"
+\include "fermatas.ily"
+
+% articulate's grace-time debt and backward history are global.  Scope those
+% two values to a Voice AND a parallel branch. Borrowing across a parallel
+% join cannot shorten the other branches, so would lengthen the total music.
+% At these boundaries ordinary grace notes must borrow forward instead.
+#(define rectify:grace-states '())
+#(define rectify:grace-voice #f)
+#(define rectify:grace-contexts (make-hash-table))
+#(define rectify:original-startup ac:startup-replacements)
+#(set! ac:startup-replacements
+   (lambda (music)
+     (let ((result (rectify:original-startup music)))
+       (set! rectify:grace-states '())
+       (set! rectify:grace-voice #f)
+       (set! rectify:grace-contexts (make-hash-table))
+       (rectify:walk-voices
+        result
+        (lambda (m time staff voice grace region)
+          (hashq-set! rectify:grace-contexts m (cons region voice))))
+       result)))
+
+#(define rectify:original-articulate-chord ac:articulate-chord)
+#(set! ac:articulate-chord
+   (lambda (music)
+     (let ((voice (hashq-ref rectify:grace-contexts music #f)))
+       (if (and voice (not (equal? voice rectify:grace-voice)))
+           (begin
+             (if rectify:grace-voice
+                 (set! rectify:grace-states
+                       (acons rectify:grace-voice
+                              (cons ac:stealForward ac:eventsBackward)
+                              (assoc-remove! rectify:grace-states rectify:grace-voice))))
+             (let ((entry (assoc voice rectify:grace-states)))
+               (set! ac:stealForward (if entry (cadr entry) 0))
+               (set! ac:eventsBackward (if entry (cddr entry) '())))
+             (set! rectify:grace-voice voice)))
+       (let ((result (rectify:original-articulate-chord music)))
+         (if (eq? (ly:music-property music 'name) 'SimultaneousMusic)
+             (set! ac:eventsBackward '()))
+         result))))
 
 #(define rectify:current-tempo 15)
 #(define rectify:arpeggio-direction #f)
@@ -420,4 +511,6 @@ rectify =
      (set! rectify:current-tempo 15)
      (set! rectify:arpeggio-direction #f)
      (set! rectify:connect-arpeggios #f)
-     (rectify:walk copy)))
+     (call-with-values
+      (lambda () (rectify:fermatas (rectify:walk copy)))
+      (lambda (music tempos) (rectify:trill-spans music tempos)))))

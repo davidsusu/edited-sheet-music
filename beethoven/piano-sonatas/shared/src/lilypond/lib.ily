@@ -105,6 +105,11 @@ defaultLayout = \layout {
   \context {
     \PianoStaff
     \consists "Span_stem_engraver"
+    \consists "Span_arpeggio_engraver"
+  }
+  \context {
+    \Staff
+    \consists "Span_arpeggio_engraver"
   }
   \context {
     \Voice
@@ -121,6 +126,11 @@ urtextLayout = \layout {
   \context {
     \PianoStaff
     \consists "Span_stem_engraver"
+    \consists "Span_arpeggio_engraver"
+  }
+  \context {
+    \Staff
+    \consists "Span_arpeggio_engraver"
   }
   \context {
     \Voice
@@ -233,6 +243,50 @@ turnAccidental =
     }
   >>
 #})
+
+% Keep the visual spelling and MIDI alteration on the same native event.
+#(define (trill:markup-alteration accidental)
+   (cond
+    ((not accidental) #f)
+    ((equal? accidental (make-sharp-markup)) 1/2)
+    ((equal? accidental (make-flat-markup)) -1/2)
+    ((equal? accidental (make-natural-markup)) 0)
+    ((equal? accidental (make-doublesharp-markup)) 1)
+    ((equal? accidental (make-doubleflat-markup)) -1)
+    ((string? accidental)
+     (let ((entry (assoc accidental
+                        '(("accidentals.sharp" . 1/2)
+                          ("accidentals.flat" . -1/2)
+                          ("accidentals.natural" . 0)
+                          ("accidentals.doublesharp" . 1)
+                          ("accidentals.flatflat" . -1)))))
+       (and entry (cdr entry))))
+    ((pair? accidental)
+     (or (trill:markup-alteration (car accidental))
+         (trill:markup-alteration (cdr accidental))))
+    (else #f)))
+
+#(define-markup-command (trill-span-text layout props accidental) (maybe-markup?)
+   (let* ((tr (interpret-markup layout props
+                               (make-musicglyph-markup "scripts.trill")))
+          (combined (interpret-markup layout props
+                                     (trill-accidental-markup accidental))))
+     (ly:stencil-translate-axis
+      combined
+      (- (car (ly:stencil-extent tr Y))
+         (car (ly:stencil-extent combined Y))) Y)))
+
+startTrillSpanAccidental =
+#(define-event-function (accidental) (maybe-markup?)
+   (let ((event (make-music 'TrillSpanEvent 'span-direction START))
+         (alteration (trill:markup-alteration accidental)))
+     (if (and accidental (not alteration))
+         (ly:warning "Unknown trill accidental markup; MIDI uses the key signature"))
+     (set! (ly:music-property event 'trill-alteration) alteration)
+     (set! (ly:music-property event 'tweaks)
+           (list (cons '(#t bound-details left text)
+                       (make-trill-span-text-markup accidental))))
+     event))
 
 trillAccidental =
 #(define-music-function (accidental music) ((maybe-markup? #f) ly:music?)
